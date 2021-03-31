@@ -20,6 +20,7 @@ struct Crypto {
             case .randomBytesGenerationError(statusCode: let code):
                 return NSLocalizedString("Generating random bytes failed with error: \(code).",
                                          comment: "'CryptoError.randomBytesGenerationError' error text")
+
             case .zeroRandomBytesRequested:
                 return NSLocalizedString("Zero random bytes were requested.",
                                          comment: "'CryptoError.zeroRandomBytesRequested' error text")

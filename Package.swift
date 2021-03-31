@@ -10,7 +10,7 @@ let package = Package(
     products: [
         .library(
             name: "Pusher",
-            targets: ["Pusher"]),
+            targets: ["Pusher"])
     ],
     dependencies: [
         // Source code linting
@@ -38,6 +38,6 @@ let package = Package(
             ]),
         .testTarget(
             name: "PusherTests",
-            dependencies: ["Pusher"]),
+            dependencies: ["Pusher"])
     ]
 )

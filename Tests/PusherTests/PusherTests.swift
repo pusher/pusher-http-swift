@@ -4,16 +4,20 @@ import XCTest
 
 final class PusherTests: XCTestCase {
 
+    private static let testKey = "b5390e69136683c40d2d"
+    private static let testSecret = "24aaea961cfe1335f796"
+    private static let testCluster = "eu"
+    private static let testMasterKey = "a7QyXV8eYrtJBehbuix68XCPO6+LrpnNNReWOkaXW7A="
     private static let pusher = Pusher(options: APIClientOptions(appId: 1070530,
-                                                         key: "b5390e69136683c40d2d",
-                                                         secret: "24aaea961cfe1335f796",
-                                                         useTLS: true,
-                                                         host: "api-eu.pusher.com",
-                                                         cluster: "eu",
-                                                         port: 443,
-                                                         scheme: "https",
-                                                         httpProxy: "",
-                                                         encryptionMasterKeyBase64: "a7QyXV8eYrtJBehbuix68XCPO6+LrpnNNReWOkaXW7A="))
+                                                                 key: testKey,
+                                                                 secret: testSecret,
+                                                                 useTLS: true,
+                                                                 host: "api-eu.pusher.com",
+                                                                 cluster: testCluster,
+                                                                 port: 443,
+                                                                 scheme: "https",
+                                                                 httpProxy: "",
+                                                                 encryptionMasterKeyBase64: testMasterKey))
 
     // MARK: - GET channels tests
 

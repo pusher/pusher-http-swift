@@ -23,4 +23,8 @@ identifier_name:
   - to
   - ws
 
+inclusive_language:
+  override_allowed_terms:
+    - masterkey
+
 warning_threshold: 10

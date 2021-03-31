@@ -16,7 +16,7 @@ struct GetChannelsEndpoint: APIotaCodableEndpoint {
     let httpMethod: HTTPMethod = .GET
 
     var path: String {
-        
+
         return "/apps/\(options.appId)/channels"
     }
 

@@ -15,7 +15,7 @@ enum ChannelType: String, Decodable {
     /// Presence channels provide an awareness of which users are subscribed to them.
     /// These channels have the same restrictions as a `private` channel for the purposes of subscription attempts.
     case presence
-    
+
     /// A private channel.
     ///
     /// The messages published to private channels are considered sensitive.

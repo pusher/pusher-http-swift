@@ -8,7 +8,7 @@ struct TriggerEventEndpoint: APIotaCodableEndpoint {
     typealias Body = Event
 
     let encoder: JSONEncoder = JSONEncoder()
-    
+
     var headers: HTTPHeaders? {
 
         var headers = APIClient.defaultHeaders
@@ -22,7 +22,7 @@ struct TriggerEventEndpoint: APIotaCodableEndpoint {
     let httpMethod: HTTPMethod = .POST
 
     var path: String {
-        
+
         return "/apps/\(options.appId)/events"
     }
 

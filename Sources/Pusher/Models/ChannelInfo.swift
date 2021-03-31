@@ -8,7 +8,7 @@ public struct ChannelInfo: ChannelInfoRecord, Decodable {
     let userCount: UInt?
 
     // MARK: - Decodable conformance
-    
+
     enum CodingKeys: String, CodingKey {
         case isOccupied = "occupied"
         case subscriptionCount = "subscription_count"

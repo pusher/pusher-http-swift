@@ -1,5 +1,7 @@
 import Foundation
 
+// swiftlint:disable nesting
+
 struct GetChannelSummariesAPIResponse: Decodable {
 
     /// A JSON dictionary representation of channel summaries.

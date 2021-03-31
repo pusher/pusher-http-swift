@@ -13,9 +13,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - name: Linting
+      run: swift run swiftlint
     - name: Build
       run: swift build -v
     - name: Run tests
       run: swift test -v
-    - name: Linting
-      run: swift run swiftlint

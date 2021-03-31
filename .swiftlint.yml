@@ -1,4 +1,7 @@
 excluded:
   - .build
+  - Tests/XCTestManifests.swift
+  - Tests/*/XCTestManifests.swift
+  - Tests/LinuxMain.swift
 
 warning_threshold: 10

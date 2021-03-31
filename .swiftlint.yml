@@ -1,0 +1,4 @@
+excluded:
+  - .build
+
+warning_threshold: 10

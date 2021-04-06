@@ -67,15 +67,20 @@ extension PusherError {
         switch apiClientError {
         case .clientSide:
             self = .clientSide
+
         case .decodingError(let error):
             self = .decodingError(error)
+
         case .encodingError(let error):
             self = .encodingError(error)
+
         case .failedResponse(statusCode: let code, errorResponseBody: let responseBody):
             let errorMessage = String(data: responseBody, encoding: .utf8) ?? "An error occured."
             self = .failedResponse(statusCode: code.rawValue, errorResponse: errorMessage)
+
         case .internalError(let error):
             self = .internalError(error)
+
         case .unexpectedResponse:
             self = .unexpectedResponse
         }
@@ -88,16 +93,22 @@ extension PusherError: Equatable {
         switch (lhs, rhs) {
         case (.clientSide, .clientSide):
             return true
+
         case (.decodingError(let errorOne), .decodingError(let errorTwo)):
             return errorOne.localizedDescription == errorTwo.localizedDescription
+
         case (.encodingError(let errorOne), .encodingError(let errorTwo)):
             return errorOne.localizedDescription == errorTwo.localizedDescription
+
         case (.failedResponse(let codeOne, let responseBodyOne), .failedResponse(let codeTwo, let responseBodyTwo)):
             return codeOne == codeTwo && responseBodyOne == responseBodyTwo
+
         case (.internalError(let errorOne), .internalError(let errorTwo)):
             return errorOne.localizedDescription == errorTwo.localizedDescription
+
         case (.unexpectedResponse, .unexpectedResponse):
             return true
+
         default:
             return false
         }

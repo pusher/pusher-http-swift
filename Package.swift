@@ -18,7 +18,7 @@ let package = Package(
                  .upToNextMajor(from: "0.43.1")),
         // Simple REST API client implementation with 'Codable' types
         .package(url: "https://github.com/danielrbrowne/APIota",
-                 .upToNextMajor(from: "0.1.3")),
+                 .upToNextMajor(from: "0.2.0")),
         // Open-source implementation of Apple's `CryptoKit`
         // (Allows for crypto on Linux, and calls CryptoKit directly on Apple platforms)
         .package(url: "https://github.com/apple/swift-crypto",

@@ -4,7 +4,8 @@ import Foundation
 /// Fetches the information for users currently subscribed to a specific presence channel.
 struct GetUsersEndpoint: APIotaCodableEndpoint {
 
-    typealias Response = GetUsersForChannelAPIResponse
+    typealias SuccessResponse = GetUsersForChannelAPIResponse
+    typealias ErrorResponse = Data
     typealias Body = String
 
     let encoder: JSONEncoder = JSONEncoder()

@@ -4,7 +4,8 @@ import Foundation
 /// Fetches the information for multiple channels.
 struct GetChannelsEndpoint: APIotaCodableEndpoint {
 
-    typealias Response = GetChannelSummariesAPIResponse
+    typealias SuccessResponse = GetChannelSummariesAPIResponse
+    typealias ErrorResponse = Data
     typealias Body = String
 
     let encoder: JSONEncoder = JSONEncoder()

@@ -4,7 +4,8 @@ import Foundation
 /// Triggers an event on one or more channels.
 struct TriggerEventEndpoint: APIotaCodableEndpoint {
 
-    typealias Response = [ChannelSummary]?
+    typealias SuccessResponse = [ChannelSummary]?
+    typealias ErrorResponse = Data
     typealias Body = Event
 
     let encoder: JSONEncoder = JSONEncoder()

@@ -39,6 +39,10 @@ final class PusherTests: XCTestCase {
 
     func testGetChannelsFailsForInvalidAttributes() {
         let expectation = XCTestExpectation(description: "testGetChannelsSucceedsExpectation")
+        let expectedErrorMessage = """
+        user_count may only be requested for presence channels - \
+        please supply filter_by_prefix begining with presence-\n
+        """
         Self.pusher.channels(withFilter: .private,
                              attributes: .userCount) { result in
             switch result {
@@ -46,9 +50,8 @@ final class PusherTests: XCTestCase {
                 XCTFail("This test should not succeed.")
 
             case .failure(let error):
-                let apiError = error as? APIotaClientError
-                XCTAssertNotNil(apiError)
-                XCTAssertEqual(apiError, .failedResponse(statusCode: .badRequest))
+                XCTAssertEqual(error, .failedResponse(statusCode: HTTPStatusCode.badRequest.rawValue,
+                                                      errorResponse: expectedErrorMessage))
             }
             expectation.fulfill()
         }
@@ -76,6 +79,9 @@ final class PusherTests: XCTestCase {
 
     func testGetChannelInfoFailsForInvalidAttributes() {
         let expectation = XCTestExpectation(description: "testGetChannelInfoSucceedsExpectation")
+        let expectedErrorMessage = """
+        Cannot retrieve the user count unless the channel is a presence channel\n
+        """
         Self.pusher.channelInfo(for: Channel(name: "my-channel",
                                              type: .public),
                                 attributes: .userCount) { result in
@@ -84,9 +90,8 @@ final class PusherTests: XCTestCase {
                 XCTFail("This test should not succeed.")
 
             case .failure(let error):
-                let apiError = error as? APIotaClientError
-                XCTAssertNotNil(apiError)
-                XCTAssertEqual(apiError, .failedResponse(statusCode: .badRequest))
+                XCTAssertEqual(error, .failedResponse(statusCode: HTTPStatusCode.badRequest.rawValue,
+                                                      errorResponse: expectedErrorMessage))
             }
             expectation.fulfill()
         }
@@ -113,6 +118,9 @@ final class PusherTests: XCTestCase {
 
     func testGetUsersForChannelFailsForPublicChannel() {
         let expectation = XCTestExpectation(description: "testGetUsersForChannelFailsForNonPresenceChannelExpectation")
+        let expectedErrorMessage = """
+        Users can only be retrieved for presence channels\n
+        """
         Self.pusher.users(for: Channel(name: "my-channel",
                                        type: .public)) { result in
             switch result {
@@ -120,9 +128,8 @@ final class PusherTests: XCTestCase {
                 XCTFail("This test should not succeed.")
 
             case .failure(let error):
-                let apiError = error as? APIotaClientError
-                XCTAssertNotNil(apiError)
-                XCTAssertEqual(apiError, .failedResponse(statusCode: .badRequest))
+                XCTAssertEqual(error, .failedResponse(statusCode: HTTPStatusCode.badRequest.rawValue,
+                                                      errorResponse: expectedErrorMessage))
             }
             expectation.fulfill()
         }

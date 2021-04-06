@@ -1,4 +1,5 @@
 import APIota
+import Foundation
 
 /// Manages operations when interacting with the Pusher Channels HTTP API.
 public class Pusher {
@@ -30,51 +31,66 @@ public class Pusher {
 
     public func channels(withFilter filter: ChannelFilter,
                          attributes: ChannelAttributes,
-                         callback: @escaping (Result<[ChannelSummary], Error>) -> Void) {
+                         callback: @escaping (Result<[ChannelSummary], PusherError>) -> Void) {
 
         apiClient.sendRequest(for: GetChannelsEndpoint(channelFilter: filter,
                                                        channelAttributes: attributes,
                                                        options: options)) { result in
 
             // Map the API response to `[ChannelSummary]` when running the callback
-            callback(result.map { $0.summaries })
+            // and map the API client error to an equivalent `PusherError`
+            callback(result
+                        .map { $0.summaries }
+                        .mapError({ PusherError(error: $0) }))
         }
     }
 
     public func channelInfo(for channel: Channel,
                             attributes: ChannelAttributes,
-                            callback: @escaping (Result<ChannelInfo, Error>) -> Void) {
+                            callback: @escaping (Result<ChannelInfo, PusherError>) -> Void) {
 
         apiClient.sendRequest(for: GetChannelEndpoint(channel: channel,
                                                       channelAttributes: attributes,
-                                                      options: options),
-                              callback: callback)
+                                                      options: options)) { result in
+
+            // Map the API client error to an equivalent `PusherError`
+            callback(result.mapError({ PusherError(error: $0) }))
+        }
     }
 
     public func users(for channel: Channel,
-                      callback: @escaping (Result<[User], Error>) -> Void) {
+                      callback: @escaping (Result<[User], PusherError>) -> Void) {
 
         apiClient.sendRequest(for: GetUsersEndpoint(channel: channel,
                                                     options: options)) { result in
 
             // Map the API response to `[User]` when running the callback
-            callback(result.map { $0.users })
+            // and map the API client error to an equivalent `PusherError`
+            callback(result
+                        .map { $0.users }
+                        .mapError({ PusherError(error: $0) }))
         }
     }
 
     public func trigger(event: Event,
-                        callback: @escaping (Result<[ChannelSummary]?, Error>) -> Void) {
+                        callback: @escaping (Result<[ChannelSummary]?, PusherError>) -> Void) {
 
         apiClient.sendRequest(for: TriggerEventEndpoint(httpBody: event,
-                                                        options: options),
-                              callback: callback)
+                                                        options: options)) { result in
+
+            // Map the API client error to an equivalent `PusherError`
+            callback(result.mapError({ PusherError(error: $0) }))
+        }
     }
 
     public func trigger(events: [BatchEvent],
-                        callback: @escaping (Result<[ChannelInfo]?, Error>) -> Void) {
+                        callback: @escaping (Result<[ChannelInfo]?, PusherError>) -> Void) {
 
         apiClient.sendRequest(for: TriggerBatchEventsEndpoint(httpBody: events,
-                                                              options: options),
-                              callback: callback)
+                                                              options: options)) { result in
+
+            // Map the API client error to an equivalent `PusherError`
+            callback(result.mapError({ PusherError(error: $0) }))
+        }
     }
 }

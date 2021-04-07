@@ -73,13 +73,15 @@ public class Pusher {
     }
 
     public func trigger(event: Event,
-                        callback: @escaping (Result<[ChannelSummary]?, PusherError>) -> Void) {
+                        callback: @escaping (Result<[ChannelSummary], PusherError>) -> Void) {
 
         apiClient.sendRequest(for: TriggerEventEndpoint(httpBody: event,
                                                         options: options)) { result in
 
             // Map the API client error to an equivalent `PusherError`
-            callback(result.mapError({ PusherError(error: $0) }))
+            callback(result
+                        .map { $0.summaries }
+                        .mapError({ PusherError(error: $0) }))
         }
     }
 

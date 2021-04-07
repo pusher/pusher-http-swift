@@ -2,7 +2,8 @@ import Foundation
 
 // swiftlint:disable nesting
 
-struct GetChannelSummariesAPIResponse: Decodable {
+/// The HTTP API response returning a list of channel summaries.
+struct ChannelSummariesAPIResponse: Decodable {
 
     /// A JSON dictionary representation of channel summaries.
     typealias ChannelSummariesJSON = [String: ChannelAttributes]
@@ -36,7 +37,11 @@ struct GetChannelSummariesAPIResponse: Decodable {
     init(from decoder: Decoder) throws {
 
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        let summariesJSON = try container.decode(ChannelSummariesJSON.self, forKey: .summaries)
+        guard let summariesJSON = try container.decodeIfPresent(ChannelSummariesJSON.self,
+                                                                forKey: .summaries) else {
+            self.summaries = []
+            return
+        }
 
         self.summaries = summariesJSON.map { (channelName: String, attributes: ChannelAttributes) -> ChannelSummary in
             return ChannelSummary(name: channelName,

@@ -1,7 +1,7 @@
 import Foundation
 
 /// The available channel types.
-enum ChannelType: String, Decodable {
+public enum ChannelType: String, Decodable {
 
     /// An end-to-end encrypted channel.
     ///
@@ -34,7 +34,7 @@ enum ChannelType: String, Decodable {
     /// As an example, a channel named `"presence-my-channel"` would initialize to `.presence`.
     /// Any channel named without a reserved prefix will be initialized to `.public`. (E.g. `"my-important-channel"`).
     /// - Parameter channelName: The channel name.
-    init(channelName: String) {
+    public init(channelName: String) {
         if channelName.hasPrefix("\(Self.encrypted.rawValue)-") {
             self = .encrypted
         } else if channelName.hasPrefix("\(Self.presence.rawValue)-") {

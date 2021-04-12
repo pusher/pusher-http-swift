@@ -5,8 +5,8 @@ public struct ChannelSummary: ChannelSummaryRecord, Decodable {
 
     // MARK: - Public properties
 
-    let name: String
-    let subscriptionCount: UInt?
-    let userCount: UInt?
-    let type: ChannelType
+    public let name: String
+    public let subscriptionCount: UInt?
+    public let userCount: UInt?
+    public let type: ChannelType
 }

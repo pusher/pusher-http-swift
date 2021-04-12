@@ -10,13 +10,13 @@ public struct ChannelAttributes: OptionSet {
     }
 
     /// The number of distinct users that are currently subscribed.
-    static let userCount = ChannelAttributes(rawValue: 1 << 0)
+    public static let userCount = ChannelAttributes(rawValue: 1 << 0)
 
     /// The number of all connections currently subscribed.
-    static let subscriptionCount = ChannelAttributes(rawValue: 1 << 1)
+    public static let subscriptionCount = ChannelAttributes(rawValue: 1 << 1)
 
     /// All available attributes for the occupied channel.
-    static let all: ChannelAttributes = [.userCount, .subscriptionCount]
+    public static let all: ChannelAttributes = [.userCount, .subscriptionCount]
 }
 
 extension ChannelAttributes {

@@ -3,23 +3,23 @@ import Foundation
 /// A collection of configuration options for a Pusher Channels HTTP API client.
 public struct APIClientOptions {
 
-    let appId: Int
+    public let appId: Int
 
-    let key: String
+    public let key: String
 
-    let secret: String
+    public let secret: String
 
-    let useTLS: Bool
+    public let useTLS: Bool
 
-    let host: String
+    public let host: String
 
-    let cluster: String
+    public let cluster: String
 
-    let port: Int
+    public let port: Int
 
-    let scheme: String
+    public let scheme: String
 
-    let httpProxy: String
+    public let httpProxy: String
 
-    let encryptionMasterKeyBase64: String
+    public let encryptionMasterKeyBase64: String
 }

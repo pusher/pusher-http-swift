@@ -3,9 +3,9 @@ import Foundation
 /// An information record for an occupied channel.
 public struct ChannelInfo: ChannelInfoRecord, Decodable {
 
-    let isOccupied: Bool
-    let subscriptionCount: UInt?
-    let userCount: UInt?
+    public let isOccupied: Bool
+    public let subscriptionCount: UInt?
+    public let userCount: UInt?
 
     // MARK: - Decodable conformance
 

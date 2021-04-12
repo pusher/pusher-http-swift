@@ -14,7 +14,7 @@ public class Pusher {
 
     /// Creates a Pusher Channels HTTP API client from a set of options.
     /// - Parameter options: Configuration options used to managing the connection.
-    init(options: APIClientOptions) {
+    public init(options: APIClientOptions) {
         self.apiClient = APIClient(options: options)
         self.options = options
     }
@@ -22,7 +22,7 @@ public class Pusher {
     /// Creates a Pusher Channels HTTP API client from a type conforming to `APIotaClient`.
     /// - Parameter apiClient: The API client used to manage the connection.
     /// - Parameter options: Configuration options used to managing the connection.
-    init(apiClient: APIotaClient, options: APIClientOptions) {
+    public init(apiClient: APIotaClient, options: APIClientOptions) {
         self.apiClient = apiClient
         self.options = options
     }

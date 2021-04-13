@@ -13,5 +13,5 @@ public struct Channel: ChannelDescription {
         }
     }
 
-    let type: ChannelType
+    public let type: ChannelType
 }

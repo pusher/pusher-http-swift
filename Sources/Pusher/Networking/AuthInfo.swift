@@ -26,7 +26,7 @@ struct AuthInfo: AuthInfoRecord {
 
     // MARK: - Lifecycle
 
-    /// Creates a new `AuthInfo` object that can be used to authenticate Channels API requests.
+    /// Creates an `AuthInfo` object that can be used to authenticate Channels API requests.
     /// - Parameters:
     ///   - httpBody: The HTTP body for an API request, which must conform to `Encodable`.
     ///   - httpMethod: The intended HTTP method `String` for an API request (e.g. `"GET"`).

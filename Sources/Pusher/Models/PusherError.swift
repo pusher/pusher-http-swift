@@ -58,6 +58,8 @@ public enum PusherError: LocalizedError {
 
 extension PusherError {
 
+    /// Creates a `PusherError` which wraps another `Error`, offering additional context if it can be determined.
+    /// - Parameter error: The `Error` to wrap inside the resulting `PusherError`.
     init(error: Error) {
         guard let apiClientError = error as? APIotaClientError<Data> else {
             self = .internalError(error)

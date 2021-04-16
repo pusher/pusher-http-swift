@@ -12,14 +12,9 @@ final class PusherTests: XCTestCase {
         let expectation = XCTestExpectation(function: #function)
         Self.pusher.channels(withFilter: .any,
                              attributes: []) { result in
-            switch result {
-            case .success(let channelSummaries):
+            self.verifyAPIResultSuccess(result, expectation: expectation) { channelSummaries in
                 XCTAssertEqual(channelSummaries.count, 0)
-
-            case .failure(let error):
-                XCTFail("This test should not fail. Failed with error: \(error.localizedDescription)")
             }
-            expectation.fulfill()
         }
         wait(for: [expectation], timeout: 10.0)
     }
@@ -47,14 +42,9 @@ final class PusherTests: XCTestCase {
         let expectation = XCTestExpectation(function: #function)
         Self.pusher.channelInfo(for: TestObjects.publicChannel,
                                 attributes: []) { result in
-            switch result {
-            case .success(let channelInfo):
+            self.verifyAPIResultSuccess(result, expectation: expectation) { channelInfo in
                 XCTAssertNotNil(channelInfo)
-
-            case .failure(let error):
-                XCTFail("This test should not fail. Failed with error: \(error.localizedDescription)")
             }
-            expectation.fulfill()
         }
         wait(for: [expectation], timeout: 10.0)
     }
@@ -80,14 +70,9 @@ final class PusherTests: XCTestCase {
     func testGetUsersForChannelSucceedsForPresenceChannel() {
         let expectation = XCTestExpectation(function: #function)
         Self.pusher.users(for: TestObjects.presenceChannel) { result in
-            switch result {
-            case .success(let users):
+            self.verifyAPIResultSuccess(result, expectation: expectation) { users in
                 XCTAssertEqual(users.count, 0)
-
-            case .failure(let error):
-                XCTFail("This test should not fail. Failed with error: \(error.localizedDescription)")
             }
-            expectation.fulfill()
         }
         wait(for: [expectation], timeout: 10.0)
     }

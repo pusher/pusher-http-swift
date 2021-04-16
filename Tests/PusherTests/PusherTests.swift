@@ -4,56 +4,34 @@ import XCTest
 
 final class PusherTests: XCTestCase {
 
-    private static let testKey = "b5390e69136683c40d2d"
-    private static let testSecret = "24aaea961cfe1335f796"
-    private static let testCluster = "eu"
-    private static let testMasterKey = "a7QyXV8eYrtJBehbuix68XCPO6+LrpnNNReWOkaXW7A="
-    private static let pusher = Pusher(options: APIClientOptions(appId: 1070530,
-                                                                 key: testKey,
-                                                                 secret: testSecret,
-                                                                 useTLS: true,
-                                                                 host: "api-eu.pusher.com",
-                                                                 cluster: testCluster,
-                                                                 port: 443,
-                                                                 scheme: "https",
-                                                                 httpProxy: "",
-                                                                 encryptionMasterKeyBase64: testMasterKey))
+    private static let pusher = TestObjects.pusher
 
     // MARK: - GET channels tests
 
     func testGetChannelsSucceeds() {
-        let expectation = XCTestExpectation(description: "testGetChannelsSucceedsExpectation")
+        let expectation = XCTestExpectation(function: #function)
         Self.pusher.channels(withFilter: .any,
                              attributes: []) { result in
-            switch result {
-            case .success(let channelSummaries):
+            self.verifyAPIResultSuccess(result, expectation: expectation) { channelSummaries in
                 XCTAssertEqual(channelSummaries.count, 0)
-
-            case .failure(let error):
-                XCTFail("This test should not fail. Failed with error: \(error.localizedDescription)")
             }
-            expectation.fulfill()
         }
         wait(for: [expectation], timeout: 10.0)
     }
 
     func testGetChannelsFailsForInvalidAttributes() {
-        let expectation = XCTestExpectation(description: "testGetChannelsSucceedsExpectation")
+        let expectation = XCTestExpectation(function: #function)
         let expectedErrorMessage = """
         user_count may only be requested for presence channels - \
         please supply filter_by_prefix begining with presence-\n
         """
+        let expectedError = PusherError.failedResponse(statusCode: HTTPStatusCode.badRequest.rawValue,
+                                                       errorResponse: expectedErrorMessage)
         Self.pusher.channels(withFilter: .private,
                              attributes: .userCount) { result in
-            switch result {
-            case .success:
-                XCTFail("This test should not succeed.")
-
-            case .failure(let error):
-                XCTAssertEqual(error, .failedResponse(statusCode: HTTPStatusCode.badRequest.rawValue,
-                                                      errorResponse: expectedErrorMessage))
-            }
-            expectation.fulfill()
+            self.verifyAPIResultFailure(result,
+                                        expectation: expectation,
+                                        expectedError: expectedError)
         }
         wait(for: [expectation], timeout: 10.0)
     }
@@ -61,39 +39,28 @@ final class PusherTests: XCTestCase {
     // MARK: - GET channel info tests
 
     func testGetChannelInfoSucceeds() {
-        let expectation = XCTestExpectation(description: "testGetChannelInfoSucceedsExpectation")
-        Self.pusher.channelInfo(for: Channel(name: "my-channel",
-                                             type: .public),
+        let expectation = XCTestExpectation(function: #function)
+        Self.pusher.channelInfo(for: TestObjects.publicChannel,
                                 attributes: []) { result in
-            switch result {
-            case .success(let channelInfo):
+            self.verifyAPIResultSuccess(result, expectation: expectation) { channelInfo in
                 XCTAssertNotNil(channelInfo)
-
-            case .failure(let error):
-                XCTFail("This test should not fail. Failed with error: \(error.localizedDescription)")
             }
-            expectation.fulfill()
         }
         wait(for: [expectation], timeout: 10.0)
     }
 
     func testGetChannelInfoFailsForInvalidAttributes() {
-        let expectation = XCTestExpectation(description: "testGetChannelInfoSucceedsExpectation")
+        let expectation = XCTestExpectation(function: #function)
         let expectedErrorMessage = """
         Cannot retrieve the user count unless the channel is a presence channel\n
         """
-        Self.pusher.channelInfo(for: Channel(name: "my-channel",
-                                             type: .public),
+        let expectedError = PusherError.failedResponse(statusCode: HTTPStatusCode.badRequest.rawValue,
+                                                       errorResponse: expectedErrorMessage)
+        Self.pusher.channelInfo(for: TestObjects.publicChannel,
                                 attributes: .userCount) { result in
-            switch result {
-            case .success:
-                XCTFail("This test should not succeed.")
-
-            case .failure(let error):
-                XCTAssertEqual(error, .failedResponse(statusCode: HTTPStatusCode.badRequest.rawValue,
-                                                      errorResponse: expectedErrorMessage))
-            }
-            expectation.fulfill()
+            self.verifyAPIResultFailure(result,
+                                        expectation: expectation,
+                                        expectedError: expectedError)
         }
         wait(for: [expectation], timeout: 10.0)
     }
@@ -101,37 +68,26 @@ final class PusherTests: XCTestCase {
     // MARK: - GET users tests
 
     func testGetUsersForChannelSucceedsForPresenceChannel() {
-        let expectation = XCTestExpectation(description: "testGetUsersForChannelSucceedsForPresenceChannelExpectation")
-        Self.pusher.users(for: Channel(name: "my-channel",
-                                       type: .presence)) { result in
-            switch result {
-            case .success(let users):
+        let expectation = XCTestExpectation(function: #function)
+        Self.pusher.users(for: TestObjects.presenceChannel) { result in
+            self.verifyAPIResultSuccess(result, expectation: expectation) { users in
                 XCTAssertEqual(users.count, 0)
-
-            case .failure(let error):
-                XCTFail("This test should not fail. Failed with error: \(error.localizedDescription)")
             }
-            expectation.fulfill()
         }
         wait(for: [expectation], timeout: 10.0)
     }
 
     func testGetUsersForChannelFailsForPublicChannel() {
-        let expectation = XCTestExpectation(description: "testGetUsersForChannelFailsForNonPresenceChannelExpectation")
+        let expectation = XCTestExpectation(function: #function)
         let expectedErrorMessage = """
         Users can only be retrieved for presence channels\n
         """
-        Self.pusher.users(for: Channel(name: "my-channel",
-                                       type: .public)) { result in
-            switch result {
-            case .success:
-                XCTFail("This test should not succeed.")
-
-            case .failure(let error):
-                XCTAssertEqual(error, .failedResponse(statusCode: HTTPStatusCode.badRequest.rawValue,
-                                                      errorResponse: expectedErrorMessage))
-            }
-            expectation.fulfill()
+        let expectedError = PusherError.failedResponse(statusCode: HTTPStatusCode.badRequest.rawValue,
+                                                       errorResponse: expectedErrorMessage)
+        Self.pusher.users(for: TestObjects.publicChannel) { result in
+            self.verifyAPIResultFailure(result,
+                                        expectation: expectation,
+                                        expectedError: expectedError)
         }
         wait(for: [expectation], timeout: 10.0)
     }

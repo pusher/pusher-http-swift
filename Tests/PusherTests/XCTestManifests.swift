@@ -6,7 +6,12 @@ extension PusherTests {
     //   `swift test --generate-linuxmain`
     // to regenerate.
     static let __allTests__PusherTests = [
-        ("testGetChannels", testGetChannels),
+        ("testGetChannelInfoFailsForInvalidAttributes", testGetChannelInfoFailsForInvalidAttributes),
+        ("testGetChannelInfoSucceeds", testGetChannelInfoSucceeds),
+        ("testGetChannelsFailsForInvalidAttributes", testGetChannelsFailsForInvalidAttributes),
+        ("testGetChannelsSucceeds", testGetChannelsSucceeds),
+        ("testGetUsersForChannelFailsForPublicChannel", testGetUsersForChannelFailsForPublicChannel),
+        ("testGetUsersForChannelSucceedsForPresenceChannel", testGetUsersForChannelSucceedsForPresenceChannel),
     ]
 }
 

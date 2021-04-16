@@ -1,8 +1,6 @@
 import Foundation
 @testable import Pusher
 
-// swiftlint:disable force_try
-
 struct TestObjects {
 
     // MARK: - SDK client

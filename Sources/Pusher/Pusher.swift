@@ -41,7 +41,7 @@ public class Pusher {
             // and map the API client error to an equivalent `PusherError`
             callback(result
                         .map { $0.summaries }
-                        .mapError({ PusherError(error: $0) }))
+                        .mapError({ PusherError(from: $0) }))
         }
     }
 
@@ -54,7 +54,7 @@ public class Pusher {
                                                       options: options)) { result in
 
             // Map the API client error to an equivalent `PusherError`
-            callback(result.mapError({ PusherError(error: $0) }))
+            callback(result.mapError({ PusherError(from: $0) }))
         }
     }
 
@@ -68,7 +68,7 @@ public class Pusher {
             // and map the API client error to an equivalent `PusherError`
             callback(result
                         .map { $0.users }
-                        .mapError({ PusherError(error: $0) }))
+                        .mapError({ PusherError(from: $0) }))
         }
     }
 
@@ -81,18 +81,18 @@ public class Pusher {
             // Map the API client error to an equivalent `PusherError`
             callback(result
                         .map { $0.summaries }
-                        .mapError({ PusherError(error: $0) }))
+                        .mapError({ PusherError(from: $0) }))
         }
     }
 
-    public func trigger(events: [BatchEvent],
+    public func trigger(events: [Event],
                         callback: @escaping (Result<[ChannelInfo]?, PusherError>) -> Void) {
 
         apiClient.sendRequest(for: TriggerBatchEventsEndpoint(httpBody: events,
                                                               options: options)) { result in
 
             // Map the API client error to an equivalent `PusherError`
-            callback(result.mapError({ PusherError(error: $0) }))
+            callback(result.mapError({ PusherError(from: $0) }))
         }
     }
 }

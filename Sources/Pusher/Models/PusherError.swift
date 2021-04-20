@@ -60,12 +60,22 @@ extension PusherError {
 
     /// Creates a `PusherError` which wraps another `Error`, offering additional context if it can be determined.
     /// - Parameter error: The `Error` to wrap inside the resulting `PusherError`.
-    init(error: Error) {
+    init(from error: Error) {
+
+        // Handle mapping from other `Error` types
         guard let apiClientError = error as? APIotaClientError<Data> else {
-            self = .internalError(error)
+            if let decodingError = error as? DecodingError {
+                self = .decodingError(decodingError)
+            } else if let encodingError = error as? EncodingError {
+                self = .encodingError(encodingError)
+            } else {
+                self = .internalError(error)
+            }
+
             return
         }
 
+        // Handle mapping from `APIotaClientError` -> `PusherError`
         switch apiClientError {
         case .clientSide:
             self = .clientSide

@@ -87,7 +87,7 @@ extension PusherError {
             self = .encodingError(error)
 
         case .failedResponse(statusCode: let code, errorResponseBody: let responseBody):
-            let errorMessage = String(data: responseBody, encoding: .utf8) ?? "An error occured."
+            let errorMessage = responseBody.toString()
             self = .failedResponse(statusCode: code.rawValue, errorResponse: errorMessage)
 
         case .internalError(let error):

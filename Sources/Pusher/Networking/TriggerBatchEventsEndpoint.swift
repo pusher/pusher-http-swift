@@ -6,7 +6,7 @@ struct TriggerBatchEventsEndpoint: APIotaCodableEndpoint {
 
     typealias SuccessResponse = [ChannelInfo]?
     typealias ErrorResponse = Data
-    typealias Body = [BatchEvent]
+    typealias Body = [Event]
 
     let encoder: JSONEncoder = JSONEncoder()
 
@@ -18,7 +18,7 @@ struct TriggerBatchEventsEndpoint: APIotaCodableEndpoint {
         return headers
     }
 
-    let httpBody: [BatchEvent]?
+    let httpBody: [Event]?
 
     let httpMethod: HTTPMethod = .POST
 

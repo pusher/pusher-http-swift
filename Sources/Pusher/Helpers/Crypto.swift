@@ -5,8 +5,13 @@ import TweetNacl
 /// Provides cryptography functionality as a collection of helper methods.
 struct Crypto {
 
+    // MARK: - Error reporting
+
     /// An error generated during a cryptographic operation.
     enum CryptoError: LocalizedError {
+
+        /// An error occurred during a NaCl cryptographic operation.
+        case naclError(_ error: Error)
 
         /// Generation of random bytes failed with a `OSStatus` code.
         case randomBytesGenerationError(statusCode: OSStatus)
@@ -17,6 +22,9 @@ struct Crypto {
         /// A localized human-readable description of the error.
         public var errorDescription: String? {
             switch self {
+            case .naclError(error: let error):
+                return NSLocalizedString("An NaCl cryptographic operation failed with error: \(error.localizedDescription)",
+                                         comment: "'CryptoError.naclError' error text")
             case .randomBytesGenerationError(statusCode: let code):
                 return NSLocalizedString("Generating random bytes failed with error: \(code).",
                                          comment: "'CryptoError.randomBytesGenerationError' error text")
@@ -28,58 +36,83 @@ struct Crypto {
         }
     }
 
-    /// Generates a SHA256 HMAC digest of a `string` using a `secret`.
-    /// - Parameters:
-    ///   - secret: The secret key.
-    ///   - string: The `String` to use as source data.
-    /// - Returns: The SHA256 HMAC `String`, in hexadecimal notation.
-    static func generateSHA256HMAC(secret: String, string: String) -> String {
-
-        let key = SymmetricKey(data: Data(secret.utf8))
-        let signature = HMAC<SHA256>.authenticationCode(for: Data(string.utf8), using: key)
-
-        return signature
-            .map { String(format: "%02hhx", $0) }
-            .joined()
-    }
+    // MARK: - Hashing algorithms
 
     /// Generates a MD5 digest of some data.
-    /// - Parameter data: The source `Data` to encode.
-    /// - Returns: The MD5 digest `String`, in hexadecimal notation.
-    static func generateMD5Digest(data: Data) -> String {
+    /// - Parameter data: The source `Data` to hash.
+    /// - Returns: The MD5 digest `Data`.
+    static func md5Digest(data: Data) -> Data {
 
-        let digest = Insecure.MD5.hash(data: data)
-
-        return digest
-            .map { String(format: "%02hhx", $0) }
-            .joined()
+        return Data(Insecure.MD5.hash(data: data))
     }
 
-    /// Encrypt a `string` using a `key`, according to the
+    /// Generates a SHA256 digest of some data.
+    /// - Parameter data: The source `Data` to hash.
+    /// - Returns: The SHA256 digest `Data`.
+    static func sha256Digest(data: Data) -> Data {
+
+        return Data(SHA256.hash(data: data))
+    }
+
+    // MARK: - Hash-based message authentication
+
+    /// Generates a SHA256 HMAC digest of a `string` using a `secret`.
+    /// - Parameters:
+    ///   - data: The source `Data` for the computation.
+    ///   - key: The symmetric key used to secure the computation.
+    /// - Returns: The SHA256 HMAC digest `Data`.
+    static func sha256HMAC(for data: Data, using key: Data) -> Data {
+
+        let key = SymmetricKey(data: key)
+        let signature = HMAC<SHA256>.authenticationCode(for: data, using: key)
+
+        return Data(signature)
+    }
+
+    // MARK: - NaCl-based encryption and decryption
+
+    /// Decrypt some `data` using a `nonce` and a `key`, according to the
     /// [Secretbox standard](https://nacl.cr.yp.to/secretbox.html) from NaCl.
     /// - Parameters:
-    ///   - string: The data `String` to encrypt.
-    ///   - key: The key `String` to use for the encryption operation.
-    /// - Throws: An `Error` if the encryption operation fails for some reason.
-    /// - Returns: The encrypted data (as a `String`), if the operation was successful.
-    static func encrypt(string: String, key: String) throws -> String? {
+    ///   - data: The encrypted `Data` to decrypt.
+    ///   - nonce: The nonce `Data` to use for the decryption operation.
+    ///   - key: The key `Data` to use for the decryption operation.
+    /// - Throws: An `CryptoError` if the decryption operation fails for some reason.
+    /// - Returns: The decrypted `Data`, if the operation was successful.
+    static func decrypt(data: Data, nonce: Data, key: Data) throws -> Data {
 
-        let nonce = try secureRandomBytes(count: 24)
-        let secretBox = try NaclSecretBox.secretBox(message: Data(string.utf8),
-                                                    nonce: nonce,
-                                                    key: Data(key.utf8))
-
-        return String(data: secretBox, encoding: .utf8)
+        do {
+            return try NaclSecretBox.open(box: data, nonce: nonce, key: key)
+        } catch {
+            throw CryptoError.naclError(error)
+        }
     }
 
-    // MARK: - Private methods
+    /// Encrypt some `data` using a `nonce` and a `key`, according to the
+    /// [Secretbox standard](https://nacl.cr.yp.to/secretbox.html) from NaCl.
+    /// - Parameters:
+    ///   - data: The `Data` to encrypt.
+    ///   - nonce: The nonce `Data` to use for the encryption operation.
+    ///   - key: The key `Data` to use for the encryption operation.
+    /// - Throws: An `CryptoError` if the encryption operation fails for some reason.
+    /// - Returns: The encrypted `Data`, if the operation was successful.
+    static func encrypt(data: Data, nonce: Data, key: Data) throws -> Data {
 
-    /// Generates cryptographically secure random bytes.
+        do {
+            return try NaclSecretBox.secretBox(message: data, nonce: nonce, key: key)
+        } catch {
+            throw CryptoError.naclError(error)
+        }
+    }
+
+    // MARK: - Random data
+
+    /// Generates cryptographically secure random data.
     /// - Parameter count: The number of random bytes to return.
-    /// - Throws: An `Error` if the random bytes could not be generated for some reason,
+    /// - Throws: An `CryptoError` if the random data could not be generated for some reason,
     ///           or if zero random bytes were requested.
     /// - Returns: The requested number of cryptographically secure random bytes, as `Data`.
-    private static func secureRandomBytes(count: Int) throws -> Data {
+    static func secureRandomData(count: Int) throws -> Data {
 
         // Generation method is platform dependent
         // (The Security framework is only available on Apple platforms).

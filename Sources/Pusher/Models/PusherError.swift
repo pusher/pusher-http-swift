@@ -1,6 +1,7 @@
 import APIota
 import Foundation
 
+/// An error whilst using the Pusher HTTP API Swift SDK.
 public enum PusherError: LocalizedError {
 
     /// The `URLRequest` could not be initialized with a valid `URL`.
@@ -23,6 +24,9 @@ public enum PusherError: LocalizedError {
     /// When the circumstances that caused the error cannot be determined, an `internalError` will be thrown.
     case internalError(_ error: Error)
 
+    /// An instance of `Event` could not be initialized successfully for some reason.
+    case invalidConfiguration(reason: String)
+
     /// The server returned a response that was not a `HTTPURLResponse`.
     case unexpectedResponse
 
@@ -30,7 +34,7 @@ public enum PusherError: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .clientSide:
-            return NSLocalizedString("The URLRequest was not initialized with a valid URL.",
+            return NSLocalizedString("The URLRequest was not initialized with a valid URL",
                                      comment: "'clientSide' error text")
 
         case .decodingError(let error):
@@ -49,8 +53,12 @@ public enum PusherError: LocalizedError {
             return NSLocalizedString("The request failed with error: \(error)",
                                      comment: "'internalError' error text")
 
+        case .invalidConfiguration(let reason):
+            return NSLocalizedString("Configuration was invalid and failed with error: \(reason)",
+                                     comment: "'invalidConfiguration' error text")
+
         case .unexpectedResponse:
-            return NSLocalizedString("The response was of an unexpected format.",
+            return NSLocalizedString("The response was of an unexpected format",
                                      comment: "'unexpectedResponse' error text")
         }
     }

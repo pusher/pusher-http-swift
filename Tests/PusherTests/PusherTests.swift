@@ -91,4 +91,26 @@ final class PusherTests: XCTestCase {
         }
         wait(for: [expectation], timeout: 10.0)
     }
+
+    // MARK: - POST single event tests
+
+    func testPostEventToChannelSucceedsForPublicChannel() throws {
+        let expectation = XCTestExpectation(function: #function)
+        Self.pusher.trigger(event: TestObjects.publicEvent) { result in
+            self.verifyAPIResultSuccess(result, expectation: expectation) { channelSummaries in
+                XCTAssertEqual(channelSummaries.count, 0)
+            }
+        }
+        wait(for: [expectation], timeout: 10.0)
+    }
+
+    func testPostEventToChannelSucceedsForEncryptedChannel() throws {
+        let expectation = XCTestExpectation(function: #function)
+        Self.pusher.trigger(event: TestObjects.encryptedEvent) { result in
+            self.verifyAPIResultSuccess(result, expectation: expectation) { channelSummaries in
+                XCTAssertEqual(channelSummaries.count, 0)
+            }
+        }
+        wait(for: [expectation], timeout: 10.0)
+    }
 }

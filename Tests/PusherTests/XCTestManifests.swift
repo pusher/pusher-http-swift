@@ -12,6 +12,8 @@ extension PusherTests {
         ("testGetChannelsSucceeds", testGetChannelsSucceeds),
         ("testGetUsersForChannelFailsForPublicChannel", testGetUsersForChannelFailsForPublicChannel),
         ("testGetUsersForChannelSucceedsForPresenceChannel", testGetUsersForChannelSucceedsForPresenceChannel),
+        ("testPostEventToChannelSucceedsForEncryptedChannel", testPostEventToChannelSucceedsForEncryptedChannel),
+        ("testPostEventToChannelSucceedsForPublicChannel", testPostEventToChannelSucceedsForPublicChannel),
     ]
 }
 

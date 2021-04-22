@@ -13,7 +13,7 @@ protocol EventInfoRecord {
     var eventName: String { get }
 
     /// The event payload data.
-    var eventPayload: Data { get }
+    var eventData: Data { get }
 
     /// A connection to which the event will not be sent.
     var socketId: String? { get }

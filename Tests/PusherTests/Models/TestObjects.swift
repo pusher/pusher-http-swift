@@ -29,17 +29,17 @@ struct TestObjects {
     // MARK: - Events
 
     static let encryptedEvent = try! Event(eventName: "my-event",
-                                           eventPayload: Self.eventPayload,
+                                           eventData: Self.eventData,
                                            channel: Self.encryptedChannel)
 
     // swiftlint:disable:next force_try
     static let publicEvent = try! Event(eventName: "my-event",
-                                        eventPayload: Self.eventPayload,
+                                        eventData: Self.eventData,
                                         channel: Self.publicChannel)
 
     // MARK: - Event payloads
 
-    static let eventPayload = MockEventPayload(name: "Joe Bloggs",
-                                                age: 28,
-                                                job: "Software Engineer")
+    static let eventData = MockEventData(name: "Joe Bloggs",
+                                         age: 28,
+                                         job: "Software Engineer")
 }

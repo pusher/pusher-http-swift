@@ -70,6 +70,12 @@ extension PusherError {
     /// - Parameter error: The `Error` to wrap inside the resulting `PusherError`.
     init(from error: Error) {
 
+        // Handle the case where `error` is already a `PusherError`
+        if error is PusherError {
+            // swiftlint:disable:next force_cast
+            self = error as! PusherError
+        }
+
         // Handle mapping from other `Error` types
         guard let apiClientError = error as? APIotaClientError<Data> else {
             if let decodingError = error as? DecodingError {

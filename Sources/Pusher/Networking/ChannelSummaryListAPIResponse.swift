@@ -24,7 +24,7 @@ struct ChannelSummaryListAPIResponse: Decodable {
     // MARK: - Properties
 
     /// An array of `ChannelSummary` for any occupied channels.
-    let summaries: [ChannelSummary]
+    let channelSummaryList: [ChannelSummary]
 
     // MARK: - Decodable conformance
 
@@ -39,11 +39,11 @@ struct ChannelSummaryListAPIResponse: Decodable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard let summariesJSON = try container.decodeIfPresent(ChannelSummaryListJSON.self,
                                                                 forKey: .summaries) else {
-            self.summaries = []
+            self.channelSummaryList = []
             return
         }
 
-        self.summaries = summariesJSON.map { (channelName: String, attributes: ChannelAttributes) -> ChannelSummary in
+        self.channelSummaryList = summariesJSON.map { (channelName: String, attributes: ChannelAttributes) -> ChannelSummary in
             return ChannelSummary(name: channelName,
                                   subscriptionCount: attributes.subscriptionCount,
                                   userCount: attributes.userCount,

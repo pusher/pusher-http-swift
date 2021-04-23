@@ -40,7 +40,7 @@ public class Pusher {
             // Map the API response to `[ChannelSummary]` when running the callback
             // and map the API client error to an equivalent `PusherError`
             callback(result
-                        .map { $0.summaries }
+                        .map { $0.channelSummaryList }
                         .mapError({ PusherError(from: $0) }))
         }
     }
@@ -88,7 +88,7 @@ public class Pusher {
 
             // Map the API client error to an equivalent `PusherError`
             callback(result
-                        .map { $0.summaries }
+                        .map { $0.channelSummaryList }
                         .mapError({ PusherError(from: $0) }))
         }
     }

@@ -24,7 +24,7 @@ public enum PusherError: LocalizedError {
     /// When the circumstances that caused the error cannot be determined, an `internalError` will be thrown.
     case internalError(_ error: Error)
 
-    /// An instance of `Event` could not be initialized successfully for some reason.
+    /// An invalid configuration caused an error for some reason.
     case invalidConfiguration(reason: String)
 
     /// The server returned a response that was not a `HTTPURLResponse`.

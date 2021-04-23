@@ -75,7 +75,15 @@ public class Pusher {
     public func trigger(event: Event,
                         callback: @escaping (Result<[ChannelSummary], PusherError>) -> Void) {
 
-        apiClient.sendRequest(for: TriggerEventEndpoint(httpBody: event,
+        // Encrypt the `eventData` (if necessary)
+        var eventToTrigger: Event!
+        do {
+            eventToTrigger = try event.encrypted(using: options)
+        } catch {
+            callback(.failure(PusherError(from: error)))
+        }
+
+        apiClient.sendRequest(for: TriggerEventEndpoint(httpBody: eventToTrigger,
                                                         options: options)) { result in
 
             // Map the API client error to an equivalent `PusherError`

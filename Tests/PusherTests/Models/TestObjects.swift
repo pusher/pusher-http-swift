@@ -28,6 +28,7 @@ struct TestObjects {
 
     // MARK: - Events
 
+    // swiftlint:disable:next force_try
     static let encryptedEvent = try! Event(eventName: "my-event",
                                            eventData: Self.eventData,
                                            channel: Self.encryptedChannel)

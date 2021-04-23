@@ -23,8 +23,9 @@ struct Crypto {
         public var errorDescription: String? {
             switch self {
             case .naclError(error: let error):
-                return NSLocalizedString("An NaCl cryptographic operation failed with error: \(error.localizedDescription)",
+                return NSLocalizedString("A cryptographic operation failed with error: \(error.localizedDescription)",
                                          comment: "'CryptoError.naclError' error text")
+
             case .randomBytesGenerationError(statusCode: let code):
                 return NSLocalizedString("Generating random bytes failed with error: \(code).",
                                          comment: "'CryptoError.randomBytesGenerationError' error text")

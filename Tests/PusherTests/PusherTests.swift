@@ -11,7 +11,7 @@ final class PusherTests: XCTestCase {
     func testGetChannelsSucceeds() {
         let expectation = XCTestExpectation(function: #function)
         Self.pusher.channels(withFilter: .any,
-                             attributes: []) { result in
+                             attributeOptions: []) { result in
             self.verifyAPIResultSuccess(result, expectation: expectation) { channelSummaries in
                 XCTAssertEqual(channelSummaries.count, 0)
             }
@@ -28,7 +28,7 @@ final class PusherTests: XCTestCase {
         let expectedError = PusherError.failedResponse(statusCode: HTTPStatusCode.badRequest.rawValue,
                                                        errorResponse: expectedErrorMessage)
         Self.pusher.channels(withFilter: .private,
-                             attributes: .userCount) { result in
+                             attributeOptions: .userCount) { result in
             self.verifyAPIResultFailure(result,
                                         expectation: expectation,
                                         expectedError: expectedError)
@@ -41,7 +41,7 @@ final class PusherTests: XCTestCase {
     func testGetChannelInfoSucceeds() {
         let expectation = XCTestExpectation(function: #function)
         Self.pusher.channelInfo(for: TestObjects.publicChannel,
-                                attributes: []) { result in
+                                attributeOptions: []) { result in
             self.verifyAPIResultSuccess(result, expectation: expectation) { channelInfo in
                 XCTAssertNotNil(channelInfo)
             }
@@ -57,7 +57,7 @@ final class PusherTests: XCTestCase {
         let expectedError = PusherError.failedResponse(statusCode: HTTPStatusCode.badRequest.rawValue,
                                                        errorResponse: expectedErrorMessage)
         Self.pusher.channelInfo(for: TestObjects.publicChannel,
-                                attributes: .userCount) { result in
+                                attributeOptions: .userCount) { result in
             self.verifyAPIResultFailure(result,
                                         expectation: expectation,
                                         expectedError: expectedError)

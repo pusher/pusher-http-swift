@@ -5,8 +5,8 @@ import Foundation
 /// The HTTP API response returning a list of channel summaries.
 struct ChannelSummaryListAPIResponse: Decodable {
 
-    /// A JSON dictionary representation of channel summaries.
-    typealias ChannelSummaryListJSON = [String: ChannelAttributes]
+    /// A dictionary representation of `ChannelAttributes` keyed by channel name.
+    typealias ChannelAttributesDictionary = [String: ChannelAttributes]
 
     /// Channel attributes (e.g. `["user_count": 42]`).
     struct ChannelAttributes: SubscriptionCountable, UserCountable, Decodable {
@@ -37,13 +37,13 @@ struct ChannelSummaryListAPIResponse: Decodable {
     init(from decoder: Decoder) throws {
 
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard let summariesJSON = try container.decodeIfPresent(ChannelSummaryListJSON.self,
+        guard let attributesDict = try container.decodeIfPresent(ChannelAttributesDictionary.self,
                                                                 forKey: .summaries) else {
             self.channelSummaryList = []
             return
         }
 
-        self.channelSummaryList = summariesJSON.map { (name: String, attributes: ChannelAttributes) -> ChannelSummary in
+        self.channelSummaryList = attributesDict.map { (name: String, attributes: ChannelAttributes) -> ChannelSummary in
             return ChannelSummary(name: name,
                                   subscriptionCount: attributes.subscriptionCount,
                                   userCount: attributes.userCount,

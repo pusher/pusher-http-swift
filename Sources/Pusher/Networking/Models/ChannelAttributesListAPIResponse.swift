@@ -5,19 +5,6 @@ import Foundation
 /// The HTTP API response returning a list of channel attributes.
 struct ChannelAttributesListAPIResponse: Decodable {
 
-    /// Channel attributes (e.g. `["user_count": 42]`).
-    struct ChannelAttributes: SubscriptionCountable, UserCountable, Decodable {
-        var subscriptionCount: UInt?
-        var userCount: UInt?
-
-        // MARK: - Decodable conformance
-
-        enum CodingKeys: String, CodingKey {
-            case subscriptionCount = "subscription_count"
-            case userCount = "user_count"
-        }
-    }
-
     // MARK: - Properties
 
     /// An array of `ChannelInfo` for any occupied channels.

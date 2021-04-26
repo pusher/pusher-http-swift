@@ -8,19 +8,6 @@ struct ChannelSummaryListAPIResponse: Decodable {
     /// A dictionary representation of `ChannelAttributes` keyed by channel name.
     typealias ChannelAttributesDictionary = [String: ChannelAttributes]
 
-    /// Channel attributes (e.g. `["user_count": 42]`).
-    struct ChannelAttributes: SubscriptionCountable, UserCountable, Decodable {
-        var subscriptionCount: UInt?
-        var userCount: UInt?
-
-        // MARK: - Decodable conformance
-
-        enum CodingKeys: String, CodingKey {
-            case subscriptionCount = "subscription_count"
-            case userCount = "user_count"
-        }
-    }
-
     // MARK: - Properties
 
     /// An array of `ChannelSummary` for any occupied channels.

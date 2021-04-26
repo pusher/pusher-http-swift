@@ -30,11 +30,11 @@ public class Pusher {
     // MARK: - Public methods
 
     public func channels(withFilter filter: ChannelFilter,
-                         attributes: ChannelAttributes,
+                         attributeOptions: ChannelAttributeFetchOptions,
                          callback: @escaping (Result<[ChannelSummary], PusherError>) -> Void) {
 
         apiClient.sendRequest(for: GetChannelsEndpoint(channelFilter: filter,
-                                                       channelAttributes: attributes,
+                                                       attributeOptions: attributeOptions,
                                                        options: options)) { result in
 
             // Map the API response to `[ChannelSummary]` when running the callback
@@ -46,11 +46,11 @@ public class Pusher {
     }
 
     public func channelInfo(for channel: Channel,
-                            attributes: ChannelAttributes,
+                            attributeOptions: ChannelAttributeFetchOptions,
                             callback: @escaping (Result<ChannelInfo, PusherError>) -> Void) {
 
         apiClient.sendRequest(for: GetChannelEndpoint(channel: channel,
-                                                      channelAttributes: attributes,
+                                                      attributeOptions: attributeOptions,
                                                       options: options)) { result in
 
             // Map the API client error to an equivalent `PusherError`

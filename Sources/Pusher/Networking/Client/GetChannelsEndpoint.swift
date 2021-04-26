@@ -1,7 +1,7 @@
 import APIota
 import Foundation
 
-/// Fetches the information for multiple channels.
+/// Fetches the channel summary information for multiple channels.
 struct GetChannelsEndpoint: APIotaCodableEndpoint {
 
     typealias SuccessResponse = ChannelSummaryListAPIResponse
@@ -29,7 +29,7 @@ struct GetChannelsEndpoint: APIotaCodableEndpoint {
         if let channelFilterQueryItem = channelFilter.queryItem {
             typeAndAttributesQueryItems.append(channelFilterQueryItem)
         }
-        typeAndAttributesQueryItems.append(contentsOf: channelAttributes.queryItems)
+        typeAndAttributesQueryItems.append(contentsOf: attributeOptions.queryItems)
 
         // Initialize auth info
         let authInfo = AuthInfo(httpBody: httpBody,
@@ -45,8 +45,8 @@ struct GetChannelsEndpoint: APIotaCodableEndpoint {
     /// The channel type used to filter results in the API response.
     let channelFilter: ChannelFilter
 
-    /// The channel attributes that will be present in the API response.
-    let channelAttributes: ChannelAttributes
+    /// The channel attributes to fetch that will be present in the API response.
+    let attributeOptions: ChannelAttributeFetchOptions
 
     /// Configuration options which are used when initializing the `URLRequest`.
     let options: PusherClientOptions

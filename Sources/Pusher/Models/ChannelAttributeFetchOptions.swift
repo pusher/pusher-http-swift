@@ -1,7 +1,7 @@
 import Foundation
 
-/// An attribute of an occupied channel.
-public struct ChannelAttributes: OptionSet {
+/// Attributes of an occupied channel that can be fetched from the Pusher HTTP API.
+public struct ChannelAttributeFetchOptions: OptionSet {
 
     public let rawValue: Int
 
@@ -10,16 +10,16 @@ public struct ChannelAttributes: OptionSet {
     }
 
     /// The number of distinct users that are currently subscribed.
-    public static let userCount = ChannelAttributes(rawValue: 1 << 0)
+    public static let userCount = Self(rawValue: 1 << 0)
 
     /// The number of all connections currently subscribed.
-    public static let subscriptionCount = ChannelAttributes(rawValue: 1 << 1)
+    public static let subscriptionCount = Self(rawValue: 1 << 1)
 
     /// All available attributes for the occupied channel.
-    public static let all: ChannelAttributes = [.userCount, .subscriptionCount]
+    public static let all: Self = [.userCount, .subscriptionCount]
 }
 
-extension ChannelAttributes {
+extension ChannelAttributeFetchOptions {
 
     /// An array of `URLQueryItem` that can be used when requesting additional attributes of occupied channels.
     var queryItems: [URLQueryItem] {

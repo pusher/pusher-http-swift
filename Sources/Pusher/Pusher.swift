@@ -8,13 +8,13 @@ public class Pusher {
 
     private let apiClient: APIotaClient
 
-    private let options: APIClientOptions
+    private let options: PusherClientOptions
 
     // MARK: - Lifecycle
 
     /// Creates a Pusher Channels HTTP API client from a set of options.
     /// - Parameter options: Configuration options used to managing the connection.
-    public init(options: APIClientOptions) {
+    public init(options: PusherClientOptions) {
         self.apiClient = APIClient(options: options)
         self.options = options
     }
@@ -22,7 +22,7 @@ public class Pusher {
     /// Creates a Pusher Channels HTTP API client from a type conforming to `APIotaClient`.
     /// - Parameter apiClient: The API client used to manage the connection.
     /// - Parameter options: Configuration options used to managing the connection.
-    public init(apiClient: APIotaClient, options: APIClientOptions) {
+    public init(apiClient: APIotaClient, options: PusherClientOptions) {
         self.apiClient = apiClient
         self.options = options
     }

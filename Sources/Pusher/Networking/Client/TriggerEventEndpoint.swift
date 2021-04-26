@@ -40,5 +40,5 @@ struct TriggerEventEndpoint: APIotaCodableEndpoint {
     }
 
     /// Configuration options which are used when initializing the `URLRequest`.
-    let options: APIClientOptions
+    let options: PusherClientOptions
 }

@@ -99,7 +99,7 @@ public struct Event: EventInfoRecord, Encodable {
     /// then the receiver is returned unaltered.
     /// - Parameter options: Configuration options used to managing the connection.
     /// - Throws: An `PusherError` if encrypting the `eventData` fails for some reason.
-    func encrypted(using options: APIClientOptions) throws -> Self {
+    func encrypted(using options: PusherClientOptions) throws -> Self {
 
         guard let channel = channel, channel.type == .encrypted else {
             return self

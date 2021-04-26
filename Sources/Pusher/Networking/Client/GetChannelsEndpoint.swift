@@ -49,5 +49,5 @@ struct GetChannelsEndpoint: APIotaCodableEndpoint {
     let channelAttributes: ChannelAttributes
 
     /// Configuration options which are used when initializing the `URLRequest`.
-    let options: APIClientOptions
+    let options: PusherClientOptions
 }

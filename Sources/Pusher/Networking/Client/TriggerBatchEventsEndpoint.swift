@@ -40,11 +40,11 @@ struct TriggerBatchEventsEndpoint: APIotaCodableEndpoint {
     }
 
     /// Configuration options which are used when initializing the `URLRequest`.
-    let options: APIClientOptions
+    let options: PusherClientOptions
 
     // MARK: - Lifecycle
 
-    init(events: [Event], options: APIClientOptions) {
+    init(events: [Event], options: PusherClientOptions) {
         self.httpBody = EventBatch(batch: events)
         self.options = options
     }

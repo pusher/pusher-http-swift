@@ -37,5 +37,5 @@ struct GetUsersEndpoint: APIotaCodableEndpoint {
     let channel: Channel
 
     /// Configuration options which are used when initializing the `URLRequest`.
-    let options: APIClientOptions
+    let options: PusherClientOptions
 }

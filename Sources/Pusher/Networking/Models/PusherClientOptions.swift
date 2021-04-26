@@ -1,7 +1,7 @@
 import Foundation
 
 /// A collection of configuration options for a Pusher Channels HTTP API client.
-public struct APIClientOptions {
+public struct PusherClientOptions {
 
     public let appId: Int
 

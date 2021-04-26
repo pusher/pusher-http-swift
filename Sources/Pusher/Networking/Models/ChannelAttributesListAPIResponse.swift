@@ -26,7 +26,7 @@ struct ChannelAttributesListAPIResponse: Decodable {
     // MARK: - Decodable conformance
 
     enum CodingKeys: String, CodingKey {
-        case attributes = "batch"
+        case channelAttributesList = "batch"
     }
 
     // MARK: - Custom Decodable initializer
@@ -35,7 +35,7 @@ struct ChannelAttributesListAPIResponse: Decodable {
 
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard let attributesList = try container.decodeIfPresent([ChannelAttributes].self,
-                                                                 forKey: .attributes) else {
+                                                                 forKey: .channelAttributesList) else {
             self.channelInfoList = []
             return
         }

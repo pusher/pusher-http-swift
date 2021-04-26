@@ -73,12 +73,14 @@ public class Pusher {
     }
 
     public func trigger(event: Event,
+                        attributeOptions: ChannelAttributeFetchOptions = [],
                         callback: @escaping (Result<[ChannelSummary], PusherError>) -> Void) {
 
         do {
             // Encrypt the `eventData` (if necessary) before triggering the event
             let eventToTrigger = try event.encrypted(using: options)
             apiClient.sendRequest(for: TriggerEventEndpoint(httpBody: eventToTrigger,
+                                                            attributeOptions: attributeOptions,
                                                             options: options)) { result in
 
                 // Map the API client error to an equivalent `PusherError`
@@ -92,11 +94,13 @@ public class Pusher {
     }
 
     public func trigger(events: [Event],
+                        attributeOptions: ChannelAttributeFetchOptions = [],
                         callback: @escaping (Result<[ChannelInfo], PusherError>) -> Void) {
 
         do {
             let eventsToTrigger = try events.map { try $0.encrypted(using: options) }
             apiClient.sendRequest(for: TriggerBatchEventsEndpoint(events: eventsToTrigger,
+                                                                  attributeOptions: attributeOptions,
                                                                   options: options)) { result in
 
                 // Map the API client error to an equivalent `PusherError`

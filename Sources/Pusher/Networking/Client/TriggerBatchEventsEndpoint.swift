@@ -29,23 +29,31 @@ struct TriggerBatchEventsEndpoint: APIotaCodableEndpoint {
 
     var queryItems: [URLQueryItem]? {
 
+        // Initialize 'additional' query items (i.e. for requested channel attributes)
+        let attributesQueryItems = attributeOptions.queryItems
+
         // Add array of `URLQueryItem` for authenticating the `URLRequest`
         let authInfo = AuthInfo(httpBody: httpBody,
                                 httpMethod: httpMethod.rawValue,
                                 path: path,
                                 key: options.key,
-                                secret: options.secret)
+                                secret: options.secret,
+                                additionalQueryItems: attributesQueryItems)
 
         return authInfo.queryItems
     }
+
+    /// The channel attributes to fetch that will be present in the API response.
+    let attributeOptions: ChannelAttributeFetchOptions
 
     /// Configuration options which are used when initializing the `URLRequest`.
     let options: PusherClientOptions
 
     // MARK: - Lifecycle
 
-    init(events: [Event], options: PusherClientOptions) {
+    init(events: [Event], attributeOptions: ChannelAttributeFetchOptions, options: PusherClientOptions) {
         self.httpBody = EventBatch(batch: events)
+        self.attributeOptions = attributeOptions
         self.options = options
     }
 }

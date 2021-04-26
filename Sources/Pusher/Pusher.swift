@@ -94,13 +94,20 @@ public class Pusher {
     }
 
     public func trigger(events: [Event],
-                        callback: @escaping (Result<[ChannelInfo]?, PusherError>) -> Void) {
+                        callback: @escaping (Result<[ChannelInfo], PusherError>) -> Void) {
 
-        apiClient.sendRequest(for: TriggerBatchEventsEndpoint(httpBody: events,
-                                                              options: options)) { result in
+        do {
+            let eventsToTrigger = try events.map { try $0.encrypted(using: options) }
+            apiClient.sendRequest(for: TriggerBatchEventsEndpoint(events: eventsToTrigger,
+                                                                  options: options)) { result in
 
-            // Map the API client error to an equivalent `PusherError`
-            callback(result.mapError({ PusherError(from: $0) }))
+                // Map the API client error to an equivalent `PusherError`
+                callback(result
+                            .map { $0.channelInfoList }
+                            .mapError({ PusherError(from: $0) }))
+            }
+        } catch {
+            callback(.failure(PusherError(from: error)))
         }
     }
 }

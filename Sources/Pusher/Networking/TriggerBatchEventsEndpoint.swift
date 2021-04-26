@@ -6,7 +6,13 @@ struct TriggerBatchEventsEndpoint: APIotaCodableEndpoint {
 
     typealias SuccessResponse = ChannelAttributesListAPIResponse
     typealias ErrorResponse = Data
-    typealias Body = [Event]
+    typealias Body = EventBatch
+
+    /// Represents a batch of events to be triggered in a single API request.
+    struct EventBatch: Encodable {
+        /// The array of events to trigger.
+        let batch: [Event]
+    }
 
     let encoder: JSONEncoder = JSONEncoder()
 
@@ -18,7 +24,7 @@ struct TriggerBatchEventsEndpoint: APIotaCodableEndpoint {
         return headers
     }
 
-    let httpBody: [Event]?
+    let httpBody: EventBatch?
 
     let httpMethod: HTTPMethod = .POST
 
@@ -41,4 +47,11 @@ struct TriggerBatchEventsEndpoint: APIotaCodableEndpoint {
 
     /// Configuration options which are used when initializing the `URLRequest`.
     let options: APIClientOptions
+
+    // MARK: - Lifecycle
+
+    init(events: [Event], options: APIClientOptions) {
+        self.httpBody = EventBatch(batch: events)
+        self.options = options
+    }
 }

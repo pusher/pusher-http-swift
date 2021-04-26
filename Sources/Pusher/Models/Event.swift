@@ -12,6 +12,9 @@ public struct Event: EventInfoRecord, Encodable {
     public let eventData: Data
     public let socketId: String?
 
+    /// The channel attributes to fetch that will be present in the API response.
+    let attributeOptions: ChannelAttributeFetchOptions
+
     // MARK: - Encodable conformance
 
     enum CodingKeys: String, CodingKey {
@@ -20,6 +23,7 @@ public struct Event: EventInfoRecord, Encodable {
         case eventName = "name"
         case eventData = "data"
         case socketId = "socket_id"
+        case attributeOptions = "info"
     }
 
     // MARK: - Lifecycle
@@ -34,12 +38,14 @@ public struct Event: EventInfoRecord, Encodable {
     init<EventData: Encodable>(eventName: String,
                                eventData: EventData,
                                channel: Channel,
-                               socketId: String? = nil) throws {
+                               socketId: String? = nil,
+                               attributeOptions: ChannelAttributeFetchOptions = []) throws {
         self.channel = channel
         self.channels = nil
         self.eventName = eventName
         self.eventData = try Self.encodeEventData(eventData)
         self.socketId = socketId
+        self.attributeOptions = attributeOptions
     }
 
     /// Creates an `Event` which will be triggered on multiple `Channel`s.
@@ -53,7 +59,8 @@ public struct Event: EventInfoRecord, Encodable {
     init<EventData: Encodable>(eventName: String,
                                eventData: EventData,
                                channels: [Channel],
-                               socketId: String? = nil) throws {
+                               socketId: String? = nil,
+                               attributeOptions: ChannelAttributeFetchOptions = []) throws {
 
         // Throw an error if `channels` contains any encrypted channels
         // (Triggering an event on multiple channels is not allowed if any are encrypted).
@@ -68,6 +75,7 @@ public struct Event: EventInfoRecord, Encodable {
         self.eventName = eventName
         self.eventData = try Self.encodeEventData(eventData)
         self.socketId = socketId
+        self.attributeOptions = attributeOptions
     }
 
     // MARK: - Custom Encodable conformance
@@ -85,6 +93,9 @@ public struct Event: EventInfoRecord, Encodable {
         try container.encode(channels?.map { $0.internalName }, forKey: .channels)
         try container.encode(channel?.internalName, forKey: .channel)
         try container.encode(socketId, forKey: .socketId)
+        if !attributeOptions.description.isEmpty {
+            try container.encode(attributeOptions.description, forKey: .attributeOptions)
+        }
     }
 
     // MARK: - Event data encryption

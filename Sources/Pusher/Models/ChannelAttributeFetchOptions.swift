@@ -26,13 +26,28 @@ extension ChannelAttributeFetchOptions {
         var queryItems = [URLQueryItem]()
 
         if self.contains(.all) {
-            queryItems = [URLQueryItem(name: "info", value: "user_count,subscription_count")]
+            queryItems = [URLQueryItem(name: "info", value: String(describing: Self.all))]
         } else if self.contains(.userCount) {
-            queryItems = [URLQueryItem(name: "info", value: "user_count")]
+            queryItems = [URLQueryItem(name: "info", value: String(describing: Self.userCount))]
         } else if self.contains(.subscriptionCount) {
-            queryItems = [URLQueryItem(name: "info", value: "subscription_count")]
+            queryItems = [URLQueryItem(name: "info", value: String(describing: Self.subscriptionCount))]
         }
 
         return queryItems
+    }
+}
+
+extension ChannelAttributeFetchOptions: CustomStringConvertible {
+
+    public var description: String {
+        if self.contains(.all) {
+            return "\(String(describing: Self.userCount)),\(String(describing: Self.subscriptionCount))"
+        } else if self.contains(.userCount) {
+            return "user_count"
+        } else if self.contains(.subscriptionCount) {
+            return "subscription_count"
+        }
+
+        return ""
     }
 }

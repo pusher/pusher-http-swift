@@ -1,6 +1,8 @@
 import Foundation
 @testable import Pusher
 
+// swiftlint:disable force_try
+
 struct TestObjects {
 
     // MARK: - SDK client
@@ -24,19 +26,29 @@ struct TestObjects {
 
     static let encryptedChannel = Channel(name: "my-channel", type: .encrypted)
     static let presenceChannel = Channel(name: "my-channel", type: .presence)
+    static let privateChannel = Channel(name: "my-channel", type: .private)
     static let publicChannel = Channel(name: "my-channel", type: .public)
 
-    // MARK: - Events
+    // MARK: - Single channel events
 
-    // swiftlint:disable:next force_try
     static let encryptedEvent = try! Event(eventName: "my-event",
                                            eventData: Self.eventData,
                                            channel: Self.encryptedChannel)
 
-    // swiftlint:disable:next force_try
+    static let privateEvent = try! Event(eventName: "my-event",
+                                        eventData: Self.eventData,
+                                        channel: Self.privateChannel)
+
     static let publicEvent = try! Event(eventName: "my-event",
                                         eventData: Self.eventData,
                                         channel: Self.publicChannel)
+
+    // MARK: - Multi-channel events
+
+    static let multichannelEvent = try! Event(eventName: "my-multichannel-event",
+                                              eventData: Self.eventData,
+                                              channels: [Self.privateChannel,
+                                                         Self.publicChannel])
 
     // MARK: - Event payloads
 

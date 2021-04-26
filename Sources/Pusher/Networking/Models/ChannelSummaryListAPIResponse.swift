@@ -32,8 +32,7 @@ struct ChannelSummaryListAPIResponse: Decodable {
 
         self.channelSummaryList = attributesDict.map { (name: String, attributes: ChannelAttributes) -> ChannelSummary in
             return ChannelSummary(name: name,
-                                  subscriptionCount: attributes.subscriptionCount,
-                                  userCount: attributes.userCount,
+                                  attributes: attributes,
                                   type: ChannelType(channelName: name))
         }
     }

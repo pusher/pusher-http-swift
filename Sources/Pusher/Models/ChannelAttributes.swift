@@ -2,9 +2,9 @@ import Foundation
 
 /// Channel attributes that can be fetched depending on the `ChannelAttributeFetchOptions`
 /// provided to a top-level API method (see `Pusher.swift`).
-struct ChannelAttributes: SubscriptionCountable, UserCountable, Decodable {
-    var subscriptionCount: UInt?
-    var userCount: UInt?
+public struct ChannelAttributes: SubscriptionCountable, UserCountable, Decodable {
+    public let subscriptionCount: UInt?
+    public let userCount: UInt?
 
     // MARK: - Decodable conformance
 

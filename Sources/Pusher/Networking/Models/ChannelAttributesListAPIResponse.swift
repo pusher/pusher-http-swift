@@ -29,8 +29,7 @@ struct ChannelAttributesListAPIResponse: Decodable {
 
         self.channelInfoList = attributesList.map { attributes -> ChannelInfo in
             return ChannelInfo(isOccupied: (attributes.subscriptionCount ?? 0 > 0 || attributes.userCount ?? 0 > 0),
-                               subscriptionCount: attributes.subscriptionCount,
-                               userCount: attributes.userCount)
+                               attributes: attributes)
         }
     }
 }

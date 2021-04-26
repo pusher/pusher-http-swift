@@ -74,6 +74,7 @@ extension PusherError {
         if error is PusherError {
             // swiftlint:disable:next force_cast
             self = error as! PusherError
+            return
         }
 
         // Handle mapping from other `Error` types
@@ -131,6 +132,9 @@ extension PusherError: Equatable {
 
         case (.internalError(let errorOne), .internalError(let errorTwo)):
             return errorOne.localizedDescription == errorTwo.localizedDescription
+
+        case (.invalidConfiguration(let reasonOne), .invalidConfiguration(let reasonTwo)):
+            return reasonOne == reasonTwo
 
         case (.unexpectedResponse, .unexpectedResponse):
             return true

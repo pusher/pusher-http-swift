@@ -12,8 +12,14 @@ extension PusherTests {
         ("testGetChannelsSucceeds", testGetChannelsSucceeds),
         ("testGetUsersForChannelFailsForPublicChannel", testGetUsersForChannelFailsForPublicChannel),
         ("testGetUsersForChannelSucceedsForPresenceChannel", testGetUsersForChannelSucceedsForPresenceChannel),
+        ("testPostBatchEventsToChannelFailsForMultichannelEvents", testPostBatchEventsToChannelFailsForMultichannelEvents),
+        ("testPostBatchEventsToChannelFailsForTooLargeBatch", testPostBatchEventsToChannelFailsForTooLargeBatch),
+        ("testPostBatchEventsToChannelSucceedsForSingleChannelEvents", testPostBatchEventsToChannelSucceedsForSingleChannelEvents),
+        ("testPostEventToChannelFailsForInvalidMultichannelEvent", testPostEventToChannelFailsForInvalidMultichannelEvent),
         ("testPostEventToChannelSucceedsForEncryptedChannel", testPostEventToChannelSucceedsForEncryptedChannel),
+        ("testPostEventToChannelSucceedsForPrivateChannel", testPostEventToChannelSucceedsForPrivateChannel),
         ("testPostEventToChannelSucceedsForPublicChannel", testPostEventToChannelSucceedsForPublicChannel),
+        ("testPostEventToChannelSucceedsForValidMultichannelEvent", testPostEventToChannelSucceedsForValidMultichannelEvent),
     ]
 }
 

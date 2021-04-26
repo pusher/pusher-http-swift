@@ -8,12 +8,6 @@ struct TriggerBatchEventsEndpoint: APIotaCodableEndpoint {
     typealias ErrorResponse = Data
     typealias Body = EventBatch
 
-    /// Represents a batch of events to be triggered in a single API request.
-    struct EventBatch: Encodable {
-        /// The array of events to trigger.
-        let batch: [Event]
-    }
-
     let encoder: JSONEncoder = JSONEncoder()
 
     var headers: HTTPHeaders? {

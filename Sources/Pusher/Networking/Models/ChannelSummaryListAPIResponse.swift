@@ -1,7 +1,5 @@
 import Foundation
 
-// swiftlint:disable nesting
-
 /// The HTTP API response returning a list of channel summaries.
 struct ChannelSummaryListAPIResponse: Decodable {
 
@@ -25,11 +23,12 @@ struct ChannelSummaryListAPIResponse: Decodable {
 
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard let attributesDict = try container.decodeIfPresent(ChannelAttributesDictionary.self,
-                                                                forKey: .summaries) else {
+                                                                 forKey: .summaries) else {
             self.channelSummaryList = []
             return
         }
 
+        // swiftlint:disable:next line_length
         self.channelSummaryList = attributesDict.map { (name: String, attributes: ChannelAttributes) -> ChannelSummary in
             return ChannelSummary(name: name,
                                   attributes: attributes,

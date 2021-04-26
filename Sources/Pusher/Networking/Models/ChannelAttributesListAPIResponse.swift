@@ -1,7 +1,5 @@
 import Foundation
 
-// swiftlint:disable nesting
-
 /// The HTTP API response returning a list of channel attributes.
 struct ChannelAttributesListAPIResponse: Decodable {
 

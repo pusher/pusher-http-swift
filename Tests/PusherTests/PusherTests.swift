@@ -10,7 +10,7 @@ final class PusherTests: XCTestCase {
 
     func testGetChannelsSucceeds() {
         let expectation = XCTestExpectation(function: #function)
-        Self.pusher.channels() { result in
+        Self.pusher.channels { result in
             self.verifyAPIResultSuccess(result, expectation: expectation) { channelSummaries in
                 XCTAssertEqual(channelSummaries.count, 0)
             }

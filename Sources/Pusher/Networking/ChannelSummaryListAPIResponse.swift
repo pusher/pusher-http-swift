@@ -43,11 +43,11 @@ struct ChannelSummaryListAPIResponse: Decodable {
             return
         }
 
-        self.channelSummaryList = summariesJSON.map { (channelName: String, attributes: ChannelAttributes) -> ChannelSummary in
-            return ChannelSummary(name: channelName,
+        self.channelSummaryList = summariesJSON.map { (name: String, attributes: ChannelAttributes) -> ChannelSummary in
+            return ChannelSummary(name: name,
                                   subscriptionCount: attributes.subscriptionCount,
                                   userCount: attributes.userCount,
-                                  type: ChannelType(channelName: channelName))
+                                  type: ChannelType(channelName: name))
         }
     }
 }

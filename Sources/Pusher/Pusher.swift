@@ -29,8 +29,8 @@ public class Pusher {
 
     // MARK: - Public methods
 
-    public func channels(withFilter filter: ChannelFilter,
-                         attributeOptions: ChannelAttributeFetchOptions,
+    public func channels(withFilter filter: ChannelFilter = .any,
+                         attributeOptions: ChannelAttributeFetchOptions = [],
                          callback: @escaping (Result<[ChannelSummary], PusherError>) -> Void) {
 
         apiClient.sendRequest(for: GetChannelsEndpoint(channelFilter: filter,
@@ -46,7 +46,7 @@ public class Pusher {
     }
 
     public func channelInfo(for channel: Channel,
-                            attributeOptions: ChannelAttributeFetchOptions,
+                            attributeOptions: ChannelAttributeFetchOptions = [],
                             callback: @escaping (Result<ChannelInfo, PusherError>) -> Void) {
 
         apiClient.sendRequest(for: GetChannelEndpoint(channel: channel,

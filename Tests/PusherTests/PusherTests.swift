@@ -10,8 +10,7 @@ final class PusherTests: XCTestCase {
 
     func testGetChannelsSucceeds() {
         let expectation = XCTestExpectation(function: #function)
-        Self.pusher.channels(withFilter: .any,
-                             attributeOptions: []) { result in
+        Self.pusher.channels() { result in
             self.verifyAPIResultSuccess(result, expectation: expectation) { channelSummaries in
                 XCTAssertEqual(channelSummaries.count, 0)
             }
@@ -40,8 +39,7 @@ final class PusherTests: XCTestCase {
 
     func testGetChannelInfoSucceeds() {
         let expectation = XCTestExpectation(function: #function)
-        Self.pusher.channelInfo(for: TestObjects.publicChannel,
-                                attributeOptions: []) { result in
+        Self.pusher.channelInfo(for: TestObjects.publicChannel) { result in
             self.verifyAPIResultSuccess(result, expectation: expectation) { channelInfo in
                 XCTAssertNotNil(channelInfo)
             }

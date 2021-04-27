@@ -1,6 +1,7 @@
 import APIota
 import Foundation
 
+/// An error whilst using the Pusher HTTP API Swift SDK.
 public enum PusherError: LocalizedError {
 
     /// The `URLRequest` could not be initialized with a valid `URL`.
@@ -23,6 +24,9 @@ public enum PusherError: LocalizedError {
     /// When the circumstances that caused the error cannot be determined, an `internalError` will be thrown.
     case internalError(_ error: Error)
 
+    /// An invalid configuration caused an error for some reason.
+    case invalidConfiguration(reason: String)
+
     /// The server returned a response that was not a `HTTPURLResponse`.
     case unexpectedResponse
 
@@ -30,7 +34,7 @@ public enum PusherError: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .clientSide:
-            return NSLocalizedString("The URLRequest was not initialized with a valid URL.",
+            return NSLocalizedString("The URLRequest was not initialized with a valid URL",
                                      comment: "'clientSide' error text")
 
         case .decodingError(let error):
@@ -49,8 +53,12 @@ public enum PusherError: LocalizedError {
             return NSLocalizedString("The request failed with error: \(error)",
                                      comment: "'internalError' error text")
 
+        case .invalidConfiguration(let reason):
+            return NSLocalizedString("Configuration was invalid and failed with error: \(reason)",
+                                     comment: "'invalidConfiguration' error text")
+
         case .unexpectedResponse:
-            return NSLocalizedString("The response was of an unexpected format.",
+            return NSLocalizedString("The response was of an unexpected format",
                                      comment: "'unexpectedResponse' error text")
         }
     }
@@ -58,12 +66,31 @@ public enum PusherError: LocalizedError {
 
 extension PusherError {
 
-    init(error: Error) {
-        guard let apiClientError = error as? APIotaClientError<Data> else {
-            self = .internalError(error)
+    /// Creates a `PusherError` which wraps another `Error`, offering additional context if it can be determined.
+    /// - Parameter error: The `Error` to wrap inside the resulting `PusherError`.
+    init(from error: Error) {
+
+        // Handle the case where `error` is already a `PusherError`
+        if error is PusherError {
+            // swiftlint:disable:next force_cast
+            self = error as! PusherError
             return
         }
 
+        // Handle mapping from other `Error` types
+        guard let apiClientError = error as? APIotaClientError<Data> else {
+            if let decodingError = error as? DecodingError {
+                self = .decodingError(decodingError)
+            } else if let encodingError = error as? EncodingError {
+                self = .encodingError(encodingError)
+            } else {
+                self = .internalError(error)
+            }
+
+            return
+        }
+
+        // Handle mapping from `APIotaClientError` -> `PusherError`
         switch apiClientError {
         case .clientSide:
             self = .clientSide
@@ -75,7 +102,7 @@ extension PusherError {
             self = .encodingError(error)
 
         case .failedResponse(statusCode: let code, errorResponseBody: let responseBody):
-            let errorMessage = String(data: responseBody, encoding: .utf8) ?? "An error occured."
+            let errorMessage = responseBody.toString()
             self = .failedResponse(statusCode: code.rawValue, errorResponse: errorMessage)
 
         case .internalError(let error):
@@ -105,6 +132,9 @@ extension PusherError: Equatable {
 
         case (.internalError(let errorOne), .internalError(let errorTwo)):
             return errorOne.localizedDescription == errorTwo.localizedDescription
+
+        case (.invalidConfiguration(let reasonOne), .invalidConfiguration(let reasonTwo)):
+            return reasonOne == reasonTwo
 
         case (.unexpectedResponse, .unexpectedResponse):
             return true

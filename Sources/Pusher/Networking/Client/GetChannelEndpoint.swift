@@ -24,7 +24,7 @@ struct GetChannelEndpoint: APIotaCodableEndpoint {
     var queryItems: [URLQueryItem]? {
 
         // Initialize 'additional' query items (i.e. for requested channel attributes)
-        let attributesQueryItems = channelAttributes.queryItems
+        let attributesQueryItems = attributeOptions.queryItems
 
         // Initialize auth info
         let authInfo = AuthInfo(httpBody: httpBody,
@@ -40,9 +40,9 @@ struct GetChannelEndpoint: APIotaCodableEndpoint {
     /// The Channel to query for information.
     let channel: Channel
 
-    /// The channel attributes that will be present in the API response.
-    let channelAttributes: ChannelAttributes
+    /// The channel attributes to fetch that will be present in the API response.
+    let attributeOptions: ChannelAttributeFetchOptions
 
     /// Configuration options which are used when initializing the `URLRequest`.
-    let options: APIClientOptions
+    let options: PusherClientOptions
 }

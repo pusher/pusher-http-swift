@@ -1,6 +1,6 @@
 import Foundation
 
-struct MockEventPayload: Encodable {
+struct MockEventData: Encodable {
     let name: String
     let age: Int
     let job: String

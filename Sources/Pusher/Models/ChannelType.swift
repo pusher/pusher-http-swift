@@ -29,7 +29,7 @@ public enum ChannelType: String, Decodable {
     /// These channels do not require any form of authorisation in order to be subscribed to.
     case `public`
 
-    /// Initialize a `ChannelType` based on a channel name.
+    /// Creates a `ChannelType` based on a channel name.
     ///
     /// As an example, a channel named `"presence-my-channel"` would initialize to `.presence`.
     /// Any channel named without a reserved prefix will be initialized to `.public`. (E.g. `"my-important-channel"`).

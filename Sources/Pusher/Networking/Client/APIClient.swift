@@ -18,7 +18,7 @@ struct APIClient: APIotaClient {
     }
 
     /// Configuration options which are used when initializing any `URLRequest` made by the receiver.
-    let options: APIClientOptions
+    let options: PusherClientOptions
 }
 
 extension APIClient {

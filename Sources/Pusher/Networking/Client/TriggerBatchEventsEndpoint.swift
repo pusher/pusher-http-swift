@@ -1,12 +1,12 @@
 import APIota
 import Foundation
 
-/// Triggers an event on one or more channels.
-struct TriggerEventEndpoint: APIotaCodableEndpoint {
+/// Triggers multiple events on one or more channels in a single request.
+struct TriggerBatchEventsEndpoint: APIotaCodableEndpoint {
 
-    typealias SuccessResponse = [ChannelSummary]?
+    typealias SuccessResponse = ChannelAttributesListAPIResponse
     typealias ErrorResponse = Data
-    typealias Body = Event
+    typealias Body = EventBatch
 
     let encoder: JSONEncoder = JSONEncoder()
 
@@ -18,13 +18,13 @@ struct TriggerEventEndpoint: APIotaCodableEndpoint {
         return headers
     }
 
-    let httpBody: Event?
+    let httpBody: EventBatch?
 
     let httpMethod: HTTPMethod = .POST
 
     var path: String {
 
-        return "/apps/\(options.appId)/events"
+        return "/apps/\(options.appId)/batch_events"
     }
 
     var queryItems: [URLQueryItem]? {
@@ -40,5 +40,12 @@ struct TriggerEventEndpoint: APIotaCodableEndpoint {
     }
 
     /// Configuration options which are used when initializing the `URLRequest`.
-    let options: APIClientOptions
+    let options: PusherClientOptions
+
+    // MARK: - Lifecycle
+
+    init(events: [Event], options: PusherClientOptions) {
+        self.httpBody = EventBatch(batch: events)
+        self.options = options
+    }
 }

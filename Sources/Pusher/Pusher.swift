@@ -27,7 +27,7 @@ public class Pusher {
         self.options = options
     }
 
-    // MARK: - Public methods
+    // MARK: - Application state queries
 
     public func channels(withFilter filter: ChannelFilter = .any,
                          attributeOptions: ChannelAttributeFetchOptions = [],
@@ -104,6 +104,22 @@ public class Pusher {
                             .map { $0.channelInfoList }
                             .mapError({ PusherError(from: $0) }))
             }
+        } catch {
+            callback(.failure(PusherError(from: error)))
+        }
+    }
+
+    // MARK: - Webhook verification
+
+    public func verifyWebhookRequest(_ request: URLRequest,
+                                     callback: @escaping (Result<Webhook, PusherError>) -> Void) {
+
+        // Verify request key and signature and then decode into a `Webhook`
+        do {
+            try WebhookService.verifySignature(of: request, using: options)
+            let webhook = try WebhookService.webhook(from: request, using: options)
+
+            callback(.success(webhook))
         } catch {
             callback(.failure(PusherError(from: error)))
         }

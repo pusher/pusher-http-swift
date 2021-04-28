@@ -111,7 +111,8 @@ public class Pusher {
 
     // MARK: - Webhook verification
 
-    public func verifyWebhookRequest(_ request: URLRequest, callback: @escaping (Result<Webhook, PusherError>) -> Void) {
+    public func verifyWebhookRequest(_ request: URLRequest,
+                                     callback: @escaping (Result<Webhook, PusherError>) -> Void) {
 
         // Verify request key and signature and then decode into a `Webhook`
         do {

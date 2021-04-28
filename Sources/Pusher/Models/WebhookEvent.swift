@@ -22,11 +22,11 @@ public struct WebhookEvent: WebhookEventRecord {
     // MARK: - Lifecycle (used in Tests)
 
     init(eventType: WebhookEventType,
-        channelName: String,
-        eventName: String? = nil,
-        eventData: Data? = nil,
-        socketId: String? = nil,
-        userId: String? = nil) {
+         channelName: String,
+         eventName: String? = nil,
+         eventData: Data? = nil,
+         socketId: String? = nil,
+         userId: String? = nil) {
         self.eventType = eventType
         self.channelName = channelName
         self.eventName = eventName

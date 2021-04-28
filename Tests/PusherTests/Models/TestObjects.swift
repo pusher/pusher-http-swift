@@ -56,6 +56,8 @@ struct TestObjects {
                                          age: 28,
                                          job: "Software Engineer")
 
+    static let encodedEventData = try! JSONEncoder().encode(eventData)
+
     // MARK: - Webhooks
 
     static let channelOccupiedWebhookRequest: URLRequest = {
@@ -78,22 +80,22 @@ struct TestObjects {
         return webhookRequest(for: clientEventWebhook)
     }()
 
-    static let missingPusherKeyHeaderWebhookRequest: URLRequest = {
+    static let missingKeyHeaderWebhookRequest: URLRequest = {
         return webhookRequest(for: channelOccupiedWebhook,
                               pusherKeyHeaderValue: nil)
     }()
 
-    static let invalidPusherKeyHeaderWebhookRequest: URLRequest = {
+    static let invalidKeyHeaderWebhookRequest: URLRequest = {
         return webhookRequest(for: channelOccupiedWebhook,
                               pusherKeyHeaderValue: "invalid_key")
     }()
 
-    static let missingPusherSignatureHeaderWebhookRequest: URLRequest = {
+    static let missingSignatureHeaderWebhookRequest: URLRequest = {
         return webhookRequest(for: channelOccupiedWebhook,
                               pusherSignatureHeaderValue: nil)
     }()
 
-    static let invalidPusherSignatureHeaderWebhookRequest: URLRequest = {
+    static let invalidSignatureHeaderWebhookRequest: URLRequest = {
         return webhookRequest(for: channelOccupiedWebhook,
                               pusherSignatureHeaderValue: "invalid_signature")
     }()
@@ -121,14 +123,14 @@ struct TestObjects {
                                                       events: [WebhookEvent(eventType: .memberRemoved,
                                                                             channelName: "presence-my-channel",
                                                                             userId: "user_1")])
-    
+
     private static let clientEventWebhook = Webhook(createdAt: Date(timeIntervalSince1970: 1619602993),
                                                     events: [WebhookEvent(eventType: .clientEvent,
                                                                           channelName: "my-channel",
                                                                           eventName: "my-event",
-                                                                          eventData: try! JSONEncoder().encode(eventData),
+                                                                          eventData: encodedEventData,
                                                                           socketId: "socket_1")])
-    
+
     private static func webhookRequest(for webhook: Webhook? = nil,
                                        pusherKeyHeaderValue: String? = testKey,
                                        pusherSignatureHeaderValue: String? = testSecret) -> URLRequest {

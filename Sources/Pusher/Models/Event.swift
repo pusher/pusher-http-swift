@@ -123,8 +123,8 @@ public struct Event: EventInfoRecord, Encodable {
             let eventCiphertext = try Crypto.encrypt(data: eventData,
                                                      nonce: eventNonce,
                                                      key: sharedSecret)
-            let encryptedEvent = EncryptedData(nonce: eventNonce.base64EncodedString(),
-                                               ciphertext: eventCiphertext.base64EncodedString())
+            let encryptedEvent = EncryptedData(nonceData: eventNonce,
+                                               ciphertextData: eventCiphertext)
             let encryptedEventData = try JSONEncoder().encode(encryptedEvent)
 
             return try Event(eventName: eventName, eventData: encryptedEventData, channel: channel)

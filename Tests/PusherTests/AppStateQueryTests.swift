@@ -2,7 +2,7 @@ import APIota
 @testable import Pusher
 import XCTest
 
-final class PusherTests: XCTestCase {
+final class AppStateQueryTests: XCTestCase {
 
     private static let pusher = TestObjects.pusher
 

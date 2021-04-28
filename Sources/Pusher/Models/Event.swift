@@ -110,6 +110,8 @@ public struct Event: EventInfoRecord, Encodable {
     /// then the receiver is returned unaltered.
     /// - Parameter options: Configuration options used to managing the connection.
     /// - Throws: An `PusherError` if encrypting the `eventData` fails for some reason.
+    /// - Returns: A copy of the receiver, but with encrypted `eventData`. If the `channel` is not
+    ///            encrypted, the receiver will be returned unaltered.
     func encrypted(using options: PusherClientOptions) throws -> Self {
 
         guard let channel = channel, channel.type == .encrypted else {

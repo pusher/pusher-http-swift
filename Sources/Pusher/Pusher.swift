@@ -108,4 +108,19 @@ public class Pusher {
             callback(.failure(PusherError(from: error)))
         }
     }
+
+    // MARK: - Webhook verification
+
+    public func verifyWebhookRequest(_ request: URLRequest, callback: @escaping (Result<Webhook, PusherError>) -> Void) {
+
+        // Verify request key and signature and then decode into a `Webhook`
+        do {
+            try WebhookService.verifySignature(of: request, using: options)
+            let webhook = try WebhookService.webhook(from: request, using: options)
+
+            callback(.success(webhook))
+        } catch {
+            callback(.failure(PusherError(from: error)))
+        }
+    }
 }

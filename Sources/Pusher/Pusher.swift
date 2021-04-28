@@ -27,7 +27,7 @@ public class Pusher {
         self.options = options
     }
 
-    // MARK: - Public methods
+    // MARK: - Application state queries
 
     public func channels(withFilter filter: ChannelFilter = .any,
                          attributeOptions: ChannelAttributeFetchOptions = [],

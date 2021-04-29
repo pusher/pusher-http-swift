@@ -50,6 +50,15 @@ struct TestObjects {
                                               channels: [Self.privateChannel,
                                                          Self.publicChannel])
 
+    // MARK: - Private and presence channel auth signatures
+
+    static let socketId = "123.456"
+
+    static let presenceAuthData = PresenceUserAuthData(userId: "user_1")
+
+    static let presenceAuthDataWithUserInfo = try! PresenceUserAuthData(userId: "user_1",
+                                                                        userInfo: eventData)
+
     // MARK: - Event payloads
 
     static let eventData = MockEventData(name: "Joe Bloggs",

@@ -124,4 +124,22 @@ public class Pusher {
             callback(.failure(PusherError(from: error)))
         }
     }
+
+    // MARK: - Private and presence channel subscription authentication
+
+    public func authenticate(channel: Channel,
+                             socketId: String,
+                             userData: PresenceUserAuthData? = nil,
+                             callback: @escaping (Result<AuthToken, PusherError>) -> Void) {
+
+        do {
+            let authToken = try AuthTokenService.authToken(for: channel,
+                                                           socketId: socketId,
+                                                           userData: userData,
+                                                           using: options)
+            callback(.success(authToken))
+        } catch {
+            callback(.failure(PusherError(from: error)))
+        }
+    }
 }

@@ -152,8 +152,8 @@ struct TestObjects {
         request.setValue(pusherKeyHeaderValue, forHTTPHeaderField: WebhookService.xPusherKeyHeader)
 
         if pusherSignatureHeaderValue != nil, request.httpBody != nil {
-            let signature = Crypto.sha256HMAC(for: request.httpBody!,
-                                              using: pusherSignatureHeaderValue!.toData()).hexEncodedString()
+            let signature = CryptoService.sha256HMAC(for: request.httpBody!,
+                                                     using: pusherSignatureHeaderValue!.toData()).hexEncodedString()
             request.setValue(signature, forHTTPHeaderField: WebhookService.xPusherSignatureHeader)
         }
 

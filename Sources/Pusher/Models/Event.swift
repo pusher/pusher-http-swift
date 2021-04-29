@@ -119,12 +119,12 @@ public struct Event: EventInfoRecord, Encodable {
         }
 
         do {
-            let eventNonce = try Crypto.secureRandomData(count: 24)
+            let eventNonce = try CryptoService.secureRandomData(count: 24)
             let sharedSecretString = "\(channel.internalName)\(options.encryptionMasterKeyBase64)"
-            let sharedSecret = Crypto.sha256Digest(data: sharedSecretString.toData())
-            let eventCiphertext = try Crypto.encrypt(data: eventData,
-                                                     nonce: eventNonce,
-                                                     key: sharedSecret)
+            let sharedSecret = CryptoService.sha256Digest(data: sharedSecretString.toData())
+            let eventCiphertext = try CryptoService.encrypt(data: eventData,
+                                                            nonce: eventNonce,
+                                                            key: sharedSecret)
             let encryptedEvent = EncryptedData(nonceData: eventNonce,
                                                ciphertextData: eventCiphertext)
             let encryptedEventData = try JSONEncoder().encode(encryptedEvent)

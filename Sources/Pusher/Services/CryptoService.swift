@@ -2,8 +2,10 @@ import Crypto
 import Foundation
 import TweetNacl
 
-/// Provides cryptography functionality as a collection of helper methods.
-struct Crypto {
+/// Provides cryptography functionality for generating digests, HMACs
+/// and encrypting and decrypting data according to the
+/// [Secretbox standard](https://nacl.cr.yp.to/secretbox.html) from NaCl..
+struct CryptoService {
 
     // MARK: - Error reporting
 

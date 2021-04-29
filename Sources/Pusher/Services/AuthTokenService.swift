@@ -45,14 +45,14 @@ struct AuthTokenService {
             stringToSign += ":\(userDataString!)"
         }
 
-        let signature = Crypto.sha256HMAC(for: stringToSign.toData(),
-                                          using: options.secret.toData())
+        let signature = CryptoService.sha256HMAC(for: stringToSign.toData(),
+                                                 using: options.secret.toData())
         let authSignature = "\(options.key):\(signature.hexEncodedString())"
 
         var sharedSecret: String?
         if channel.type == .encrypted {
             let stringToDigest = "\(channel.internalName)\(options.encryptionMasterKeyBase64)"
-            sharedSecret = Crypto.sha256Digest(data: stringToDigest.toData()).base64EncodedString()
+            sharedSecret = CryptoService.sha256Digest(data: stringToDigest.toData()).base64EncodedString()
         }
 
         return AuthToken(signature: authSignature,

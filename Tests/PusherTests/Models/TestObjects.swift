@@ -56,8 +56,8 @@ struct TestObjects {
 
     static let presenceAuthData = PresenceUserAuthData(userId: "user_1")
 
-    static let presenceAuthDataWithUserInfo = try! PresenceUserAuthData(userId: "user_1",
-                                                                        userInfo: eventData)
+    static let presenceAuthDataWithUserInfo = PresenceUserAuthData(userId: "user_1",
+                                                                   userInfo: ["name": "Joe Bloggs"])
 
     // MARK: - Event payloads
 

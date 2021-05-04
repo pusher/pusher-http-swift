@@ -53,9 +53,9 @@ final class AuthTokenTests: XCTestCase {
 
     func testAuthenticatePresenceChannelWithUserInfoSucceeds() {
         let expectation = XCTestExpectation(function: #function)
-        let expectedSignature = "b5390e69136683c40d2d:675c8d3f1707918c9e3fb1c688c7f3ba9fb23534a1f812911cf5db146abf335d"
+        let expectedSignature = "b5390e69136683c40d2d:7709a34e0bd1f12fcadb52d9cc85feebfef414e59166a357bf777c4043c6aa5e"
         // swiftlint:disable:next line_length
-        let expectedUserData = "{\"user_id\":\"user_1\",\"user_info\":\"{\\\"name\\\":\\\"Joe Bloggs\\\",\\\"age\\\":28,\\\"job\\\":\\\"Software Engineer\\\"}\"}"
+        let expectedUserData = "{\"user_id\":\"user_1\",\"user_info\":{\"name\":\"Joe Bloggs\"}}"
         Self.pusher.authenticate(channel: TestObjects.presenceChannel,
                                  socketId: TestObjects.socketId,
                                  userData: TestObjects.presenceAuthDataWithUserInfo) { result in

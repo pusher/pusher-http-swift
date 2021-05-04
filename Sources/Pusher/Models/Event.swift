@@ -127,7 +127,7 @@ public struct Event: EventInfoRecord, Encodable {
                                                             key: sharedSecret)
             let encryptedEvent = EncryptedData(nonceData: eventNonce,
                                                ciphertextData: eventCiphertext)
-            let encryptedEventData = try JSONEncoder().encode(encryptedEvent)
+            let encryptedEventData = try Self.encodeEventData(encryptedEvent)
 
             return try Event(eventName: eventName, eventData: encryptedEventData, channel: channel)
         } catch {

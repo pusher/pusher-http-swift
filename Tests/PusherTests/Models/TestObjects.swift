@@ -63,7 +63,8 @@ struct TestObjects {
 
     static let eventData = MockEventData(name: "Joe Bloggs",
                                          age: 28,
-                                         job: "Software Engineer")
+                                         job: "Software Engineer",
+                                         metadata: ["id": 10])
 
     static let encodedEventData = try! JSONEncoder().encode(eventData)
 

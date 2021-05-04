@@ -19,6 +19,8 @@ let package = Package(
         // Simple REST API client implementation with 'Codable' types
         .package(url: "https://github.com/danielrbrowne/APIota",
                  .upToNextMajor(from: "0.2.0")),
+        .package(url: "https://github.com/Flight-School/AnyCodable",
+                 .upToNextMajor(from: "0.4.0")),
         // Open-source implementation of Apple's `CryptoKit`
         // (Allows for crypto on Linux, and calls CryptoKit directly on Apple platforms)
         .package(url: "https://github.com/apple/swift-crypto",
@@ -33,6 +35,7 @@ let package = Package(
             name: "Pusher",
             dependencies: [
                 "APIota",
+                "AnyCodable",
                 .product(name: "Crypto", package: "swift-crypto"),
                 "TweetNacl"
             ]),

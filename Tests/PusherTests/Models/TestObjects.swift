@@ -50,11 +50,21 @@ struct TestObjects {
                                               channels: [Self.privateChannel,
                                                          Self.publicChannel])
 
+    // MARK: - Private and presence channel auth signatures
+
+    static let socketId = "123.456"
+
+    static let presenceAuthData = PresenceUserAuthData(userId: "user_1")
+
+    static let presenceAuthDataWithUserInfo = PresenceUserAuthData(userId: "user_1",
+                                                                   userInfo: ["name": "Joe Bloggs"])
+
     // MARK: - Event payloads
 
     static let eventData = MockEventData(name: "Joe Bloggs",
                                          age: 28,
-                                         job: "Software Engineer")
+                                         job: "Software Engineer",
+                                         metadata: ["id": 10])
 
     static let encodedEventData = try! JSONEncoder().encode(eventData)
 
@@ -143,8 +153,8 @@ struct TestObjects {
         request.setValue(pusherKeyHeaderValue, forHTTPHeaderField: WebhookService.xPusherKeyHeader)
 
         if pusherSignatureHeaderValue != nil, request.httpBody != nil {
-            let signature = Crypto.sha256HMAC(for: request.httpBody!,
-                                              using: pusherSignatureHeaderValue!.toData()).hexEncodedString()
+            let signature = CryptoService.sha256HMAC(for: request.httpBody!,
+                                                     using: pusherSignatureHeaderValue!.toData()).hexEncodedString()
             request.setValue(signature, forHTTPHeaderField: WebhookService.xPusherSignatureHeader)
         }
 

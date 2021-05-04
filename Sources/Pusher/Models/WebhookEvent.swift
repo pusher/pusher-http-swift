@@ -53,10 +53,10 @@ public struct WebhookEvent: WebhookEventRecord {
 
         let encryptedData = try JSONDecoder().decode(EncryptedData.self, from: eventData)
         let sharedSecretString = "\(channelName)\(options.encryptionMasterKeyBase64)"
-        let sharedSecret = Crypto.sha256Digest(data: sharedSecretString.toData())
-        let decryptedEventData = try Crypto.decrypt(data: Data(base64Encoded: encryptedData.ciphertext)!,
-                                                    nonce: Data(base64Encoded: encryptedData.nonce)!,
-                                                    key: sharedSecret)
+        let sharedSecret = CryptoService.sha256Digest(data: sharedSecretString.toData())
+        let decryptedEventData = try CryptoService.decrypt(data: Data(base64Encoded: encryptedData.ciphertext)!,
+                                                           nonce: Data(base64Encoded: encryptedData.nonce)!,
+                                                           key: sharedSecret)
         return WebhookEvent(eventType: eventType,
                             channelName: channelName,
                             eventName: eventName,

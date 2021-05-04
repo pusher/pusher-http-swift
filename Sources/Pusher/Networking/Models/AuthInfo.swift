@@ -48,7 +48,7 @@ struct AuthInfo: AuthInfoRecord {
 
         // Generate a MD5 digest of the body (if provided)
         if let httpBody = httpBody, let bodyData = try? JSONEncoder().encode(httpBody) {
-            self.bodyMD5 = Crypto.md5Digest(data: bodyData).hexEncodedString()
+            self.bodyMD5 = CryptoService.md5Digest(data: bodyData).hexEncodedString()
         } else {
             self.bodyMD5 = nil
         }
@@ -77,7 +77,7 @@ struct AuthInfo: AuthInfoRecord {
         let stringToSign = "\(httpMethod)\n\(path)\n\(components.query!)"
 
         // Compute the `auth_signature` SHA256 HMAC digest, using the `secret`
-        self.signature = Crypto.sha256HMAC(for: stringToSign.toData(),
-                                           using: self.secret.toData()).hexEncodedString()
+        self.signature = CryptoService.sha256HMAC(for: stringToSign.toData(),
+                                                  using: self.secret.toData()).hexEncodedString()
     }
 }

@@ -31,7 +31,8 @@ struct WebhookService {
             throw PusherError.invalidConfiguration(reason: reason)
         }
 
-        let expectedSignature = Crypto.sha256HMAC(for: bodyData, using: options.secret.toData()).hexEncodedString()
+        let expectedSignature = CryptoService.sha256HMAC(for: bodyData,
+                                                         using: options.secret.toData()).hexEncodedString()
         guard let xPusherSignatureHeaderValue = request.value(forHTTPHeaderField: xPusherSignatureHeader),
               expectedSignature == xPusherSignatureHeaderValue else {
             let reason = "The '\(xPusherSignatureHeader)' header is missing or invalid on the Webhook request."

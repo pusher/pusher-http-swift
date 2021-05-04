@@ -20,7 +20,7 @@ public struct PresenceUserAuthData: Encodable {
     /// Creates an instance of `PresenceUserAuthData` for use when generating an `AuthToken`.
     /// - Parameter userId: The user identifier.
     /// - Parameter userInfo: Optional additional user data to send as part of a generated `AuthToken`.
-    init(userId: String, userInfo: [String: AnyEncodable]? = nil) {
+    public init(userId: String, userInfo: [String: AnyEncodable]? = nil) {
         self.userId = userId
         self.userInfo = userInfo
     }

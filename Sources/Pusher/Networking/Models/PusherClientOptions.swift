@@ -103,7 +103,7 @@ public struct PusherClientOptions {
                 useTLS: Bool = true) throws {
 
         guard Data(base64Encoded: encryptionMasterKey) != nil else {
-            let reason = "The provided 'encryptionMasterKeyBase64' value is not a valid Base-64 string."
+            let reason = "The provided 'encryptionMasterKey' value is not a valid Base-64 string."
             throw PusherError.invalidConfiguration(reason: reason)
         }
 

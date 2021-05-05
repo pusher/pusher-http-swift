@@ -55,7 +55,7 @@ final class ClientOptionsTests: XCTestCase {
 
                 return
             }
-            let expectedReason = "The provided 'encryptionMasterKeyBase64' value is not a valid Base-64 string."
+            let expectedReason = "The provided 'encryptionMasterKey' value is not a valid Base-64 string."
             XCTAssertEqual(pusherError, .invalidConfiguration(reason: expectedReason))
         }
     }

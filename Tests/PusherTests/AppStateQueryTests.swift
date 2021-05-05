@@ -4,7 +4,7 @@ import XCTest
 
 final class AppStateQueryTests: XCTestCase {
 
-    private static let pusher = TestObjects.pusher
+    private static let pusher = TestObjects.Client.shared
 
     // MARK: - GET channels tests
 

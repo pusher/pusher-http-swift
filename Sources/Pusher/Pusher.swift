@@ -6,13 +6,15 @@ public class Pusher {
 
     // MARK: - Properties
 
+    /// The API client used for querying app state via the Channels HTTP API.
     private let apiClient: APIotaClient
 
+    /// Configuration options used to managing the connection.
     private let options: PusherClientOptions
 
     // MARK: - Lifecycle
 
-    /// Creates a Pusher Channels HTTP API client from a set of options.
+    /// Creates a Pusher Channels HTTP API client configured using some `options`.
     /// - Parameter options: Configuration options used to managing the connection.
     public init(options: PusherClientOptions) {
         self.apiClient = APIClient(options: options)

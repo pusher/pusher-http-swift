@@ -77,8 +77,6 @@ struct TestObjects {
                                                                     host: invalidSuffixCustomHost)
     }
 
-
-
     // MARK: - Channels
 
     static let encryptedChannel = Channel(name: "my-channel", type: .encrypted)

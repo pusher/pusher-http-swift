@@ -2,6 +2,8 @@ import APIota
 @testable import Pusher
 import XCTest
 
+// swiftlint:disable line_length
+
 final class ClientOptionsTests: XCTestCase {
 
     func testClientOptionsWithClusterSucceeds() {
@@ -48,8 +50,13 @@ final class ClientOptionsTests: XCTestCase {
                                                      key: TestObjects.ClientOptions.testKey,
                                                      secret: TestObjects.ClientOptions.testSecret,
                                                      encryptionMasterKey: TestObjects.ClientOptions.invalidEncryptionMasterKey)) { error in
+            guard let pusherError = error as? PusherError else {
+                XCTFail("The error should be a 'PusherError'.")
+
+                return
+            }
             let expectedReason = "The provided 'encryptionMasterKeyBase64' value is not a valid Base-64 string."
-            XCTAssertEqual(error as! PusherError, .invalidConfiguration(reason: expectedReason))
+            XCTAssertEqual(pusherError, .invalidConfiguration(reason: expectedReason))
         }
     }
 
@@ -59,8 +66,13 @@ final class ClientOptionsTests: XCTestCase {
                                                      secret: TestObjects.ClientOptions.testSecret,
                                                      encryptionMasterKey: TestObjects.ClientOptions.testEncryptionMasterKey,
                                                      host: TestObjects.ClientOptions.invalidPrefixCustomHost)) { error in
+            guard let pusherError = error as? PusherError else {
+                XCTFail("The error should be a 'PusherError'.")
+
+                return
+            }
             let expectedReason = "The provided 'host' value should not have a 'https://' or 'http://' prefix."
-            XCTAssertEqual(error as! PusherError, .invalidConfiguration(reason: expectedReason))
+            XCTAssertEqual(pusherError, .invalidConfiguration(reason: expectedReason))
         }
     }
 
@@ -70,8 +82,13 @@ final class ClientOptionsTests: XCTestCase {
                                                      secret: TestObjects.ClientOptions.testSecret,
                                                      encryptionMasterKey: TestObjects.ClientOptions.testEncryptionMasterKey,
                                                      host: TestObjects.ClientOptions.invalidSuffixCustomHost)) { error in
+            guard let pusherError = error as? PusherError else {
+                XCTFail("The error should be a 'PusherError'.")
+
+                return
+            }
             let expectedReason =  "The provided 'host' value should not have a '/' suffix."
-            XCTAssertEqual(error as! PusherError, .invalidConfiguration(reason: expectedReason))
+            XCTAssertEqual(pusherError, .invalidConfiguration(reason: expectedReason))
         }
     }
 
@@ -81,8 +98,13 @@ final class ClientOptionsTests: XCTestCase {
                                                      secret: TestObjects.ClientOptions.testSecret,
                                                      encryptionMasterKey: TestObjects.ClientOptions.testEncryptionMasterKey,
                                                      port: TestObjects.ClientOptions.testCustomPort)) { error in
+            guard let pusherError = error as? PusherError else {
+                XCTFail("The error should be a 'PusherError'.")
+
+                return
+            }
             let expectedReason =  "A 'host' should be provided if a custom 'port' or 'scheme' is set."
-            XCTAssertEqual(error as! PusherError, .invalidConfiguration(reason: expectedReason))
+            XCTAssertEqual(pusherError, .invalidConfiguration(reason: expectedReason))
         }
     }
 }

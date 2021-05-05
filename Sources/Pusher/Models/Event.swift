@@ -35,11 +35,12 @@ public struct Event: EventInfoRecord, Encodable {
     ///   - channel: The `Channel` on which to trigger the `Event`.
     ///   - socketId: A connection to which the event will not be sent.
     /// - Throws: An `PusherError` if encoding the `eventData` fails for some reason.
-    init<EventData: Encodable>(eventName: String,
-                               eventData: EventData,
-                               channel: Channel,
-                               socketId: String? = nil,
-                               attributeOptions: ChannelAttributeFetchOptions = []) throws {
+    public init<EventData: Encodable>(eventName: String,
+                                      eventData: EventData,
+                                      channel: Channel,
+                                      socketId: String? = nil,
+                                      attributeOptions: ChannelAttributeFetchOptions = []) throws {
+
         self.channel = channel
         self.channels = nil
         self.eventName = eventName
@@ -56,11 +57,11 @@ public struct Event: EventInfoRecord, Encodable {
     ///   - socketId: A connection to which the event will not be sent.
     /// - Throws: An `PusherError` if encoding the `eventData` fails for some reason,
     ///           or if `channels` contains any encrypted channels.
-    init<EventData: Encodable>(eventName: String,
-                               eventData: EventData,
-                               channels: [Channel],
-                               socketId: String? = nil,
-                               attributeOptions: ChannelAttributeFetchOptions = []) throws {
+    public init<EventData: Encodable>(eventName: String,
+                                      eventData: EventData,
+                                      channels: [Channel],
+                                      socketId: String? = nil,
+                                      attributeOptions: ChannelAttributeFetchOptions = []) throws {
 
         // Throw an error if `channels` contains any encrypted channels
         // (Triggering an event on multiple channels is not allowed if any are encrypted).

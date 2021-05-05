@@ -4,7 +4,7 @@ import XCTest
 
 final class WebhookTests: XCTestCase {
 
-    private static let pusher = TestObjects.pusher
+    private static let pusher = TestObjects.Client.shared
 
     func testVerifyChannelOccupiedWebhookSucceeds() {
         let expectation = XCTestExpectation(function: #function)

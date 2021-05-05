@@ -5,22 +5,77 @@ import Foundation
 
 struct TestObjects {
 
-    // MARK: - SDK client
+    // MARK: - SDK client for Tests
 
-    private static let testKey = "b5390e69136683c40d2d"
-    private static let testSecret = "24aaea961cfe1335f796"
-    private static let testCluster = "eu"
-    private static let testMasterKey = "a7QyXV8eYrtJBehbuix68XCPO6+LrpnNNReWOkaXW7A="
-    static let pusher = Pusher(options: PusherClientOptions(appId: 1070530,
-                                                            key: testKey,
-                                                            secret: testSecret,
-                                                            useTLS: true,
-                                                            host: "api-eu.pusher.com",
-                                                            cluster: testCluster,
-                                                            port: 443,
-                                                            scheme: "https",
-                                                            httpProxy: "",
-                                                            encryptionMasterKeyBase64: testMasterKey))
+    struct Client {
+
+        static let testAppId = 1070530
+        static let testKey = "b5390e69136683c40d2d"
+        static let testSecret = "24aaea961cfe1335f796"
+        static let testMasterKey = "a7QyXV8eYrtJBehbuix68XCPO6+LrpnNNReWOkaXW7A="
+        static let testCluster = "eu"
+
+        static let shared = Pusher(options: try! PusherClientOptions(appId: testAppId,
+                                                                     key: testKey,
+                                                                     secret: testSecret,
+                                                                     encryptionMasterKey: testMasterKey,
+                                                                     cluster: testCluster))
+    }
+
+    // MARK: - Client options
+
+    struct ClientOptions {
+
+        static let testAppId = 123456
+        static let testKey = "auth_key"
+        static let testSecret = "auth_secret"
+        static let testEncryptionMasterKey = "hsRSqt4JEOd4bu2ww+F7e94BZsMBmELIUMHfhpTml2w="
+        static let invalidEncryptionMasterKey = "invalid_master_key"
+        static let testCluster = "eu"
+        static let testCustomHost = "myhost.com"
+        static let invalidPrefixCustomHost = "https://myhost.com"
+        static let invalidSuffixCustomHost = "myhost.com/"
+        static let testCustomPort = 3000
+
+        static let withCluster = try! PusherClientOptions(appId: testAppId,
+                                                          key: testKey,
+                                                          secret: testSecret,
+                                                          encryptionMasterKey: testEncryptionMasterKey,
+                                                          cluster: testCluster)
+
+        static let withCustomHost = try! PusherClientOptions(appId: testAppId,
+                                                             key: testKey,
+                                                             secret: testSecret,
+                                                             encryptionMasterKey: testEncryptionMasterKey,
+                                                             host: testCustomHost)
+
+        static let withCustomPort = try! PusherClientOptions(appId: testAppId,
+                                                             key: testKey,
+                                                             secret: testSecret,
+                                                             encryptionMasterKey: testEncryptionMasterKey,
+                                                             host: testCustomHost,
+                                                             port: testCustomPort,
+                                                             scheme: "https",
+                                                             useTLS: false)
+
+        static let withInvalidMasterKey = try! PusherClientOptions(appId: testAppId,
+                                                                   key: testKey,
+                                                                   secret: testSecret,
+                                                                   encryptionMasterKey: invalidEncryptionMasterKey,
+                                                                   cluster: testCluster)
+
+        static let withInvalidPrefixHost = try! PusherClientOptions(appId: testAppId,
+                                                                    key: testKey,
+                                                                    secret: testSecret,
+                                                                    encryptionMasterKey: invalidEncryptionMasterKey,
+                                                                    host: invalidPrefixCustomHost)
+
+        static let withInvalidSuffixHost = try! PusherClientOptions(appId: testAppId,
+                                                                    key: testKey,
+                                                                    secret: testSecret,
+                                                                    encryptionMasterKey: invalidEncryptionMasterKey,
+                                                                    host: invalidSuffixCustomHost)
+    }
 
     // MARK: - Channels
 
@@ -142,8 +197,8 @@ struct TestObjects {
                                                                           socketId: "socket_1")])
 
     private static func webhookRequest(for webhook: Webhook? = nil,
-                                       pusherKeyHeaderValue: String? = testKey,
-                                       pusherSignatureHeaderValue: String? = testSecret) -> URLRequest {
+                                       pusherKeyHeaderValue: String? = Client.testKey,
+                                       pusherSignatureHeaderValue: String? = Client.testSecret) -> URLRequest {
 
         var request = URLRequest(url: URL(string: "https://google.com")!)
         if let webhook = webhook {

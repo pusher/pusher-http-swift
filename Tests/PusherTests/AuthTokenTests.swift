@@ -4,7 +4,7 @@ import XCTest
 
 final class AuthTokenTests: XCTestCase {
 
-    private static let pusher = TestObjects.pusher
+    private static let pusher = TestObjects.Client.shared
 
     func testAuthenticateEncryptedChannelSucceeds() {
         let expectation = XCTestExpectation(function: #function)

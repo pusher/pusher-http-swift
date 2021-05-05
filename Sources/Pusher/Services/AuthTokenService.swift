@@ -51,7 +51,7 @@ struct AuthTokenService {
 
         var sharedSecret: String?
         if channel.type == .encrypted {
-            let stringToDigest = "\(channel.internalName)\(options.encryptionMasterKeyBase64)"
+            let stringToDigest = "\(channel.internalName)\(options.encryptionMasterKey)"
             sharedSecret = CryptoService.sha256Digest(data: stringToDigest.toData()).base64EncodedString()
         }
 

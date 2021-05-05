@@ -104,7 +104,7 @@ public struct Event: EventInfoRecord, Encodable {
     /// and its `ChannelType` is `.encrypted`.
     ///
     /// The event data is encrypted using a random nonce and a shared secret which is
-    /// a concatenation of the channel name and the `encryptionMasterKeyBase64` from `options`.
+    /// a concatenation of the channel name and the `encryptionMasterKey` from `options`.
     ///
     /// If the provided `channel` is not an encrypted (or multiple `channels` are provided instead),
     /// then the receiver is returned unaltered.
@@ -120,7 +120,7 @@ public struct Event: EventInfoRecord, Encodable {
 
         do {
             let eventNonce = try CryptoService.secureRandomData(count: 24)
-            let sharedSecretString = "\(channel.internalName)\(options.encryptionMasterKeyBase64)"
+            let sharedSecretString = "\(channel.internalName)\(options.encryptionMasterKey)"
             let sharedSecret = CryptoService.sha256Digest(data: sharedSecretString.toData())
             let eventCiphertext = try CryptoService.encrypt(data: eventData,
                                                             nonce: eventNonce,

@@ -41,7 +41,7 @@ public struct WebhookEvent: WebhookEventRecord {
     /// the event occured on an encrypted channel.
     ///
     /// The event data ciphertext is decrypted using the received nonce and a shared secret which is
-    /// a concatenation of the channel name and the `encryptionMasterKeyBase64` from `options`.
+    /// a concatenation of the channel name and the `encryptionMasterKey` from `options`.
     /// - Parameter options: Configuration options used to managing the connection.
     /// - Throws: An `PusherError` if decrypting the `eventData` fails for some reason.
     /// - Returns: A copy of the receiver, but with decrypted `eventData`. If the `channel` is not
@@ -52,7 +52,7 @@ public struct WebhookEvent: WebhookEventRecord {
         }
 
         let encryptedData = try JSONDecoder().decode(EncryptedData.self, from: eventData)
-        let sharedSecretString = "\(channelName)\(options.encryptionMasterKeyBase64)"
+        let sharedSecretString = "\(channelName)\(options.encryptionMasterKey)"
         let sharedSecret = CryptoService.sha256Digest(data: sharedSecretString.toData())
         let decryptedEventData = try CryptoService.decrypt(data: Data(base64Encoded: encryptedData.ciphertext)!,
                                                            nonce: Data(base64Encoded: encryptedData.nonce)!,

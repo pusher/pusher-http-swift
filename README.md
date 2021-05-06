@@ -6,7 +6,7 @@
 [![Supported Platforms](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fpusher%2Fpusher-http-swift%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/pusher/pusher-http-swift)
 [![Swift Versions](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fpusher%2Fpusher-http-swift%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/pusher/pusher-http-swift)
 [![Twitter](https://img.shields.io/badge/twitter-@Pusher-blue.svg?style=flat)](http://twitter.com/Pusher)
-[![LICENSE](https://img.shields.io/github/license/pusher/pusher-http-swift)](https://github.com/pusher/pusher-http-swift/blob/master/LICENSE.md)
+[![LICENSE](https://img.shields.io/github/license/pusher/pusher-http-swift)](https://github.com/pusher/pusher-http-swift/blob/master/LICENSE)
 
 A Swift library for interacting with the [Pusher Channels HTTP API](https://pusher.com/docs/channels/library_auth_reference/rest-api).
 
@@ -88,4 +88,4 @@ Please ensure you use the relevant issue template when reporting a bug or reques
 
 ## License
 
-The library is completely open source and released under the MIT license. See [LICENSE.md](https://github.com/pusher/pusher-http-swift/blob/master/LICENSE.md) for details if you want to use it in your own project(s).
+The library is completely open source and released under the MIT license. See [LICENSE](https://github.com/pusher/pusher-http-swift/blob/master/LICENSE) for details if you want to use it in your own project(s).

@@ -129,9 +129,9 @@
                         <p>Encapsulates an authentication signature that can be used when users
 subscribe to private or presence channels.</p>
 
-<p>The <code>AuthToken</code> will contain any user data that was provided during
+<p>The authentication token will contain any <code>userData</code> that was provided during
 the signing request. In the case of encrypted channels, it will also
-contain a base-64 encoded shared secret.</p>
+contain a base-64 encoded <code>sharedSecret</code>.</p>
 
                         <a href="Structs/AuthToken.html" class="slightly-smaller">See more</a>
                       </div>
@@ -188,6 +188,10 @@ contain a base-64 encoded shared secret.</p>
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>Attributes of an occupied channel that can be fetched from the Pusher HTTP API.</p>
+
+<p>The attributes that can be fetched for a channel is dependent on its <code><a href="Enums/ChannelType.html">ChannelType</a></code>.
+Attempting to fetch an attribute for a channel that does not support it will result
+in an error.</p>
 
                         <a href="Structs/ChannelAttributeFetchOptions.html" class="slightly-smaller">See more</a>
                       </div>
@@ -385,8 +389,12 @@ provided to a top-level API method (see <code>Pusher.swift</code>).</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Contains events related to changes in the internal state of a Channels app,
-that were received as a POST request from Channels to a user-specified Webhook URL.</p>
+                        <p>A Webhook that contains a list of <code><a href="Structs/WebhookEvent.html">WebhookEvent</a></code> instances related to
+changes in the internal state of a Pusher Channels app, that were received as a
+POST request to a user-specified Webhook URL.</p>
+
+<p>The <code>verifyWebhookRequest(_:callback:)</code> method guarantees that these instances
+have been verified as geniune Webhooks that were received directly from Pusher.</p>
 
                         <a href="Structs/Webhook.html" class="slightly-smaller">See more</a>
                       </div>

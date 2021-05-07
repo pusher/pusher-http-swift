@@ -115,7 +115,7 @@
 
                 </div>
               </div>
-            <p>An error whilst using the Pusher HTTP API Swift SDK.</p>
+            <p>An error encountered whilst using the Pusher Channels HTTP API Swift library.</p>
 
           </section>
           <section class="section task-group-section">
@@ -215,9 +215,9 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The server returned a failed response indicated by a non-successful <code>HTTPStatusCode</code>.</p>
+                        <p>The server returned a failed response indicated by a non-successful HTTP status code.</p>
 
-<p>If the <code>errorResponseBody</code> cannot be decoded to the <code>ErrorResponse</code> type,
+<p>If the <code>errorResponseBody</code> cannot be decoded to the <code>ErrorResponse</code> type of the endpoint    ,
 the raw response body <code>Data</code> will be returned (or empty <code>Data</code> if there was no response body).</p>
 
                       </div>
@@ -247,7 +247,7 @@ the raw response body <code>Data</code> will be returned (or empty <code>Data</c
                       <div class="abstract">
                         <p>An internal error occured.</p>
 
-<p>When the circumstances that caused the error cannot be determined, an <code>internalError</code> will be thrown.</p>
+<p>The exact circumstances that resulted in the error cannot be determined.</p>
 
                       </div>
                       <div class="declaration">

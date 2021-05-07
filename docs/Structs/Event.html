@@ -123,9 +123,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:6Pusher15EventInfoRecordP8channelsSayAA7ChannelVGSgvp"></a>
+                    <a name="/s:6Pusher5EventV8channelsSayAA7ChannelVGSgvp"></a>
                     <a name="//apple_ref/swift/Property/channels" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Pusher15EventInfoRecordP8channelsSayAA7ChannelVGSgvp">channels</a>
+                    <a class="token" href="#/s:6Pusher5EventV8channelsSayAA7ChannelVGSgvp">channels</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -133,7 +133,8 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        
+                        <p>The channels to which the event will be sent (if publishing to multiple channels).</p>
+
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
@@ -149,9 +150,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:6Pusher15EventInfoRecordP7channelAA7ChannelVSgvp"></a>
+                    <a name="/s:6Pusher5EventV7channelAA7ChannelVSgvp"></a>
                     <a name="//apple_ref/swift/Property/channel" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Pusher15EventInfoRecordP7channelAA7ChannelVSgvp">channel</a>
+                    <a class="token" href="#/s:6Pusher5EventV7channelAA7ChannelVSgvp">channel</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -159,7 +160,8 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        
+                        <p>The channel to which the event will be sent (if publishing to a single channel).</p>
+
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
@@ -175,9 +177,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:6Pusher15EventInfoRecordP9eventNameSSvp"></a>
+                    <a name="/s:6Pusher5EventV9eventNameSSvp"></a>
                     <a name="//apple_ref/swift/Property/eventName" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Pusher15EventInfoRecordP9eventNameSSvp">eventName</a>
+                    <a class="token" href="#/s:6Pusher5EventV9eventNameSSvp">eventName</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -185,7 +187,8 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        
+                        <p>The event name.</p>
+
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
@@ -212,7 +215,7 @@
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>This is the <code>Data</code> representation of the original <code>eventData</code> parameter of the <code>init</code> methods.
-The data will be encrypted if a <code><a href="../Structs/Event.html#/s:6Pusher15EventInfoRecordP7channelAA7ChannelVSgvp">channel</a></code> is set and its <code><a href="../Enums/ChannelType.html">ChannelType</a></code> is <code>.encrypted</code>.</p>
+The data will be encrypted if a <code><a href="../Structs/Event.html#/s:6Pusher5EventV7channelAA7ChannelVSgvp">channel</a></code> is set and its <code><a href="../Enums/ChannelType.html">ChannelType</a></code> is <code>.encrypted</code>.</p>
 
                       </div>
                       <div class="declaration">
@@ -229,9 +232,9 @@ The data will be encrypted if a <code><a href="../Structs/Event.html#/s:6Pusher1
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:6Pusher15EventInfoRecordP8socketIdSSSgvp"></a>
+                    <a name="/s:6Pusher5EventV8socketIdSSSgvp"></a>
                     <a name="//apple_ref/swift/Property/socketId" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Pusher15EventInfoRecordP8socketIdSSSgvp">socketId</a>
+                    <a class="token" href="#/s:6Pusher5EventV8socketIdSSSgvp">socketId</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -239,7 +242,8 @@ The data will be encrypted if a <code><a href="../Structs/Event.html#/s:6Pusher1
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        
+                        <p>A connection to which the event will not be sent.</p>
+
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
@@ -278,7 +282,7 @@ The data will be encrypted if a <code><a href="../Structs/Event.html#/s:6Pusher1
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Creates an <code>Event</code> which will be triggered on a specific <code><a href="../Structs/Channel.html">Channel</a></code>.</p>
+                        <p>Creates an event to be triggered on a specific <code><a href="../Structs/Channel.html">Channel</a></code>.</p>
 <div class="aside aside-throws">
     <p class="aside-title">Throws</p>
     An <code><a href="../Enums/PusherError.html">PusherError</a></code> if encoding the <code><a href="../Structs/Event.html#/s:6Pusher5EventV9eventData10Foundation0D0Vvp">eventData</a></code> fails for some reason.
@@ -334,7 +338,7 @@ The data will be encrypted if a <code><a href="../Structs/Event.html#/s:6Pusher1
                               </td>
                               <td>
                                 <div>
-                                  <p>The <code><a href="../Structs/Channel.html">Channel</a></code> on which to trigger the <code>Event</code>.</p>
+                                  <p>The channel on which to trigger the event.</p>
                                 </div>
                               </td>
                             </tr>
@@ -358,7 +362,7 @@ The data will be encrypted if a <code><a href="../Structs/Event.html#/s:6Pusher1
                               </td>
                               <td>
                                 <div>
-                                  <p>A set of attributes that should be returned for the <code><a href="../Structs/Event.html#/s:6Pusher15EventInfoRecordP7channelAA7ChannelVSgvp">channel</a></code>.</p>
+                                  <p>A set of attributes that should be returned for the <code><a href="../Structs/Event.html#/s:6Pusher5EventV7channelAA7ChannelVSgvp">channel</a></code>.</p>
                                 </div>
                               </td>
                             </tr>
@@ -385,7 +389,7 @@ The data will be encrypted if a <code><a href="../Structs/Event.html#/s:6Pusher1
 <div class="aside aside-throws">
     <p class="aside-title">Throws</p>
     An <code><a href="../Enums/PusherError.html">PusherError</a></code> if encoding the <code><a href="../Structs/Event.html#/s:6Pusher5EventV9eventData10Foundation0D0Vvp">eventData</a></code> fails for some reason,
-      or if <code><a href="../Structs/Event.html#/s:6Pusher15EventInfoRecordP8channelsSayAA7ChannelVGSgvp">channels</a></code> contains any encrypted channels.
+      or if <code><a href="../Structs/Event.html#/s:6Pusher5EventV8channelsSayAA7ChannelVGSgvp">channels</a></code> contains any encrypted channels.
 
 </div>
 
@@ -438,7 +442,7 @@ The data will be encrypted if a <code><a href="../Structs/Event.html#/s:6Pusher1
                               </td>
                               <td>
                                 <div>
-                                  <p>An array of <code><a href="../Structs/Channel.html">Channel</a></code>s on which to trigger the <code>Event</code>.</p>
+                                  <p>An array of channels on which to trigger the event.</p>
                                 </div>
                               </td>
                             </tr>
@@ -462,7 +466,7 @@ The data will be encrypted if a <code><a href="../Structs/Event.html#/s:6Pusher1
                               </td>
                               <td>
                                 <div>
-                                  <p>A set of attributes that should be returned for each channel in <code><a href="../Structs/Event.html#/s:6Pusher15EventInfoRecordP8channelsSayAA7ChannelVGSgvp">channels</a></code>.</p>
+                                  <p>A set of attributes that should be returned for each channel in <code><a href="../Structs/Event.html#/s:6Pusher5EventV8channelsSayAA7ChannelVGSgvp">channels</a></code>.</p>
                                 </div>
                               </td>
                             </tr>

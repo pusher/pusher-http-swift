@@ -117,6 +117,10 @@
               </div>
             <p>Attributes of an occupied channel that can be fetched from the Pusher HTTP API.</p>
 
+<p>The attributes that can be fetched for a channel is dependent on its <code><a href="../Enums/ChannelType.html">ChannelType</a></code>.
+Attempting to fetch an attribute for a channel that does not support it will result
+in an error.</p>
+
           </section>
           <section class="section task-group-section">
             <div class="task-group">
@@ -188,6 +192,8 @@
                       <div class="abstract">
                         <p>The number of distinct users that are currently subscribed.</p>
 
+<p>This attribute is only supported for presence channels.</p>
+
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
@@ -215,6 +221,10 @@
                       <div class="abstract">
                         <p>The number of all connections currently subscribed.</p>
 
+<p>This attribute is not available by default. To enable it, please see the app settings
+page of your Channels dashboard. Attempts to fetch it when it is disabled result in
+an error.</p>
+
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
@@ -240,7 +250,10 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>All available attributes for the occupied channel.</p>
+                        <p>All available attributes for the occupied channel. (i.e. <code>[.userCount, .subscriptionCount]</code>).</p>
+
+<p>This is only supported for presence channels and applications that have enabled
+<code><a href="../Structs/ChannelAttributeFetchOptions.html#/s:6Pusher28ChannelAttributeFetchOptionsV17subscriptionCountACvpZ">subscriptionCount</a></code> attribute queries.</p>
 
                       </div>
                       <div class="declaration">

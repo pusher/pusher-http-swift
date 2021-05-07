@@ -114,8 +114,12 @@
 
                 </div>
               </div>
-            <p>Contains events related to changes in the internal state of a Channels app,
-that were received as a POST request from Channels to a user-specified Webhook URL.</p>
+            <p>A Webhook that contains a list of <code><a href="../Structs/WebhookEvent.html">WebhookEvent</a></code> instances related to
+changes in the internal state of a Pusher Channels app, that were received as a
+POST request to a user-specified Webhook URL.</p>
+
+<p>The <code>verifyWebhookRequest(_:callback:)</code> method guarantees that these instances
+have been verified as geniune Webhooks that were received directly from Pusher.</p>
 
           </section>
           <section class="section task-group-section">

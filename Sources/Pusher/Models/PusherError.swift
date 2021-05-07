@@ -1,7 +1,7 @@
 import APIota
 import Foundation
 
-/// An error whilst using the Pusher HTTP API Swift SDK.
+/// An error encountered whilst using the Pusher Channels HTTP API Swift library.
 public enum PusherError: LocalizedError {
 
     /// The `URLRequest` could not be initialized with a valid `URL`.
@@ -13,15 +13,15 @@ public enum PusherError: LocalizedError {
     /// The request body could not be encoded to the specified type.
     case encodingError(_ error: EncodingError)
 
-    /// The server returned a failed response indicated by a non-successful `HTTPStatusCode`.
+    /// The server returned a failed response indicated by a non-successful HTTP status code.
     ///
-    /// If the `errorResponseBody` cannot be decoded to the `ErrorResponse` type,
+    /// If the `errorResponseBody` cannot be decoded to the `ErrorResponse` type of the endpoint    ,
     /// the raw response body `Data` will be returned (or empty `Data` if there was no response body).
     case failedResponse(statusCode: Int, errorResponse: String)
 
     /// An internal error occured.
     ///
-    /// When the circumstances that caused the error cannot be determined, an `internalError` will be thrown.
+    /// The exact circumstances that resulted in the error cannot be determined.
     case internalError(_ error: Error)
 
     /// An invalid configuration caused an error for some reason.

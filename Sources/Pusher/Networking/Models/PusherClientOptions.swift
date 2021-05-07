@@ -54,7 +54,7 @@ public struct PusherClientOptions {
     ///   - key: The application key (as specified in the Channels developer dashboard).
     ///   - secret: The application secret (as specified in the Channels developer dashboard).
     ///   - encryptionMasterKey: The master key used for server-side encryption operations.
-    ///                          (Refer to the property itself for information on its expected format).
+    ///                          (Refer to `encryptionMasterKey` for information on its expected format).
     ///   - cluster: The Pusher cluster that hosts the Channels application
     ///              (as specified in the Channels developer dashboard).
     ///   - useTLS: Whether or not Transport Layer Security is used when
@@ -82,6 +82,7 @@ public struct PusherClientOptions {
     ///   - key: The application key (as specified in the Channels developer dashboard).
     ///   - secret: The application secret (as specified in the Channels developer dashboard).
     ///   - encryptionMasterKey: The master key used for server-side encryption operations.
+    ///                          (Refer to `encryptionMasterKey` for information on its expected format).
     ///   - cluster: The Pusher cluster that hosts the Channels application
     ///              (as specified in the Channels developer dashboard).
     ///   - host: A custom host for a Channels application (e.g. `"myhost.com"`).

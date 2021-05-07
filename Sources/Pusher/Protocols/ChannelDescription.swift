@@ -8,11 +8,11 @@ protocol ChannelDescription {
     /// This is the channel name, omitting any required prefixes (e.g. `my-channel`).
     var name: String { get }
 
-    /// The internal channel name.
+    /// The full channel name.
     ///
     /// This is the full name of the channel, including any required prefix
     /// (e.g. `private-encrypted-my-channel`).
-    var internalName: String { get }
+    var fullName: String { get }
 
     /// The type of the channel.
     var type: ChannelType { get }

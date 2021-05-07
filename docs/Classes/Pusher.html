@@ -142,7 +142,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Creates a Pusher Channels HTTP API client configured using some <code>options</code>.</p>
+                        <p>Creates a Pusher Channels HTTP API client configured using some <code><a href="../Structs/PusherClientOptions.html">PusherClientOptions</a></code>.</p>
 
                       </div>
                       <div class="declaration">
@@ -203,9 +203,6 @@
                       <div class="abstract">
                         <p>Fetch a list of any occupied channels.</p>
 
-<p>The results can be filtered by channel type, or a user-specified prefix
-that allows filtering based on custom naming schemes.</p>
-
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
@@ -241,7 +238,7 @@ that allows filtering based on custom naming schemes.</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>A set of attributes that should be returned for each result.</p>
+                                  <p>A set of attributes that should be returned in each <code><a href="../Structs/ChannelSummary.html">ChannelSummary</a></code>.</p>
                                 </div>
                               </td>
                             </tr>
@@ -253,9 +250,8 @@ that allows filtering based on custom naming schemes.</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>A closure that returns a <code>Result</code> containing a list of occupied
-      channels (and their requested attributes), or a <code><a href="../Enums/PusherError.html">PusherError</a></code>
-      if the operation fails for some reason.</p>
+                                  <p>A closure that returns a <code>Result</code> containing a list of <code><a href="../Structs/ChannelSummary.html">ChannelSummary</a></code>
+      instances, or a <code><a href="../Enums/PusherError.html">PusherError</a></code> if the operation fails for some reason.</p>
                                 </div>
                               </td>
                             </tr>
@@ -327,8 +323,8 @@ that allows filtering based on custom naming schemes.</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>A closure that returns a <code>Result</code> containing the requested information
-      for the <code>channel</code>, or a <code><a href="../Enums/PusherError.html">PusherError</a></code> if the operation fails for some reason.</p>
+                                  <p>A closure that returns a <code>Result</code> containing a <code><a href="../Structs/ChannelInfo.html">ChannelInfo</a></code> instance,
+      or a <code><a href="../Enums/PusherError.html">PusherError</a></code> if the operation fails for some reason.</p>
                                 </div>
                               </td>
                             </tr>
@@ -390,8 +386,9 @@ will result in an error.</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>A closure that returns a <code>Result</code> containing the subscribed users
-      for the <code>channel</code>, or a <code><a href="../Enums/PusherError.html">PusherError</a></code> if the operation fails for some reason.</p>
+                                  <p>A closure that returns a <code>Result</code> containing a list of <code><a href="../Structs/User.html">User</a></code> instances
+      subscribed to the <code>channel</code>, or a <code><a href="../Enums/PusherError.html">PusherError</a></code> if the operation fails
+      for some reason.</p>
                                 </div>
                               </td>
                             </tr>
@@ -467,10 +464,10 @@ of <code><a href="../Structs/Event.html">Event</a></code> to pass to this method
                               </td>
                               <td>
                                 <div>
-                                  <p>A closure that returns a <code>Result</code> containing a list of channels that
-      were triggered to (and their requested attributes), or a <code><a href="../Enums/PusherError.html">PusherError</a></code>
-      if the operation fails for some reason. If the <code>attributeOptions</code> on
-      the <code>event</code> are not set, an empty channel list will be returned.</p>
+                                  <p>A closure that returns a <code>Result</code> containing a list of <code><a href="../Structs/ChannelSummary.html">ChannelSummary</a></code>
+      instances, or a <code><a href="../Enums/PusherError.html">PusherError</a></code> if the operation fails for some reason.
+      If the <code>attributeOptions</code> on the <code>event</code> are not set, an empty channel
+      list will be returned.</p>
                                 </div>
                               </td>
                             </tr>
@@ -499,8 +496,8 @@ of <code><a href="../Structs/Event.html">Event</a></code> to pass to this method
 attributes to fetch for the each channel) are specified when initializing instances
 of <code><a href="../Structs/Event.html">Event</a></code> to pass to this method.</p>
 
-<p>Specifying more than one channel to trigger the event on (or providing a list of
-more than 10 events to trigger) is invalid and will result in an error.</p>
+<p>Any events in <code>events</code> specifying more than one channel to trigger on will result in
+an error. Providing a list of more than 10 events to trigger will also result in an error.</p>
 
                       </div>
                       <div class="declaration">
@@ -536,10 +533,11 @@ more than 10 events to trigger) is invalid and will result in an error.</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>A closure that returns a <code>Result</code> containing the requested information
-      for the channels that were triggered to, or a <code><a href="../Enums/PusherError.html">PusherError</a></code>
-      if the operation fails for some reason. If the <code>attributeOptions</code> on
-      the <code>event</code> are not set, an empty information list will be returned.</p>
+                                  <p>A closure that returns a <code>Result</code> containing a list of <code><a href="../Structs/ChannelInfo.html">ChannelInfo</a></code> instances
+      (where the instance at index <code>i</code> corresponds to the channel for <code>events[i]</code>,
+      or a <code><a href="../Enums/PusherError.html">PusherError</a></code> if the operation fails for some reason.
+      If the <code>attributeOptions</code> on the <code>event</code> are not set, an empty information
+      list will be returned.</p>
                                 </div>
                               </td>
                             </tr>
@@ -565,9 +563,9 @@ more than 10 events to trigger) is invalid and will result in an error.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:6PusherAAC20verifyWebhookRequest_8callbacky10Foundation10URLRequestV_ys6ResultOyAA0C0VAA0A5ErrorOGctF"></a>
-                    <a name="//apple_ref/swift/Method/verifyWebhookRequest(_:callback:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6PusherAAC20verifyWebhookRequest_8callbacky10Foundation10URLRequestV_ys6ResultOyAA0C0VAA0A5ErrorOGctF">verifyWebhookRequest(_:<wbr>callback:<wbr>)</a>
+                    <a name="/s:6PusherAAC13verifyWebhook7request8callbacky10Foundation10URLRequestV_ys6ResultOyAA0C0VAA0A5ErrorOGctF"></a>
+                    <a name="//apple_ref/swift/Method/verifyWebhook(request:callback:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6PusherAAC13verifyWebhook7request8callbacky10Foundation10URLRequestV_ys6ResultOyAA0C0VAA0A5ErrorOGctF">verifyWebhook(request:<wbr>callback:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -586,8 +584,8 @@ copy of your application key and a HMAC signature of the webhook payload (i.e. i
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">verifyWebhookRequest</span><span class="p">(</span><span class="n">_</span> <span class="nv">request</span><span class="p">:</span> <span class="kt">URLRequest</span><span class="p">,</span>
-                                 <span class="nv">callback</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt"><a href="../Structs/Webhook.html">Webhook</a></span><span class="p">,</span> <span class="kt"><a href="../Enums/PusherError.html">PusherError</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">verifyWebhook</span><span class="p">(</span><span class="nv">request</span><span class="p">:</span> <span class="kt">URLRequest</span><span class="p">,</span>
+                          <span class="nv">callback</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt"><a href="../Structs/Webhook.html">Webhook</a></span><span class="p">,</span> <span class="kt"><a href="../Enums/PusherError.html">PusherError</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -603,7 +601,7 @@ copy of your application key and a HMAC signature of the webhook payload (i.e. i
                               </td>
                               <td>
                                 <div>
-                                  <p>The webhook request.</p>
+                                  <p>The received webhook request.</p>
                                 </div>
                               </td>
                             </tr>
@@ -616,7 +614,7 @@ copy of your application key and a HMAC signature of the webhook payload (i.e. i
                               <td>
                                 <div>
                                   <p>A closure that returns a <code>Result</code> containing a verified <code><a href="../Structs/Webhook.html">Webhook</a></code> and the
-      events that it contains (which are decrypted if needed), or a <code><a href="../Enums/PusherError.html">PusherError</a></code>
+      events that were sent with it (which are decrypted if needed), or a <code><a href="../Enums/PusherError.html">PusherError</a></code>
       if the operation fails for some reason.</p>
                                 </div>
                               </td>
@@ -680,7 +678,7 @@ to subscribe to a private or presence channel, which requires authentication wit
                               </td>
                               <td>
                                 <div>
-                                  <p>The <code><a href="../Structs/Channel.html">Channel</a></code> for which to generate the authentication token.</p>
+                                  <p>The channel for which to generate the authentication token.</p>
                                 </div>
                               </td>
                             </tr>
@@ -692,7 +690,7 @@ to subscribe to a private or presence channel, which requires authentication wit
                               </td>
                               <td>
                                 <div>
-                                  <p>The socket identifier <code>String</code> for the connected user.</p>
+                                  <p>The socket identifier for the connected user.</p>
                                 </div>
                               </td>
                             </tr>
@@ -704,9 +702,10 @@ to subscribe to a private or presence channel, which requires authentication wit
                               </td>
                               <td>
                                 <div>
-                                  <p>User data required when generating an authentication token for a subscription attempt
+                                  <p>The data for generating an authentication token for a subscription attempt
       to a presence channel.
-      (This must be set when generating an authentication token for a presence channel).</p>
+      (This is required when autenticating a presence channel, and should otherwise
+      be <code>nil</code>).</p>
                                 </div>
                               </td>
                             </tr>
@@ -718,9 +717,9 @@ to subscribe to a private or presence channel, which requires authentication wit
                               </td>
                               <td>
                                 <div>
-                                  <p>A closure that returns a <code>Result</code> containing an authentication token
-      for subscribing to a private or presence channel, or a <code><a href="../Enums/PusherError.html">PusherError</a></code>
-      if the operation fails for some reason.</p>
+                                  <p>A closure that returns a <code>Result</code> containing a <code><a href="../Structs/AuthToken.html">AuthToken</a></code> for subscribing
+      to a private or presence channel, or a <code><a href="../Enums/PusherError.html">PusherError</a></code> if the operation fails
+      for some reason.</p>
                                 </div>
                               </td>
                             </tr>

@@ -8,14 +8,14 @@ final class WebhookTests: XCTestCase {
 
     func testVerifyChannelOccupiedWebhookSucceeds() {
         let expectation = XCTestExpectation(function: #function)
-        Self.pusher.verifyWebhookRequest(TestObjects.Webhooks.channelOccupiedWebhookRequest) { result in
+        Self.pusher.verifyWebhook(request: TestObjects.Webhooks.channelOccupiedWebhookRequest) { result in
             self.verifyAPIResultSuccess(result, expectation: expectation) { webhook in
                 XCTAssertEqual(webhook.createdAt, Date(timeIntervalSince1970: 1619602993))
                 XCTAssertEqual(webhook.events.count, 1)
                 XCTAssertEqual(webhook.events.first!.eventType, .channelOccupied)
-                XCTAssertEqual(webhook.events.first!.channelName, "my-channel")
-                XCTAssertNil(webhook.events.first!.eventName)
-                XCTAssertNil(webhook.events.first!.eventData)
+                XCTAssertEqual(webhook.events.first!.channel.name, "my-channel")
+                XCTAssertEqual(webhook.events.first!.channel.type, .public)
+                XCTAssertNil(webhook.events.first!.event)
                 XCTAssertNil(webhook.events.first!.socketId)
                 XCTAssertNil(webhook.events.first!.userId)
             }
@@ -25,14 +25,14 @@ final class WebhookTests: XCTestCase {
 
     func testVerifyChannelVacatedWebhookSucceeds() {
         let expectation = XCTestExpectation(function: #function)
-        Self.pusher.verifyWebhookRequest(TestObjects.Webhooks.channelVacatedWebhookRequest) { result in
+        Self.pusher.verifyWebhook(request: TestObjects.Webhooks.channelVacatedWebhookRequest) { result in
             self.verifyAPIResultSuccess(result, expectation: expectation) { webhook in
                 XCTAssertEqual(webhook.createdAt, Date(timeIntervalSince1970: 1619602993))
                 XCTAssertEqual(webhook.events.count, 1)
                 XCTAssertEqual(webhook.events.first!.eventType, .channelVacated)
-                XCTAssertEqual(webhook.events.first!.channelName, "my-channel")
-                XCTAssertNil(webhook.events.first!.eventName)
-                XCTAssertNil(webhook.events.first!.eventData)
+                XCTAssertEqual(webhook.events.first!.channel.name, "my-channel")
+                XCTAssertEqual(webhook.events.first!.channel.type, .public)
+                XCTAssertNil(webhook.events.first!.event)
                 XCTAssertNil(webhook.events.first!.socketId)
                 XCTAssertNil(webhook.events.first!.userId)
             }
@@ -42,15 +42,15 @@ final class WebhookTests: XCTestCase {
 
     func testVerifyMemberAddedWebhookSucceeds() {
         let expectation = XCTestExpectation(function: #function)
-        Self.pusher.verifyWebhookRequest(TestObjects.Webhooks.memberAddedWebhookRequest) { result in
+        Self.pusher.verifyWebhook(request: TestObjects.Webhooks.memberAddedWebhookRequest) { result in
             self.verifyAPIResultSuccess(result, expectation: expectation) { webhook in
                 XCTAssertEqual(webhook.createdAt, Date(timeIntervalSince1970: 1619602993))
                 XCTAssertEqual(webhook.events.count, 1)
                 XCTAssertEqual(webhook.events.first!.eventType, .memberAdded)
-                XCTAssertEqual(webhook.events.first!.channelName, "presence-my-channel")
+                XCTAssertEqual(webhook.events.first!.channel.name, "my-channel")
+                XCTAssertEqual(webhook.events.first!.channel.type, .presence)
                 XCTAssertEqual(webhook.events.first!.userId, "user_1")
-                XCTAssertNil(webhook.events.first!.eventName)
-                XCTAssertNil(webhook.events.first!.eventData)
+                XCTAssertNil(webhook.events.first!.event)
                 XCTAssertNil(webhook.events.first!.socketId)
             }
         }
@@ -59,15 +59,15 @@ final class WebhookTests: XCTestCase {
 
     func testVerifyMemberRemovedWebhookSucceeds() {
         let expectation = XCTestExpectation(function: #function)
-        Self.pusher.verifyWebhookRequest(TestObjects.Webhooks.memberRemovedWebhookRequest) { result in
+        Self.pusher.verifyWebhook(request: TestObjects.Webhooks.memberRemovedWebhookRequest) { result in
             self.verifyAPIResultSuccess(result, expectation: expectation) { webhook in
                 XCTAssertEqual(webhook.createdAt, Date(timeIntervalSince1970: 1619602993))
                 XCTAssertEqual(webhook.events.count, 1)
                 XCTAssertEqual(webhook.events.first!.eventType, .memberRemoved)
-                XCTAssertEqual(webhook.events.first!.channelName, "presence-my-channel")
+                XCTAssertEqual(webhook.events.first!.channel.name, "my-channel")
+                XCTAssertEqual(webhook.events.first!.channel.type, .presence)
                 XCTAssertEqual(webhook.events.first!.userId, "user_1")
-                XCTAssertNil(webhook.events.first!.eventName)
-                XCTAssertNil(webhook.events.first!.eventData)
+                XCTAssertNil(webhook.events.first!.event)
                 XCTAssertNil(webhook.events.first!.socketId)
             }
         }
@@ -76,16 +76,17 @@ final class WebhookTests: XCTestCase {
 
     func testVerifyClientEventWebhookSucceeds() throws {
         let expectation = XCTestExpectation(function: #function)
-        Self.pusher.verifyWebhookRequest(TestObjects.Webhooks.clientEventWebhookRequest) { result in
+        Self.pusher.verifyWebhook(request: TestObjects.Webhooks.clientEventWebhookRequest) { result in
             self.verifyAPIResultSuccess(result, expectation: expectation) { webhook in
                 XCTAssertEqual(webhook.createdAt, Date(timeIntervalSince1970: 1619602993))
                 XCTAssertEqual(webhook.events.count, 1)
                 XCTAssertEqual(webhook.events.first!.eventType, .clientEvent)
-                XCTAssertEqual(webhook.events.first!.channelName, "my-channel")
-                XCTAssertEqual(webhook.events.first!.eventName, "my-event")
-                XCTAssertNotNil(webhook.events.first!.eventData)
+                XCTAssertEqual(webhook.events.first!.channel.name, "my-channel")
+                XCTAssertEqual(webhook.events.first!.channel.type, .public)
+                XCTAssertEqual(webhook.events.first!.event?.name, "my-event")
+                XCTAssertNotNil(webhook.events.first!.event?.data)
                 let decodedEventData = try? JSONDecoder().decode(MockEventData.self,
-                                                            from: webhook.events.first!.eventData!)
+                                                                 from: webhook.events.first!.event!.data)
                 XCTAssertEqual(decodedEventData?.name, TestObjects.Events.eventData.name)
                 XCTAssertEqual(decodedEventData?.age, TestObjects.Events.eventData.age)
                 XCTAssertEqual(decodedEventData?.job, TestObjects.Events.eventData.job)
@@ -98,7 +99,7 @@ final class WebhookTests: XCTestCase {
 
     func testMissingPusherKeyHeaderWebhookFails() {
         let expectation = XCTestExpectation(function: #function)
-        Self.pusher.verifyWebhookRequest(TestObjects.Webhooks.missingKeyHeaderWebhookRequest) { result in
+        Self.pusher.verifyWebhook(request: TestObjects.Webhooks.missingKeyHeaderWebhookRequest) { result in
             let expectedReason = """
             The '\(WebhookService.xPusherKeyHeader)' header is missing or invalid on the Webhook request.
             """
@@ -110,7 +111,7 @@ final class WebhookTests: XCTestCase {
 
     func testInvalidPusherKeyHeaderWebhookFails() {
         let expectation = XCTestExpectation(function: #function)
-        Self.pusher.verifyWebhookRequest(TestObjects.Webhooks.invalidKeyHeaderWebhookRequest) { result in
+        Self.pusher.verifyWebhook(request: TestObjects.Webhooks.invalidKeyHeaderWebhookRequest) { result in
             let expectedReason = """
             The '\(WebhookService.xPusherKeyHeader)' header is missing or invalid on the Webhook request.
             """
@@ -122,7 +123,7 @@ final class WebhookTests: XCTestCase {
 
     func testMissingPusherSignatureHeaderWebhookFails() {
         let expectation = XCTestExpectation(function: #function)
-        Self.pusher.verifyWebhookRequest(TestObjects.Webhooks.missingSignatureHeaderWebhookRequest) { result in
+        Self.pusher.verifyWebhook(request: TestObjects.Webhooks.missingSignatureHeaderWebhookRequest) { result in
             let expectedReason = """
             The '\(WebhookService.xPusherSignatureHeader)' header is missing or invalid on the Webhook request.
             """
@@ -134,7 +135,7 @@ final class WebhookTests: XCTestCase {
 
     func testInvalidPusherSignatureHeaderWebhookFails() {
         let expectation = XCTestExpectation(function: #function)
-        Self.pusher.verifyWebhookRequest(TestObjects.Webhooks.invalidSignatureHeaderWebhookRequest) { result in
+        Self.pusher.verifyWebhook(request: TestObjects.Webhooks.invalidSignatureHeaderWebhookRequest) { result in
             let expectedReason = """
             The '\(WebhookService.xPusherSignatureHeader)' header is missing or invalid on the Webhook request.
             """
@@ -146,7 +147,7 @@ final class WebhookTests: XCTestCase {
 
     func testMissingBodyDataWebhookFails() {
         let expectation = XCTestExpectation(function: #function)
-        Self.pusher.verifyWebhookRequest(TestObjects.Webhooks.missingBodyDataWebhookRequest) { result in
+        Self.pusher.verifyWebhook(request: TestObjects.Webhooks.missingBodyDataWebhookRequest) { result in
             let expectedReason = "Body data is missing on the Webhook request."
             let expectedError = PusherError.invalidConfiguration(reason: expectedReason)
             self.verifyAPIResultFailure(result, expectation: expectation, expectedError: expectedError)

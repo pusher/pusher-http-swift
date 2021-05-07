@@ -1,7 +1,11 @@
 import Foundation
 
-/// Contains events related to changes in the internal state of a Channels app,
-/// that were received as a POST request from Channels to a user-specified Webhook URL.
+/// A Webhook that contains a list of `WebhookEvent` instances related to
+/// changes in the internal state of a Pusher Channels app, that were received as a
+/// POST request to a user-specified Webhook URL.
+///
+/// The `verifyWebhookRequest(_:callback:)` method guarantees that these instances
+/// have been verified as geniune Webhooks that were received directly from Pusher.
 public struct Webhook: Codable {
 
     /// The `Date` that Channels originally created the Webhook request.

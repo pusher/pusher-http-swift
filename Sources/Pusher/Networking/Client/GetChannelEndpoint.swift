@@ -18,7 +18,7 @@ struct GetChannelEndpoint: APIotaCodableEndpoint {
 
     var path: String {
 
-        return "/apps/\(options.appId)/channels/\(channel.internalName)"
+        return "/apps/\(options.appId)/channels/\(channel.fullName)"
     }
 
     var queryItems: [URLQueryItem]? {

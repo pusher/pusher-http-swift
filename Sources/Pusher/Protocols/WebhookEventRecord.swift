@@ -1,19 +1,16 @@
 import Foundation
 
 /// An information record for an event on a received Webhook.
-protocol WebhookEventRecord: Codable {
+protocol WebhookEventRecord {
 
     /// The event type.
     var eventType: WebhookEventType { get }
 
-    /// The channel name relating to the Webhook event.
-    var channelName: String { get }
+    /// The channel relating to the Webhook event.
+    var channel: Channel { get }
 
-    /// The event name (only set if `eventType` is `.clientEvent`).
-    var eventName: String? { get }
-
-    /// The event data (only set if `eventType` is `.clientEvent`).
-    var eventData: Data? { get }
+    /// The event (only set if `eventType` is `clientEvent`).
+    var event: Event? { get }
 
     /// The identifier of the socket that sent the event (only set if `eventType` is `.clientEvent`).
     var socketId: String? { get }

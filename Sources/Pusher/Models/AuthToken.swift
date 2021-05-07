@@ -3,9 +3,9 @@ import Foundation
 /// Encapsulates an authentication signature that can be used when users
 /// subscribe to private or presence channels.
 ///
-/// The `AuthToken` will contain any user data that was provided during
+/// The authentication token will contain any `userData` that was provided during
 /// the signing request. In the case of encrypted channels, it will also
-/// contain a base-64 encoded shared secret.
+/// contain a base-64 encoded `sharedSecret`.
 public struct AuthToken: Codable {
 
     /// The authentication signature for the channel subscription attempt.

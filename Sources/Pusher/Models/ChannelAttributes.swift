@@ -4,8 +4,10 @@ import Foundation
 /// provided to a top-level API method (see `Pusher.swift`).
 public struct ChannelAttributes: SubscriptionCountable, UserCountable, Decodable {
 
+    /// The number of all connections currently subscribed.
     public let subscriptionCount: UInt?
 
+    /// The number of distinct users that are currently subscribed.
     public let userCount: UInt?
 
     // MARK: - Decodable conformance

@@ -30,9 +30,8 @@ struct ChannelSummaryListAPIResponse: Decodable {
 
         // swiftlint:disable:next line_length
         self.channelSummaryList = attributesDict.map { (name: String, attributes: ChannelAttributes) -> ChannelSummary in
-            return ChannelSummary(name: name,
-                                  attributes: attributes,
-                                  type: ChannelType(channelName: name))
+            return ChannelSummary(channel: Channel(fullName: name),
+                                  attributes: attributes)
         }
     }
 }

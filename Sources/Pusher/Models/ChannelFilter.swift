@@ -1,6 +1,9 @@
 import Foundation
 
 /// A filter that may be applied when fetching information on occupied channels from the HTTP API.
+///
+/// The filter can either be based on the channel type, or a user-specified prefix
+/// that allows filtering based on custom naming schemes.
 public enum ChannelFilter {
 
     /// A filter encapsulating any channel that can be subscribed to.

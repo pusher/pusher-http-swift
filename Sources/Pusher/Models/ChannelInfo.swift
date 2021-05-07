@@ -3,7 +3,10 @@ import Foundation
 /// An information record for an occupied channel.
 public struct ChannelInfo: ChannelInfoRecord, Decodable {
 
+    /// If there is at least one user subscribed to the channel, it is classed as occupied.
     public let isOccupied: Bool
+
+    /// The fetched channel attributes.
     public let attributes: ChannelAttributes
 
     // MARK: - Decodable conformance

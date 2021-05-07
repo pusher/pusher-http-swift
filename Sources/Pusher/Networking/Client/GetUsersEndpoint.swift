@@ -18,7 +18,7 @@ struct GetUsersEndpoint: APIotaCodableEndpoint {
 
     var path: String {
 
-        return "/apps/\(options.appId)/channels/\(channel.internalName)/users"
+        return "/apps/\(options.appId)/channels/\(channel.fullName)/users"
     }
 
     var queryItems: [URLQueryItem]? {

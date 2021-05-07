@@ -1,6 +1,10 @@
 import Foundation
 
 /// Attributes of an occupied channel that can be fetched from the Pusher HTTP API.
+///
+/// The attributes that can be fetched for a channel is dependent on its `ChannelType`.
+/// Attempting to fetch an attribute for a channel that does not support it will result
+/// in an error.
 public struct ChannelAttributeFetchOptions: OptionSet {
 
     public let rawValue: Int
@@ -10,12 +14,21 @@ public struct ChannelAttributeFetchOptions: OptionSet {
     }
 
     /// The number of distinct users that are currently subscribed.
+    ///
+    /// This attribute is only supported for presence channels.
     public static let userCount = Self(rawValue: 1 << 0)
 
     /// The number of all connections currently subscribed.
+    ///
+    /// This attribute is not available by default. To enable it, please see the app settings
+    /// page of your Channels dashboard. Attempts to fetch it when it is disabled result in
+    /// an error.
     public static let subscriptionCount = Self(rawValue: 1 << 1)
 
-    /// All available attributes for the occupied channel.
+    /// All available attributes for the occupied channel. (i.e. `[.userCount, .subscriptionCount]`).
+    ///
+    /// This is only supported for presence channels and applications that have enabled
+    /// `subscriptionCount` attribute queries.
     public static let all: Self = [.userCount, .subscriptionCount]
 }
 

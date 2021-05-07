@@ -98,6 +98,8 @@ public class Pusher {
         }
     }
 
+    // MARK: - Triggering events
+
     /// Trigger an event on one or more channels.
     ///
     /// The channel (or channels) that the event should be triggered on, (as well as the

@@ -34,6 +34,7 @@ public struct Event: EventInfoRecord, Encodable {
     ///   - eventData: An event data object, whose type must conform to `Encodable`.
     ///   - channel: The `Channel` on which to trigger the `Event`.
     ///   - socketId: A connection to which the event will not be sent.
+    ///   - attributeOptions: A set of attributes that should be returned for the `channel`.
     /// - Throws: An `PusherError` if encoding the `eventData` fails for some reason.
     public init<EventData: Encodable>(eventName: String,
                                       eventData: EventData,
@@ -55,6 +56,7 @@ public struct Event: EventInfoRecord, Encodable {
     ///   - eventData: An event data object, whose type must conform to `Encodable`.
     ///   - channels: An array of `Channel`s on which to trigger the `Event`.
     ///   - socketId: A connection to which the event will not be sent.
+    ///   - attributeOptions: A set of attributes that should be returned for each channel in `channels`.
     /// - Throws: An `PusherError` if encoding the `eventData` fails for some reason,
     ///           or if `channels` contains any encrypted channels.
     public init<EventData: Encodable>(eventName: String,

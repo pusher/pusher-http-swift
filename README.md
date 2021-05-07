@@ -94,8 +94,8 @@ To trigger an event on one or more channels, use the `trigger(event:callback:)` 
 
 ```swift
 let publicChannel = Channel(name: "my-channel", type: .public)
-let publicEvent = try! Event(eventName: "my-event",
-                             eventData: "hello world!",
+let publicEvent = try! Event(name: "my-event",
+                             data: "hello world!",
                              channel: publicChannel)
 
 self.pusher.trigger(event: publicEvent) { result in
@@ -113,8 +113,8 @@ self.pusher.trigger(event: publicEvent) { result in
 ```swift
 let publicChannelOne = Channel(name: "my-channel", type: .public)
 let publicChannelTwo = Channel(name: "my-other-channel", type: .public)
-let multichannelEvent = try! Event(eventName: "my-multichannel-event",
-                                   eventData: "hello world!",
+let multichannelEvent = try! Event(name: "my-multichannel-event",
+                                   data: "hello world!",
                                    channels: [publicChannelOne,
                                               publicChannelTwo])
 
@@ -135,11 +135,11 @@ It's also possible to send multiple events with a single API call (max 10 events
 ```swift
 let publicChannelOne = Channel(name: "my-channel", type: .public)
 let publicChannelTwo = Channel(name: "my-other-channel", type: .public)
-let eventOne = try! Event(eventName: "my-event",
-                          eventData: "hello world!",
+let eventOne = try! Event(name: "my-event",
+                          data: "hello world!",
                           channel: publicChannelOne)
-let eventTwo = try! Event(eventName: "my-other-event",
-                          eventData: "hello world, again!",
+let eventTwo = try! Event(name: "my-other-event",
+                          data: "hello world, again!",
                           channel: publicChannelTwo)
 
 self.pusher.trigger(events: [eventOne, eventTwo]]) { result in
@@ -159,8 +159,8 @@ In some situations, you want to stop the client that broadcasts an event from re
 ```swift
 let socketIdToExclude = "123.456"
 let publicChannel = Channel(name: "my-channel", type: .public)
-let excludedClientEvent = try! Event(eventName: "my-event",
-                                     eventData: "hello world!",
+let excludedClientEvent = try! Event(name: "my-event",
+                                     data: "hello world!",
                                      channel: publicChannel,
                                      socketId: socketIdToExclude)
 
@@ -180,8 +180,8 @@ It is possible to fetch attributes about the channel(s) that were triggered to w
 
 ```swift
 let publicChannel = Channel(name: "my-channel", type: .public)
-let publicEvent = try! Event(eventName: "my-event",
-                             eventData: "hello world!",
+let publicEvent = try! Event(name: "my-event",
+                             data: "hello world!",
                              channel: publicChannel,
                              attributeOptions: [.subscriptionCount])
 
@@ -284,8 +284,8 @@ let options = try! PusherClientOptions(appId: 123456,
 ```swift
 let publicChannel = Channel(name: "my-channel", type: .public)
 let encryptedChannel = Channel(name: "my-other-channel", type: .encrypted)
-let event = try! Event(eventName: "my-event",
-                       eventData: "hello world!",
+let event = try! Event(name: "my-event",
+                       data: "hello world!",
                        channels: [publicChannel, encryptedChannel])
 
 self.pusher.trigger(event: event]) { result in

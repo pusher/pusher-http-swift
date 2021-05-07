@@ -172,8 +172,8 @@ public class Pusher {
     ///   - callback: A closure that returns a `Result` containing a verified `Webhook` and the
     ///               events that were sent with it (which are decrypted if needed), or a `PusherError`
     ///               if the operation fails for some reason.
-    public func verifyWebhookRequest(_ request: URLRequest,
-                                     callback: @escaping (Result<Webhook, PusherError>) -> Void) {
+    public func verifyWebhook(request: URLRequest,
+                              callback: @escaping (Result<Webhook, PusherError>) -> Void) {
 
         // Verify request key and signature and then decode into a `Webhook`
         do {

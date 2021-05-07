@@ -38,7 +38,7 @@ struct AuthTokenService {
             }
         }
 
-        var stringToSign = "\(socketId):\(channel.internalName)"
+        var stringToSign = "\(socketId):\(channel.fullName)"
         var userDataString: String?
         if userData != nil {
             userDataString = try JSONEncoder().encode(userData).toString()
@@ -51,7 +51,7 @@ struct AuthTokenService {
 
         var sharedSecret: String?
         if channel.type == .encrypted {
-            let stringToDigest = "\(channel.internalName)\(options.encryptionMasterKey)"
+            let stringToDigest = "\(channel.fullName)\(options.encryptionMasterKey)"
             sharedSecret = CryptoService.sha256Digest(data: stringToDigest.toData()).base64EncodedString()
         }
 

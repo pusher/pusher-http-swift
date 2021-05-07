@@ -100,8 +100,8 @@ public struct Event: EventInfoRecord, Encodable {
         let eventDataString = eventData.toString()
         try container.encode(eventDataString, forKey: .eventData)
 
-        try container.encode(channels?.map { $0.internalName }, forKey: .channels)
-        try container.encode(channel?.internalName, forKey: .channel)
+        try container.encode(channels?.map { $0.fullName }, forKey: .channels)
+        try container.encode(channel?.fullName, forKey: .channel)
         try container.encode(socketId, forKey: .socketId)
         if !attributeOptions.description.isEmpty {
             try container.encode(attributeOptions.description, forKey: .attributeOptions)
@@ -130,7 +130,7 @@ public struct Event: EventInfoRecord, Encodable {
 
         do {
             let eventNonce = try CryptoService.secureRandomData(count: 24)
-            let sharedSecretString = "\(channel.internalName)\(options.encryptionMasterKey)"
+            let sharedSecretString = "\(channel.fullName)\(options.encryptionMasterKey)"
             let sharedSecret = CryptoService.sha256Digest(data: sharedSecretString.toData())
             let eventCiphertext = try CryptoService.encrypt(data: eventData,
                                                             nonce: eventNonce,

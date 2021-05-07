@@ -15,11 +15,11 @@ extension XCTestCase {
     ///   - function: The function that called the receiver.
     ///   - line: The line number of the call site of the receiver.
     func verifyAPIResultFailure<T>(_ result: Result<T, PusherError>,
-                                              expectation: XCTestExpectation,
-                                              expectedError: PusherError,
-                                              file: StaticString = #file,
-                                              function: StaticString = #function,
-                                              line: UInt = #line) {
+                                   expectation: XCTestExpectation,
+                                   expectedError: PusherError,
+                                   file: StaticString = #file,
+                                   function: StaticString = #function,
+                                   line: UInt = #line) {
         switch result {
         case .success:
             XCTFail("This test should not succeed.", file: file, line: line)
@@ -40,11 +40,11 @@ extension XCTestCase {
     ///   - function: The function that called the receiver.
     ///   - line: The line number of the call site of the receiver.
     func verifyAPIResultSuccess<T>(_ result: Result<T, PusherError>,
-                                              expectation: XCTestExpectation,
-                                              validateResultCallback: (T) -> Void,
-                                              file: StaticString = #file,
-                                              function: StaticString = #function,
-                                              line: UInt = #line) {
+                                   expectation: XCTestExpectation,
+                                   validateResultCallback: (T) -> Void,
+                                   file: StaticString = #file,
+                                   function: StaticString = #function,
+                                   line: UInt = #line) {
         switch result {
         case .success(let value):
             validateResultCallback(value)

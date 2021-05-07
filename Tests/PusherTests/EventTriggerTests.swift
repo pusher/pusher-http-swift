@@ -51,8 +51,8 @@ final class EventTriggerTests: XCTestCase {
     func testPostEventToChannelFailsForInvalidMultichannelEvent() throws {
         let expectation = XCTestExpectation(function: #function)
         do {
-            _ = try Event(eventName: "my-multichannel-event",
-                          eventData: TestObjects.Events.eventData,
+            _ = try Event(name: "my-multichannel-event",
+                          data: TestObjects.Events.eventData,
                           channels: [TestObjects.Channels.encrypted,
                                      TestObjects.Channels.public])
         } catch {

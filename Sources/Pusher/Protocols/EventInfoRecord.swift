@@ -10,10 +10,10 @@ protocol EventInfoRecord {
     var channel: Channel? { get }
 
     /// The event name.
-    var eventName: String { get }
+    var name: String { get }
 
     /// The event payload data.
-    var eventData: Data { get }
+    var data: Data { get }
 
     /// A connection to which the event will not be sent.
     var socketId: String? { get }

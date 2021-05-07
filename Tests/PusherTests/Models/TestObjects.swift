@@ -98,20 +98,20 @@ struct TestObjects {
 
     struct Events {
 
-        static let encrypted = try! Event(eventName: "my-event",
-                                          eventData: Self.eventData,
+        static let encrypted = try! Event(name: "my-event",
+                                          data: Self.eventData,
                                           channel: TestObjects.Channels.encrypted)
 
-        static let `private` = try! Event(eventName: "my-event",
-                                          eventData: Self.eventData,
+        static let `private` = try! Event(name: "my-event",
+                                          data: Self.eventData,
                                           channel: TestObjects.Channels.private)
 
-        static let `public` = try! Event(eventName: "my-event",
-                                         eventData: Self.eventData,
+        static let `public` = try! Event(name: "my-event",
+                                         data: Self.eventData,
                                          channel: TestObjects.Channels.public)
 
-        static let multichannel = try! Event(eventName: "my-multichannel-event",
-                                             eventData: Self.eventData,
+        static let multichannel = try! Event(name: "my-multichannel-event",
+                                             data: Self.eventData,
                                              channels: [TestObjects.Channels.private,
                                                         TestObjects.Channels.public])
 

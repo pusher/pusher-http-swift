@@ -83,10 +83,10 @@ final class WebhookTests: XCTestCase {
                 XCTAssertEqual(webhook.events.first!.eventType, .clientEvent)
                 XCTAssertEqual(webhook.events.first!.channel.name, "my-channel")
                 XCTAssertEqual(webhook.events.first!.channel.type, .public)
-                XCTAssertEqual(webhook.events.first!.event?.eventName, "my-event")
-                XCTAssertNotNil(webhook.events.first!.event?.eventData)
+                XCTAssertEqual(webhook.events.first!.event?.name, "my-event")
+                XCTAssertNotNil(webhook.events.first!.event?.data)
                 let decodedEventData = try? JSONDecoder().decode(MockEventData.self,
-                                                                 from: webhook.events.first!.event!.eventData)
+                                                                 from: webhook.events.first!.event!.data)
                 XCTAssertEqual(decodedEventData?.name, TestObjects.Events.eventData.name)
                 XCTAssertEqual(decodedEventData?.age, TestObjects.Events.eventData.age)
                 XCTAssertEqual(decodedEventData?.job, TestObjects.Events.eventData.job)

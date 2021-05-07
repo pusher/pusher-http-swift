@@ -48,8 +48,8 @@ public struct WebhookEvent: WebhookEventRecord, Codable {
 
         try container.encode(eventType, forKey: .eventType)
         try container.encode(channel.fullName, forKey: .channelName)
-        try container.encodeIfPresent(event?.eventName, forKey: .eventName)
-        try container.encodeIfPresent(event?.eventData, forKey: .eventData)
+        try container.encodeIfPresent(event?.name, forKey: .eventName)
+        try container.encodeIfPresent(event?.data, forKey: .eventData)
         try container.encodeIfPresent(socketId, forKey: .socketId)
         try container.encodeIfPresent(userId, forKey: .userId)
     }
@@ -66,7 +66,7 @@ public struct WebhookEvent: WebhookEventRecord, Codable {
 
         if let eventName = try container.decodeIfPresent(String.self, forKey: .eventName),
            let eventData = try container.decodeIfPresent(Data.self, forKey: .eventData) {
-            event = try Event(eventName: eventName, eventData: eventData, channel: channel)
+            event = try Event(name: eventName, data: eventData, channel: channel)
         } else {
             event = nil
         }
@@ -91,14 +91,14 @@ public struct WebhookEvent: WebhookEventRecord, Codable {
             return self
         }
 
-        let encryptedData = try JSONDecoder().decode(EncryptedData.self, from: event.eventData)
+        let encryptedData = try JSONDecoder().decode(EncryptedData.self, from: event.data)
         let sharedSecretString = "\(channel.fullName)\(options.encryptionMasterKey)"
         let sharedSecret = CryptoService.sha256Digest(data: sharedSecretString.toData())
         let decryptedEventData = try CryptoService.decrypt(data: Data(base64Encoded: encryptedData.ciphertext)!,
                                                            nonce: Data(base64Encoded: encryptedData.nonce)!,
                                                            key: sharedSecret)
-        let decryptedEvent = try Event(eventName: event.eventName,
-                                       eventData: decryptedEventData,
+        let decryptedEvent = try Event(name: event.name,
+                                       data: decryptedEventData,
                                        channel: channel)
         return WebhookEvent(eventType: eventType,
                             channel: channel,

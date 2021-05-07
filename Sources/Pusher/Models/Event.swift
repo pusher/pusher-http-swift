@@ -10,11 +10,11 @@ public struct Event: EventInfoRecord, Encodable {
     public let channel: Channel?
 
     /// The event name.
-    public let eventName: String
+    public let name: String
 
     /// This is the `Data` representation of the original `eventData` parameter of the `init` methods.
     /// The data will be encrypted if a `channel` is set and its `ChannelType` is `encrypted`.
-    public let eventData: Data
+    public let data: Data
 
     /// A connection to which the event will not be sent.
     public let socketId: String?
@@ -27,8 +27,8 @@ public struct Event: EventInfoRecord, Encodable {
     enum CodingKeys: String, CodingKey {
         case channels
         case channel
-        case eventName = "name"
-        case eventData = "data"
+        case name
+        case data
         case socketId = "socket_id"
         case attributeOptions = "info"
     }
@@ -37,37 +37,37 @@ public struct Event: EventInfoRecord, Encodable {
 
     /// Creates an event to be triggered on a specific `Channel`.
     /// - Parameters:
-    ///   - eventName: The name of the event.
-    ///   - eventData: An event data object, whose type must conform to `Encodable`.
+    ///   - name: The name of the event.
+    ///   - data: An event data object, whose type must conform to `Encodable`.
     ///   - channel: The channel on which to trigger the event.
     ///   - socketId: A connection to which the event will not be sent.
     ///   - attributeOptions: A set of attributes that should be returned for the `channel`.
     /// - Throws: An `PusherError` if encoding the `eventData` fails for some reason.
-    public init<EventData: Encodable>(eventName: String,
-                                      eventData: EventData,
+    public init<EventData: Encodable>(name: String,
+                                      data: EventData,
                                       channel: Channel,
                                       socketId: String? = nil,
                                       attributeOptions: ChannelAttributeFetchOptions = []) throws {
 
         self.channel = channel
         self.channels = nil
-        self.eventName = eventName
-        self.eventData = try Self.encodeEventData(eventData)
+        self.name = name
+        self.data = try Self.encodeEventData(data)
         self.socketId = socketId
         self.attributeOptions = attributeOptions
     }
 
     /// Creates an `Event` which will be triggered on multiple `Channel` instances.
     /// - Parameters:
-    ///   - eventName: The name of the event.
-    ///   - eventData: An event data object, whose type must conform to `Encodable`.
+    ///   - name: The name of the event.
+    ///   - data: An event data object, whose type must conform to `Encodable`.
     ///   - channels: An array of channels on which to trigger the event.
     ///   - socketId: A connection to which the event will not be sent.
     ///   - attributeOptions: A set of attributes that should be returned for each channel in `channels`.
     /// - Throws: An `PusherError` if encoding the `eventData` fails for some reason,
     ///           or if `channels` contains any encrypted channels.
-    public init<EventData: Encodable>(eventName: String,
-                                      eventData: EventData,
+    public init<EventData: Encodable>(name: String,
+                                      data: EventData,
                                       channels: [Channel],
                                       socketId: String? = nil,
                                       attributeOptions: ChannelAttributeFetchOptions = []) throws {
@@ -82,8 +82,8 @@ public struct Event: EventInfoRecord, Encodable {
 
         self.channel = nil
         self.channels = channels
-        self.eventName = eventName
-        self.eventData = try Self.encodeEventData(eventData)
+        self.name = name
+        self.data = try Self.encodeEventData(data)
         self.socketId = socketId
         self.attributeOptions = attributeOptions
     }
@@ -93,12 +93,12 @@ public struct Event: EventInfoRecord, Encodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
 
-        try container.encode(eventName, forKey: .eventName)
+        try container.encode(name, forKey: .name)
 
         // This custom `encode(to:)` implementation is neccessary since
         // event data is expected as a `String` rather than as a JSON object
-        let eventDataString = eventData.toString()
-        try container.encode(eventDataString, forKey: .eventData)
+        let eventDataString = data.toString()
+        try container.encode(eventDataString, forKey: .data)
 
         try container.encode(channels?.map { $0.fullName }, forKey: .channels)
         try container.encode(channel?.fullName, forKey: .channel)
@@ -132,14 +132,14 @@ public struct Event: EventInfoRecord, Encodable {
             let eventNonce = try CryptoService.secureRandomData(count: 24)
             let sharedSecretString = "\(channel.fullName)\(options.encryptionMasterKey)"
             let sharedSecret = CryptoService.sha256Digest(data: sharedSecretString.toData())
-            let eventCiphertext = try CryptoService.encrypt(data: eventData,
+            let eventCiphertext = try CryptoService.encrypt(data: data,
                                                             nonce: eventNonce,
                                                             key: sharedSecret)
             let encryptedEvent = EncryptedData(nonceData: eventNonce,
                                                ciphertextData: eventCiphertext)
             let encryptedEventData = try Self.encodeEventData(encryptedEvent)
 
-            return try Event(eventName: eventName, eventData: encryptedEventData, channel: channel)
+            return try Event(name: name, data: encryptedEventData, channel: channel)
         } catch {
             throw PusherError(from: error)
         }

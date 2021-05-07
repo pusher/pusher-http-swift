@@ -121,8 +121,6 @@ struct TestObjects {
                                              age: 28,
                                              job: "Software Engineer",
                                              metadata: ["id": 10])
-
-        static let encodedEventData = try! JSONEncoder().encode(eventData)
     }
 
     // MARK: - Private and presence channel auth signatures
@@ -189,27 +187,26 @@ struct TestObjects {
 
         private static let channelOccupied = Webhook(createdAt: Date(timeIntervalSince1970: 1619602993),
                                                      events: [WebhookEvent(eventType: .channelOccupied,
-                                                                           channelName: "my-channel")])
+                                                                           channel: TestObjects.Channels.public)])
 
         private static let channelVacated = Webhook(createdAt: Date(timeIntervalSince1970: 1619602993),
                                                     events: [WebhookEvent(eventType: .channelVacated,
-                                                                          channelName: "my-channel")])
+                                                                          channel: TestObjects.Channels.public)])
 
         private static let memberAdded = Webhook(createdAt: Date(timeIntervalSince1970: 1619602993),
                                                  events: [WebhookEvent(eventType: .memberAdded,
-                                                                       channelName: "presence-my-channel",
+                                                                       channel: TestObjects.Channels.presence,
                                                                        userId: "user_1")])
 
         private static let memberRemoved = Webhook(createdAt: Date(timeIntervalSince1970: 1619602993),
                                                    events: [WebhookEvent(eventType: .memberRemoved,
-                                                                         channelName: "presence-my-channel",
+                                                                         channel: TestObjects.Channels.presence,
                                                                          userId: "user_1")])
 
         private static let clientEvent = Webhook(createdAt: Date(timeIntervalSince1970: 1619602993),
                                                  events: [WebhookEvent(eventType: .clientEvent,
-                                                                       channelName: "my-channel",
-                                                                       eventName: "my-event",
-                                                                       eventData: TestObjects.Events.encodedEventData,
+                                                                       channel: TestObjects.Channels.public,
+                                                                       event: TestObjects.Events.public,
                                                                        socketId: "socket_1")])
 
         private static func webhookRequest(for webhook: Webhook? = nil,

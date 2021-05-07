@@ -1,19 +1,16 @@
 import Foundation
 
 /// An event that is contained within a received `Webhook`.
-public struct WebhookEvent: WebhookEventRecord {
+public struct WebhookEvent: WebhookEventRecord, Codable {
 
     /// The event type.
     public let eventType: WebhookEventType
 
-    /// The channel name relating to the Webhook event.
-    public let channelName: String
+    /// The channel relating to the Webhook event.
+    public let channel: Channel
 
-    /// The event name (only set if `eventType` is `clientEvent`).
-    public let eventName: String?
-
-    /// The event data (only set if `eventType` is `clientEvent`).
-    public let eventData: Data?
+    /// The event (only set if `eventType` is `clientEvent`).
+    public let event: Event?
 
     /// The identifier of the socket that sent the event (only set if `eventType` is `clientEvent`).
     public let socketId: String?
@@ -33,17 +30,49 @@ public struct WebhookEvent: WebhookEventRecord {
     // MARK: - Lifecycle (used in Tests)
 
     init(eventType: WebhookEventType,
-         channelName: String,
-         eventName: String? = nil,
-         eventData: Data? = nil,
+         channel: Channel,
+         event: Event? = nil,
          socketId: String? = nil,
          userId: String? = nil) {
         self.eventType = eventType
-        self.channelName = channelName
-        self.eventName = eventName
-        self.eventData = eventData
+        self.channel = channel
+        self.event = event
         self.socketId = socketId
         self.userId = userId
+    }
+
+    // MARK: - Custom Encodable conformance (used in Tests)
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+
+        try container.encode(eventType, forKey: .eventType)
+        try container.encode(channel.fullName, forKey: .channelName)
+        try container.encodeIfPresent(event?.eventName, forKey: .eventName)
+        try container.encodeIfPresent(event?.eventData, forKey: .eventData)
+        try container.encodeIfPresent(socketId, forKey: .socketId)
+        try container.encodeIfPresent(userId, forKey: .userId)
+    }
+
+    // MARK: - Custom Decodable initializer
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        eventType = try container.decode(WebhookEventType.self, forKey: .eventType)
+
+        let channelName = try container.decode(String.self, forKey: .channelName)
+        channel = Channel(fullName: channelName)
+
+        if let eventName = try container.decodeIfPresent(String.self, forKey: .eventName),
+           let eventData = try container.decodeIfPresent(Data.self, forKey: .eventData) {
+            event = try Event(eventName: eventName, eventData: eventData, channel: channel)
+        } else {
+            event = nil
+        }
+
+        socketId = try container.decodeIfPresent(String.self, forKey: .socketId)
+        userId = try container.decodeIfPresent(String.self, forKey: .userId)
     }
 
     // MARK: - Event data decryption
@@ -58,20 +87,22 @@ public struct WebhookEvent: WebhookEventRecord {
     /// - Returns: A copy of the receiver, but with decrypted `eventData`. If the `channel` is not
     ///            encrypted, the receiver will be returned unaltered.
     func decrypted(using options: PusherClientOptions) throws -> Self {
-        guard let eventData = eventData, ChannelType(fullName: channelName) == .encrypted else {
+        guard let event = event, channel.type == .encrypted else {
             return self
         }
 
-        let encryptedData = try JSONDecoder().decode(EncryptedData.self, from: eventData)
-        let sharedSecretString = "\(channelName)\(options.encryptionMasterKey)"
+        let encryptedData = try JSONDecoder().decode(EncryptedData.self, from: event.eventData)
+        let sharedSecretString = "\(channel.fullName)\(options.encryptionMasterKey)"
         let sharedSecret = CryptoService.sha256Digest(data: sharedSecretString.toData())
         let decryptedEventData = try CryptoService.decrypt(data: Data(base64Encoded: encryptedData.ciphertext)!,
                                                            nonce: Data(base64Encoded: encryptedData.nonce)!,
                                                            key: sharedSecret)
+        let decryptedEvent = try Event(eventName: event.eventName,
+                                       eventData: decryptedEventData,
+                                       channel: channel)
         return WebhookEvent(eventType: eventType,
-                            channelName: channelName,
-                            eventName: eventName,
-                            eventData: decryptedEventData,
+                            channel: channel,
+                            event: decryptedEvent,
                             socketId: socketId,
                             userId: userId)
     }

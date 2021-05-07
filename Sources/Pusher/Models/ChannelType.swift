@@ -1,6 +1,6 @@
 import Foundation
 
-/// The available channel types.
+/// The available channel types for a Pusher Channels application.
 public enum ChannelType: String, Decodable {
 
     /// An end-to-end encrypted channel.
@@ -29,10 +29,11 @@ public enum ChannelType: String, Decodable {
     /// These channels do not require any form of authorisation in order to be subscribed to.
     case `public`
 
-    /// Creates a `ChannelType` based on a channel name.
+    /// Creates a `ChannelType` whose value is inferred based on a channel name.
     ///
-    /// As an example, a channel named `"presence-my-channel"` would initialize to `.presence`.
-    /// Any channel named without a reserved prefix will be initialized to `.public`. (E.g. `"my-important-channel"`).
+    /// A channel named `"presence-my-channel"` would initialize to a value of `presence`.
+    /// Any channel named without a reserved prefix will be initialized to `public`.
+    /// (e.g. `"my-important-channel"`).
     /// - Parameter channelName: The channel name.
     public init(channelName: String) {
         if channelName.hasPrefix("\(Self.encrypted.rawValue)-") {

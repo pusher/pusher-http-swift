@@ -3,13 +3,20 @@ import Foundation
 /// An event to trigger on a specific channel (or multiple channels).
 public struct Event: EventInfoRecord, Encodable {
 
+    /// The channels to which the event will be sent (if publishing to multiple channels).
     public let channels: [Channel]?
+
+    /// The channel to which the event will be sent (if publishing to a single channel).
     public let channel: Channel?
+
+    /// The event name.
     public let eventName: String
 
     /// This is the `Data` representation of the original `eventData` parameter of the `init` methods.
     /// The data will be encrypted if a `channel` is set and its `ChannelType` is `.encrypted`.
     public let eventData: Data
+
+    /// A connection to which the event will not be sent.
     public let socketId: String?
 
     /// The channel attributes to fetch that will be present in the API response.
@@ -28,11 +35,11 @@ public struct Event: EventInfoRecord, Encodable {
 
     // MARK: - Lifecycle
 
-    /// Creates an `Event` which will be triggered on a specific `Channel`.
+    /// Creates an event to be triggered on a specific `Channel`.
     /// - Parameters:
     ///   - eventName: The name of the event.
     ///   - eventData: An event data object, whose type must conform to `Encodable`.
-    ///   - channel: The `Channel` on which to trigger the `Event`.
+    ///   - channel: The channel on which to trigger the event.
     ///   - socketId: A connection to which the event will not be sent.
     ///   - attributeOptions: A set of attributes that should be returned for the `channel`.
     /// - Throws: An `PusherError` if encoding the `eventData` fails for some reason.
@@ -54,7 +61,7 @@ public struct Event: EventInfoRecord, Encodable {
     /// - Parameters:
     ///   - eventName: The name of the event.
     ///   - eventData: An event data object, whose type must conform to `Encodable`.
-    ///   - channels: An array of `Channel`s on which to trigger the `Event`.
+    ///   - channels: An array of channels on which to trigger the event.
     ///   - socketId: A connection to which the event will not be sent.
     ///   - attributeOptions: A set of attributes that should be returned for each channel in `channels`.
     /// - Throws: An `PusherError` if encoding the `eventData` fails for some reason,

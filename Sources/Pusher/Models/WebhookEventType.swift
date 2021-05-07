@@ -1,6 +1,6 @@
 import Foundation
 
-/// The available Webhook event types.
+/// The available Pusher Channels Webhook event types.
 public enum WebhookEventType: String, Codable {
 
     /// A channel has become occupied. (i.e. there is at least one subscriber).

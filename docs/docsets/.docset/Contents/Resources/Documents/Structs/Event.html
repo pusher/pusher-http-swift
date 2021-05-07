@@ -177,9 +177,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:6Pusher5EventV9eventNameSSvp"></a>
-                    <a name="//apple_ref/swift/Property/eventName" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Pusher5EventV9eventNameSSvp">eventName</a>
+                    <a name="/s:6Pusher5EventV4nameSSvp"></a>
+                    <a name="//apple_ref/swift/Property/name" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Pusher5EventV4nameSSvp">name</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -194,7 +194,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">eventName</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">name</span><span class="p">:</span> <span class="kt">String</span></code></pre>
 
                         </div>
                       </div>
@@ -204,9 +204,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:6Pusher5EventV9eventData10Foundation0D0Vvp"></a>
-                    <a name="//apple_ref/swift/Property/eventData" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Pusher5EventV9eventData10Foundation0D0Vvp">eventData</a>
+                    <a name="/s:6Pusher5EventV4data10Foundation4DataVvp"></a>
+                    <a name="//apple_ref/swift/Property/data" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Pusher5EventV4data10Foundation4DataVvp">data</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -222,7 +222,7 @@ The data will be encrypted if a <code><a href="../Structs/Event.html#/s:6Pusher5
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">eventData</span><span class="p">:</span> <span class="kt">Data</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">data</span><span class="p">:</span> <span class="kt">Data</span></code></pre>
 
                         </div>
                       </div>
@@ -272,9 +272,9 @@ The data will be encrypted if a <code><a href="../Structs/Event.html#/s:6Pusher5
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:6Pusher5EventV9eventName0C4Data7channel8socketId16attributeOptionsACSS_xAA7ChannelVSSSgAA0k14AttributeFetchJ0VtKcSERzlufc"></a>
-                    <a name="//apple_ref/swift/Method/init(eventName:eventData:channel:socketId:attributeOptions:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Pusher5EventV9eventName0C4Data7channel8socketId16attributeOptionsACSS_xAA7ChannelVSSSgAA0k14AttributeFetchJ0VtKcSERzlufc">init(eventName:<wbr>eventData:<wbr>channel:<wbr>socketId:<wbr>attributeOptions:<wbr>)</a>
+                    <a name="/s:6Pusher5EventV4name4data7channel8socketId16attributeOptionsACSS_xAA7ChannelVSSSgAA0j14AttributeFetchI0VtKcSERzlufc"></a>
+                    <a name="//apple_ref/swift/Method/init(name:data:channel:socketId:attributeOptions:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Pusher5EventV4name4data7channel8socketId16attributeOptionsACSS_xAA7ChannelVSSSgAA0j14AttributeFetchI0VtKcSERzlufc">init(name:<wbr>data:<wbr>channel:<wbr>socketId:<wbr>attributeOptions:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -285,7 +285,7 @@ The data will be encrypted if a <code><a href="../Structs/Event.html#/s:6Pusher5
                         <p>Creates an event to be triggered on a specific <code><a href="../Structs/Channel.html">Channel</a></code>.</p>
 <div class="aside aside-throws">
     <p class="aside-title">Throws</p>
-    An <code><a href="../Enums/PusherError.html">PusherError</a></code> if encoding the <code><a href="../Structs/Event.html#/s:6Pusher5EventV9eventData10Foundation0D0Vvp">eventData</a></code> fails for some reason.
+    An <code><a href="../Enums/PusherError.html">PusherError</a></code> if encoding the <code>eventData</code> fails for some reason.
 
 </div>
 
@@ -294,8 +294,8 @@ The data will be encrypted if a <code><a href="../Structs/Event.html#/s:6Pusher5
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">init</span><span class="o">&lt;</span><span class="kt">EventData</span><span class="p">:</span> <span class="kt">Encodable</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">eventName</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span>
-                                  <span class="nv">eventData</span><span class="p">:</span> <span class="kt">EventData</span><span class="p">,</span>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">init</span><span class="o">&lt;</span><span class="kt">EventData</span><span class="p">:</span> <span class="kt">Encodable</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span>
+                                  <span class="nv">data</span><span class="p">:</span> <span class="kt">EventData</span><span class="p">,</span>
                                   <span class="nv">channel</span><span class="p">:</span> <span class="kt"><a href="../Structs/Channel.html">Channel</a></span><span class="p">,</span>
                                   <span class="nv">socketId</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
                                   <span class="nv">attributeOptions</span><span class="p">:</span> <span class="kt"><a href="../Structs/ChannelAttributeFetchOptions.html">ChannelAttributeFetchOptions</a></span> <span class="o">=</span> <span class="p">[])</span> <span class="k">throws</span></code></pre>
@@ -309,7 +309,7 @@ The data will be encrypted if a <code><a href="../Structs/Event.html#/s:6Pusher5
                             <tr>
                               <td>
                                 <code>
-                                <em>eventName</em>
+                                <em>name</em>
                                 </code>
                               </td>
                               <td>
@@ -321,7 +321,7 @@ The data will be encrypted if a <code><a href="../Structs/Event.html#/s:6Pusher5
                             <tr>
                               <td>
                                 <code>
-                                <em>eventData</em>
+                                <em>data</em>
                                 </code>
                               </td>
                               <td>
@@ -375,9 +375,9 @@ The data will be encrypted if a <code><a href="../Structs/Event.html#/s:6Pusher5
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:6Pusher5EventV9eventName0C4Data8channels8socketId16attributeOptionsACSS_xSayAA7ChannelVGSSSgAA0k14AttributeFetchJ0VtKcSERzlufc"></a>
-                    <a name="//apple_ref/swift/Method/init(eventName:eventData:channels:socketId:attributeOptions:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Pusher5EventV9eventName0C4Data8channels8socketId16attributeOptionsACSS_xSayAA7ChannelVGSSSgAA0k14AttributeFetchJ0VtKcSERzlufc">init(eventName:<wbr>eventData:<wbr>channels:<wbr>socketId:<wbr>attributeOptions:<wbr>)</a>
+                    <a name="/s:6Pusher5EventV4name4data8channels8socketId16attributeOptionsACSS_xSayAA7ChannelVGSSSgAA0j14AttributeFetchI0VtKcSERzlufc"></a>
+                    <a name="//apple_ref/swift/Method/init(name:data:channels:socketId:attributeOptions:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Pusher5EventV4name4data8channels8socketId16attributeOptionsACSS_xSayAA7ChannelVGSSSgAA0j14AttributeFetchI0VtKcSERzlufc">init(name:<wbr>data:<wbr>channels:<wbr>socketId:<wbr>attributeOptions:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -388,7 +388,7 @@ The data will be encrypted if a <code><a href="../Structs/Event.html#/s:6Pusher5
                         <p>Creates an <code>Event</code> which will be triggered on multiple <code><a href="../Structs/Channel.html">Channel</a></code> instances.</p>
 <div class="aside aside-throws">
     <p class="aside-title">Throws</p>
-    An <code><a href="../Enums/PusherError.html">PusherError</a></code> if encoding the <code><a href="../Structs/Event.html#/s:6Pusher5EventV9eventData10Foundation0D0Vvp">eventData</a></code> fails for some reason,
+    An <code><a href="../Enums/PusherError.html">PusherError</a></code> if encoding the <code>eventData</code> fails for some reason,
       or if <code><a href="../Structs/Event.html#/s:6Pusher5EventV8channelsSayAA7ChannelVGSgvp">channels</a></code> contains any encrypted channels.
 
 </div>
@@ -398,8 +398,8 @@ The data will be encrypted if a <code><a href="../Structs/Event.html#/s:6Pusher5
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">init</span><span class="o">&lt;</span><span class="kt">EventData</span><span class="p">:</span> <span class="kt">Encodable</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">eventName</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span>
-                                  <span class="nv">eventData</span><span class="p">:</span> <span class="kt">EventData</span><span class="p">,</span>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">init</span><span class="o">&lt;</span><span class="kt">EventData</span><span class="p">:</span> <span class="kt">Encodable</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span>
+                                  <span class="nv">data</span><span class="p">:</span> <span class="kt">EventData</span><span class="p">,</span>
                                   <span class="nv">channels</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Structs/Channel.html">Channel</a></span><span class="p">],</span>
                                   <span class="nv">socketId</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
                                   <span class="nv">attributeOptions</span><span class="p">:</span> <span class="kt"><a href="../Structs/ChannelAttributeFetchOptions.html">ChannelAttributeFetchOptions</a></span> <span class="o">=</span> <span class="p">[])</span> <span class="k">throws</span></code></pre>
@@ -413,7 +413,7 @@ The data will be encrypted if a <code><a href="../Structs/Event.html#/s:6Pusher5
                             <tr>
                               <td>
                                 <code>
-                                <em>eventName</em>
+                                <em>name</em>
                                 </code>
                               </td>
                               <td>
@@ -425,7 +425,7 @@ The data will be encrypted if a <code><a href="../Structs/Event.html#/s:6Pusher5
                             <tr>
                               <td>
                                 <code>
-                                <em>eventData</em>
+                                <em>data</em>
                                 </code>
                               </td>
                               <td>

@@ -29,18 +29,18 @@ public enum ChannelType: String, Decodable {
     /// These channels do not require any form of authorisation in order to be subscribed to.
     case `public`
 
-    /// Creates a `ChannelType` whose value is inferred based on a channel name.
+    /// Creates a `ChannelType` whose value is inferred based on a full channel name.
     ///
     /// A channel named `"presence-my-channel"` would initialize to a value of `presence`.
     /// Any channel named without a reserved prefix will be initialized to `public`.
     /// (e.g. `"my-important-channel"`).
-    /// - Parameter channelName: The channel name.
-    public init(channelName: String) {
-        if channelName.hasPrefix("\(Self.encrypted.rawValue)-") {
+    /// - Parameter fullName: The full channel name.
+    public init(fullName: String) {
+        if fullName.hasPrefix("\(Self.encrypted.rawValue)-") {
             self = .encrypted
-        } else if channelName.hasPrefix("\(Self.presence.rawValue)-") {
+        } else if fullName.hasPrefix("\(Self.presence.rawValue)-") {
             self = .presence
-        } else if channelName.hasPrefix("\(Self.private.rawValue)-") {
+        } else if fullName.hasPrefix("\(Self.private.rawValue)-") {
             self = .private
         } else {
             self = .public

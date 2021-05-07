@@ -58,7 +58,7 @@ public struct WebhookEvent: WebhookEventRecord {
     /// - Returns: A copy of the receiver, but with decrypted `eventData`. If the `channel` is not
     ///            encrypted, the receiver will be returned unaltered.
     func decrypted(using options: PusherClientOptions) throws -> Self {
-        guard let eventData = eventData, ChannelType(channelName: channelName) == .encrypted else {
+        guard let eventData = eventData, ChannelType(fullName: channelName) == .encrypted else {
             return self
         }
 

@@ -14,7 +14,7 @@ extension XCTestCase {
     ///   - file: The source file that called the receiver.
     ///   - function: The function that called the receiver.
     ///   - line: The line number of the call site of the receiver.
-    func verifyAPIResultFailure<T: Decodable>(_ result: Result<T, PusherError>,
+    func verifyAPIResultFailure<T>(_ result: Result<T, PusherError>,
                                               expectation: XCTestExpectation,
                                               expectedError: PusherError,
                                               file: StaticString = #file,
@@ -39,7 +39,7 @@ extension XCTestCase {
     ///   - file: The source file that called the receiver.
     ///   - function: The function that called the receiver.
     ///   - line: The line number of the call site of the receiver.
-    func verifyAPIResultSuccess<T: Decodable>(_ result: Result<T, PusherError>,
+    func verifyAPIResultSuccess<T>(_ result: Result<T, PusherError>,
                                               expectation: XCTestExpectation,
                                               validateResultCallback: (T) -> Void,
                                               file: StaticString = #file,

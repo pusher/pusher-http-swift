@@ -39,7 +39,7 @@ final class AppStateQueryTests: XCTestCase {
 
     func testGetChannelInfoSucceeds() {
         let expectation = XCTestExpectation(function: #function)
-        Self.pusher.channelInfo(for: TestObjects.publicChannel) { result in
+        Self.pusher.channelInfo(for: TestObjects.Channels.public) { result in
             self.verifyAPIResultSuccess(result, expectation: expectation) { channelInfo in
                 XCTAssertNotNil(channelInfo)
             }
@@ -54,7 +54,7 @@ final class AppStateQueryTests: XCTestCase {
         """
         let expectedError = PusherError.failedResponse(statusCode: HTTPStatusCode.badRequest.rawValue,
                                                        errorResponse: expectedErrorMessage)
-        Self.pusher.channelInfo(for: TestObjects.publicChannel,
+        Self.pusher.channelInfo(for: TestObjects.Channels.public,
                                 attributeOptions: .userCount) { result in
             self.verifyAPIResultFailure(result,
                                         expectation: expectation,
@@ -67,7 +67,7 @@ final class AppStateQueryTests: XCTestCase {
 
     func testGetUsersForChannelSucceedsForPresenceChannel() {
         let expectation = XCTestExpectation(function: #function)
-        Self.pusher.users(for: TestObjects.presenceChannel) { result in
+        Self.pusher.users(for: TestObjects.Channels.presence) { result in
             self.verifyAPIResultSuccess(result, expectation: expectation) { users in
                 XCTAssertEqual(users.count, 0)
             }
@@ -82,7 +82,7 @@ final class AppStateQueryTests: XCTestCase {
         """
         let expectedError = PusherError.failedResponse(statusCode: HTTPStatusCode.badRequest.rawValue,
                                                        errorResponse: expectedErrorMessage)
-        Self.pusher.users(for: TestObjects.publicChannel) { result in
+        Self.pusher.users(for: TestObjects.Channels.public) { result in
             self.verifyAPIResultFailure(result,
                                         expectation: expectation,
                                         expectedError: expectedError)

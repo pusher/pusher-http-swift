@@ -10,7 +10,7 @@ final class EventTriggerTests: XCTestCase {
 
     func testPostEventToChannelSucceedsForEncryptedChannel() throws {
         let expectation = XCTestExpectation(function: #function)
-        Self.pusher.trigger(event: TestObjects.encryptedEvent) { result in
+        Self.pusher.trigger(event: TestObjects.Events.encrypted) { result in
             self.verifyAPIResultSuccess(result, expectation: expectation) { channelSummaries in
                 XCTAssertEqual(channelSummaries.count, 0)
             }
@@ -20,7 +20,7 @@ final class EventTriggerTests: XCTestCase {
 
     func testPostEventToChannelSucceedsForPrivateChannel() throws {
         let expectation = XCTestExpectation(function: #function)
-        Self.pusher.trigger(event: TestObjects.privateEvent) { result in
+        Self.pusher.trigger(event: TestObjects.Events.private) { result in
             self.verifyAPIResultSuccess(result, expectation: expectation) { channelSummaries in
                 XCTAssertEqual(channelSummaries.count, 0)
             }
@@ -30,7 +30,7 @@ final class EventTriggerTests: XCTestCase {
 
     func testPostEventToChannelSucceedsForPublicChannel() throws {
         let expectation = XCTestExpectation(function: #function)
-        Self.pusher.trigger(event: TestObjects.publicEvent) { result in
+        Self.pusher.trigger(event: TestObjects.Events.public) { result in
             self.verifyAPIResultSuccess(result, expectation: expectation) { channelSummaries in
                 XCTAssertEqual(channelSummaries.count, 0)
             }
@@ -40,7 +40,7 @@ final class EventTriggerTests: XCTestCase {
 
     func testPostEventToChannelSucceedsForValidMultichannelEvent() throws {
         let expectation = XCTestExpectation(function: #function)
-        Self.pusher.trigger(event: TestObjects.multichannelEvent) { result in
+        Self.pusher.trigger(event: TestObjects.Events.multichannel) { result in
             self.verifyAPIResultSuccess(result, expectation: expectation) { channelSummaries in
                 XCTAssertEqual(channelSummaries.count, 0)
             }
@@ -52,9 +52,9 @@ final class EventTriggerTests: XCTestCase {
         let expectation = XCTestExpectation(function: #function)
         do {
             _ = try Event(eventName: "my-multichannel-event",
-                          eventData: TestObjects.eventData,
-                          channels: [TestObjects.encryptedChannel,
-                                     TestObjects.publicChannel])
+                          eventData: TestObjects.Events.eventData,
+                          channels: [TestObjects.Channels.encrypted,
+                                     TestObjects.Channels.public])
         } catch {
             let expectedReason = "Cannot trigger an event on multiple channels if any of them are encrypted."
             XCTAssertEqual(PusherError(from: error),
@@ -68,9 +68,9 @@ final class EventTriggerTests: XCTestCase {
 
     func testPostBatchEventsToChannelSucceedsForSingleChannelEvents() throws {
         let expectation = XCTestExpectation(function: #function)
-        let testEvents = [TestObjects.encryptedEvent,
-                          TestObjects.privateEvent,
-                          TestObjects.publicEvent]
+        let testEvents = [TestObjects.Events.encrypted,
+                          TestObjects.Events.private,
+                          TestObjects.Events.public]
         Self.pusher.trigger(events: testEvents) { result in
             self.verifyAPIResultSuccess(result, expectation: expectation) { channelInfoList in
                 XCTAssertEqual(channelInfoList.count, 0)
@@ -86,17 +86,17 @@ final class EventTriggerTests: XCTestCase {
         """
         let expectedError = PusherError.failedResponse(statusCode: HTTPStatusCode.badRequest.rawValue,
                                                        errorResponse: expectedErrorMessage)
-        let testEvents = [TestObjects.encryptedEvent,
-                          TestObjects.privateEvent,
-                          TestObjects.publicEvent,
-                          TestObjects.encryptedEvent,
-                          TestObjects.privateEvent,
-                          TestObjects.publicEvent,
-                          TestObjects.encryptedEvent,
-                          TestObjects.privateEvent,
-                          TestObjects.publicEvent,
-                          TestObjects.encryptedEvent,
-                          TestObjects.privateEvent]
+        let testEvents = [TestObjects.Events.encrypted,
+                          TestObjects.Events.private,
+                          TestObjects.Events.public,
+                          TestObjects.Events.encrypted,
+                          TestObjects.Events.private,
+                          TestObjects.Events.public,
+                          TestObjects.Events.encrypted,
+                          TestObjects.Events.private,
+                          TestObjects.Events.public,
+                          TestObjects.Events.encrypted,
+                          TestObjects.Events.private]
         Self.pusher.trigger(events: testEvents) { result in
             self.verifyAPIResultFailure(result,
                                         expectation: expectation,
@@ -112,7 +112,7 @@ final class EventTriggerTests: XCTestCase {
         """
         let expectedError = PusherError.failedResponse(statusCode: HTTPStatusCode.badRequest.rawValue,
                                                        errorResponse: expectedErrorMessage)
-        let testEvents = [TestObjects.multichannelEvent]
+        let testEvents = [TestObjects.Events.multichannel]
         Self.pusher.trigger(events: testEvents) { result in
             self.verifyAPIResultFailure(result,
                                         expectation: expectation,

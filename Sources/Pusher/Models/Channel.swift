@@ -65,6 +65,7 @@ public struct Channel: ChannelDescription {
         case .encrypted, .presence, .private:
             // Drop the channel type prefix (accounting for the trailing '-')
             return String(fullName.dropFirst(type.rawValue.count + 1))
+
         case .public:
             return fullName
         }

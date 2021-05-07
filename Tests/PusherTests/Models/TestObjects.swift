@@ -15,6 +15,8 @@ struct TestObjects {
         static let testMasterKey = "a7QyXV8eYrtJBehbuix68XCPO6+LrpnNNReWOkaXW7A="
         static let testCluster = "eu"
 
+        // MARK: Shared client
+
         static let shared = Pusher(options: try! PusherClientOptions(appId: testAppId,
                                                                      key: testKey,
                                                                      secret: testSecret,
@@ -36,6 +38,8 @@ struct TestObjects {
         static let invalidPrefixCustomHost = "https://myhost.com"
         static let invalidSuffixCustomHost = "myhost.com/"
         static let testCustomPort = 3000
+
+        // MARK: Test instances
 
         static let withCluster = try! PusherClientOptions(appId: testAppId,
                                                           key: testKey,
@@ -79,140 +83,153 @@ struct TestObjects {
 
     // MARK: - Channels
 
-    static let encryptedChannel = Channel(name: "my-channel", type: .encrypted)
-    static let presenceChannel = Channel(name: "my-channel", type: .presence)
-    static let privateChannel = Channel(name: "my-channel", type: .private)
-    static let publicChannel = Channel(name: "my-channel", type: .public)
+    struct Channels {
 
-    // MARK: - Single channel events
+        static let encrypted = Channel(name: "my-channel", type: .encrypted)
 
-    static let encryptedEvent = try! Event(eventName: "my-event",
-                                           eventData: Self.eventData,
-                                           channel: Self.encryptedChannel)
+        static let presence = Channel(name: "my-channel", type: .presence)
 
-    static let privateEvent = try! Event(eventName: "my-event",
-                                        eventData: Self.eventData,
-                                        channel: Self.privateChannel)
+        static let `private` = Channel(name: "my-channel", type: .private)
 
-    static let publicEvent = try! Event(eventName: "my-event",
-                                        eventData: Self.eventData,
-                                        channel: Self.publicChannel)
+        static let `public` = Channel(name: "my-channel", type: .public)
+    }
 
-    // MARK: - Multi-channel events
+    // MARK: - Events
 
-    static let multichannelEvent = try! Event(eventName: "my-multichannel-event",
-                                              eventData: Self.eventData,
-                                              channels: [Self.privateChannel,
-                                                         Self.publicChannel])
+    struct Events {
+
+        static let encrypted = try! Event(eventName: "my-event",
+                                          eventData: Self.eventData,
+                                          channel: TestObjects.Channels.encrypted)
+
+        static let `private` = try! Event(eventName: "my-event",
+                                          eventData: Self.eventData,
+                                          channel: TestObjects.Channels.private)
+
+        static let `public` = try! Event(eventName: "my-event",
+                                         eventData: Self.eventData,
+                                         channel: TestObjects.Channels.public)
+
+        static let multichannel = try! Event(eventName: "my-multichannel-event",
+                                             eventData: Self.eventData,
+                                             channels: [TestObjects.Channels.private,
+                                                        TestObjects.Channels.public])
+
+        // MARK: Event payloads
+
+        static let eventData = MockEventData(name: "Joe Bloggs",
+                                             age: 28,
+                                             job: "Software Engineer",
+                                             metadata: ["id": 10])
+
+        static let encodedEventData = try! JSONEncoder().encode(eventData)
+    }
 
     // MARK: - Private and presence channel auth signatures
 
-    static let socketId = "123.456"
+    struct AuthSignatures {
 
-    static let presenceAuthData = PresenceUserAuthData(userId: "user_1")
+        static let testSocketId = "123.456"
 
-    static let presenceAuthDataWithUserInfo = PresenceUserAuthData(userId: "user_1",
-                                                                   userInfo: ["name": "Joe Bloggs"])
+        static let presenceAuthData = PresenceUserAuthData(userId: "user_1")
 
-    // MARK: - Event payloads
-
-    static let eventData = MockEventData(name: "Joe Bloggs",
-                                         age: 28,
-                                         job: "Software Engineer",
-                                         metadata: ["id": 10])
-
-    static let encodedEventData = try! JSONEncoder().encode(eventData)
+        static let presenceAuthDataWithUserInfo = PresenceUserAuthData(userId: "user_1",
+                                                                       userInfo: ["name": "Joe Bloggs"])
+    }
 
     // MARK: - Webhooks
 
-    static let channelOccupiedWebhookRequest: URLRequest = {
-        return webhookRequest(for: channelOccupiedWebhook)
-    }()
+    struct Webhooks {
 
-    static let channelVacatedWebhookRequest: URLRequest = {
-        return webhookRequest(for: channelVacatedWebhook)
-    }()
+        static let channelOccupiedWebhookRequest: URLRequest = {
+            return webhookRequest(for: channelOccupied)
+        }()
 
-    static let memberAddedWebhookRequest: URLRequest = {
-        return webhookRequest(for: memberAddedWebhook)
-    }()
+        static let channelVacatedWebhookRequest: URLRequest = {
+            return webhookRequest(for: channelVacated)
+        }()
 
-    static let memberRemovedWebhookRequest: URLRequest = {
-        return webhookRequest(for: memberRemovedWebhook)
-    }()
+        static let memberAddedWebhookRequest: URLRequest = {
+            return webhookRequest(for: memberAdded)
+        }()
 
-    static let clientEventWebhookRequest: URLRequest = {
-        return webhookRequest(for: clientEventWebhook)
-    }()
+        static let memberRemovedWebhookRequest: URLRequest = {
+            return webhookRequest(for: memberRemoved)
+        }()
 
-    static let missingKeyHeaderWebhookRequest: URLRequest = {
-        return webhookRequest(for: channelOccupiedWebhook,
-                              pusherKeyHeaderValue: nil)
-    }()
+        static let clientEventWebhookRequest: URLRequest = {
+            return webhookRequest(for: clientEvent)
+        }()
 
-    static let invalidKeyHeaderWebhookRequest: URLRequest = {
-        return webhookRequest(for: channelOccupiedWebhook,
-                              pusherKeyHeaderValue: "invalid_key")
-    }()
+        static let missingKeyHeaderWebhookRequest: URLRequest = {
+            return webhookRequest(for: channelOccupied,
+                                  pusherKeyHeaderValue: nil)
+        }()
 
-    static let missingSignatureHeaderWebhookRequest: URLRequest = {
-        return webhookRequest(for: channelOccupiedWebhook,
-                              pusherSignatureHeaderValue: nil)
-    }()
+        static let invalidKeyHeaderWebhookRequest: URLRequest = {
+            return webhookRequest(for: channelOccupied,
+                                  pusherKeyHeaderValue: "invalid_key")
+        }()
 
-    static let invalidSignatureHeaderWebhookRequest: URLRequest = {
-        return webhookRequest(for: channelOccupiedWebhook,
-                              pusherSignatureHeaderValue: "invalid_signature")
-    }()
+        static let missingSignatureHeaderWebhookRequest: URLRequest = {
+            return webhookRequest(for: channelOccupied,
+                                  pusherSignatureHeaderValue: nil)
+        }()
 
-    static let missingBodyDataWebhookRequest: URLRequest = {
-        return webhookRequest()
-    }()
+        static let invalidSignatureHeaderWebhookRequest: URLRequest = {
+            return webhookRequest(for: channelOccupied,
+                                  pusherSignatureHeaderValue: "invalid_signature")
+        }()
 
-    // MARK: - Private methods and properties
+        static let missingBodyDataWebhookRequest: URLRequest = {
+            return webhookRequest()
+        }()
 
-    private static let channelOccupiedWebhook = Webhook(createdAt: Date(timeIntervalSince1970: 1619602993),
-                                                        events: [WebhookEvent(eventType: .channelOccupied,
-                                                                              channelName: "my-channel")])
+        // MARK: Private methods and properties
 
-    private static let channelVacatedWebhook = Webhook(createdAt: Date(timeIntervalSince1970: 1619602993),
-                                                       events: [WebhookEvent(eventType: .channelVacated,
-                                                                             channelName: "my-channel")])
+        private static let channelOccupied = Webhook(createdAt: Date(timeIntervalSince1970: 1619602993),
+                                                     events: [WebhookEvent(eventType: .channelOccupied,
+                                                                           channelName: "my-channel")])
 
-    private static let memberAddedWebhook = Webhook(createdAt: Date(timeIntervalSince1970: 1619602993),
-                                                    events: [WebhookEvent(eventType: .memberAdded,
-                                                                          channelName: "presence-my-channel",
-                                                                          userId: "user_1")])
+        private static let channelVacated = Webhook(createdAt: Date(timeIntervalSince1970: 1619602993),
+                                                    events: [WebhookEvent(eventType: .channelVacated,
+                                                                          channelName: "my-channel")])
 
-    private static let memberRemovedWebhook = Webhook(createdAt: Date(timeIntervalSince1970: 1619602993),
-                                                      events: [WebhookEvent(eventType: .memberRemoved,
-                                                                            channelName: "presence-my-channel",
-                                                                            userId: "user_1")])
+        private static let memberAdded = Webhook(createdAt: Date(timeIntervalSince1970: 1619602993),
+                                                 events: [WebhookEvent(eventType: .memberAdded,
+                                                                       channelName: "presence-my-channel",
+                                                                       userId: "user_1")])
 
-    private static let clientEventWebhook = Webhook(createdAt: Date(timeIntervalSince1970: 1619602993),
-                                                    events: [WebhookEvent(eventType: .clientEvent,
-                                                                          channelName: "my-channel",
-                                                                          eventName: "my-event",
-                                                                          eventData: encodedEventData,
-                                                                          socketId: "socket_1")])
+        private static let memberRemoved = Webhook(createdAt: Date(timeIntervalSince1970: 1619602993),
+                                                   events: [WebhookEvent(eventType: .memberRemoved,
+                                                                         channelName: "presence-my-channel",
+                                                                         userId: "user_1")])
 
-    private static func webhookRequest(for webhook: Webhook? = nil,
-                                       pusherKeyHeaderValue: String? = Client.testKey,
-                                       pusherSignatureHeaderValue: String? = Client.testSecret) -> URLRequest {
+        private static let clientEvent = Webhook(createdAt: Date(timeIntervalSince1970: 1619602993),
+                                                 events: [WebhookEvent(eventType: .clientEvent,
+                                                                       channelName: "my-channel",
+                                                                       eventName: "my-event",
+                                                                       eventData: TestObjects.Events.encodedEventData,
+                                                                       socketId: "socket_1")])
 
-        var request = URLRequest(url: URL(string: "https://google.com")!)
-        if let webhook = webhook {
-            request.httpBody = try? JSONEncoder().encode(webhook)
+        private static func webhookRequest(for webhook: Webhook? = nil,
+                                           pusherKeyHeaderValue: String? = Client.testKey,
+                                           pusherSignatureHeaderValue: String? = Client.testSecret) -> URLRequest {
+
+            var request = URLRequest(url: URL(string: "https://google.com")!)
+            if let webhook = webhook {
+                request.httpBody = try? JSONEncoder().encode(webhook)
+            }
+
+            request.setValue(pusherKeyHeaderValue, forHTTPHeaderField: WebhookService.xPusherKeyHeader)
+
+            if pusherSignatureHeaderValue != nil, request.httpBody != nil {
+                let signature = CryptoService.sha256HMAC(for: request.httpBody!,
+                                                         using: pusherSignatureHeaderValue!.toData()).hexEncodedString()
+                request.setValue(signature, forHTTPHeaderField: WebhookService.xPusherSignatureHeader)
+            }
+
+            return request
         }
-
-        request.setValue(pusherKeyHeaderValue, forHTTPHeaderField: WebhookService.xPusherKeyHeader)
-
-        if pusherSignatureHeaderValue != nil, request.httpBody != nil {
-            let signature = CryptoService.sha256HMAC(for: request.httpBody!,
-                                                     using: pusherSignatureHeaderValue!.toData()).hexEncodedString()
-            request.setValue(signature, forHTTPHeaderField: WebhookService.xPusherSignatureHeader)
-        }
-
-        return request
     }
 }

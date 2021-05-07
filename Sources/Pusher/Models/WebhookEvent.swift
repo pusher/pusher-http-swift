@@ -3,7 +3,7 @@ import Foundation
 /// An event that is contained within a received `Webhook`.
 public struct WebhookEvent: WebhookEventRecord {
 
-    // The event type.
+    /// The event type.
     public let eventType: WebhookEventType
 
     /// The channel name relating to the Webhook event.

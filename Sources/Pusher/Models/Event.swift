@@ -13,7 +13,7 @@ public struct Event: EventInfoRecord, Encodable {
     public let eventName: String
 
     /// This is the `Data` representation of the original `eventData` parameter of the `init` methods.
-    /// The data will be encrypted if a `channel` is set and its `ChannelType` is `.encrypted`.
+    /// The data will be encrypted if a `channel` is set and its `ChannelType` is `encrypted`.
     public let eventData: Data
 
     /// A connection to which the event will not be sent.
@@ -57,7 +57,7 @@ public struct Event: EventInfoRecord, Encodable {
         self.attributeOptions = attributeOptions
     }
 
-    /// Creates an `Event` which will be triggered on multiple `Channel`s.
+    /// Creates an `Event` which will be triggered on multiple `Channel` instances.
     /// - Parameters:
     ///   - eventName: The name of the event.
     ///   - eventData: An event data object, whose type must conform to `Encodable`.

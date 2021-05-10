@@ -4,6 +4,39 @@ import Foundation
 /// and for decoding the request into a `Webhook` object.
 struct WebhookService {
 
+    // MARK: - Error reporting
+
+    /// An error generated during a webhook verification operation.
+    enum Error: LocalizedError {
+
+        /// The Webhook request is missing body data.
+        case bodyDataMissing
+
+        /// The webhook request is missing a `"X-Pusher-Key"' header, or its value is invalid.
+        case xPusherKeyHeaderMissingOrInvalid
+
+        /// The webhook request is missing a `"X-Pusher-Signature"' header, or its value is invalid.
+        case xPusherSignatureHeaderMissingOrInvalid
+
+        /// A localized human-readable description of the error.
+        public var errorDescription: String? {
+
+            switch self {
+            case .bodyDataMissing:
+                return NSLocalizedString("Body data is missing on the Webhook request.",
+                                         comment: "'.bodyDataMissing' error text")
+
+            case .xPusherKeyHeaderMissingOrInvalid:
+                return NSLocalizedString("The '\(xPusherKeyHeader)' header is missing or invalid on the Webhook request.",
+                                         comment: "'.xPusherKeyHeaderMissingOrInvalid' error text")
+
+            case .xPusherSignatureHeaderMissingOrInvalid:
+                return NSLocalizedString("The '\(xPusherSignatureHeader)' header is missing or invalid on the Webhook request.",
+                                         comment: "'.xPusherSignatureHeaderMissingOrInvalid' error text")
+            }
+        }
+    }
+
     /// The `X-Pusher-Key` header.
     static let xPusherKeyHeader = "X-Pusher-Key"
 
@@ -22,21 +55,18 @@ struct WebhookService {
         // Verify the Webhook key and signature header values are valid
         guard let xPusherKeyHeaderValue = request.value(forHTTPHeaderField: xPusherKeyHeader),
               xPusherKeyHeaderValue == options.key else {
-            let reason = "The '\(xPusherKeyHeader)' header is missing or invalid on the Webhook request."
-            throw PusherError.invalidConfiguration(reason: reason)
+            throw Error.xPusherKeyHeaderMissingOrInvalid
         }
 
         guard let bodyData = request.httpBody, bodyData.count > 0 else {
-            let reason = "Body data is missing on the Webhook request."
-            throw PusherError.invalidConfiguration(reason: reason)
+            throw Error.bodyDataMissing
         }
 
         let expectedSignature = CryptoService.sha256HMAC(for: bodyData,
                                                          using: options.secret.toData()).hexEncodedString()
         guard let xPusherSignatureHeaderValue = request.value(forHTTPHeaderField: xPusherSignatureHeader),
               expectedSignature == xPusherSignatureHeaderValue else {
-            let reason = "The '\(xPusherSignatureHeader)' header is missing or invalid on the Webhook request."
-            throw PusherError.invalidConfiguration(reason: reason)
+            throw Error.xPusherSignatureHeaderMissingOrInvalid
         }
     }
 

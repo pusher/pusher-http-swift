@@ -3,8 +3,6 @@ import Foundation
 /// An event to trigger on a specific channel (or multiple channels).
 public struct Event: EventInfoRecord, Encodable {
 
-    // MARK: - Error reporting
-
     /// An error generated during initialization.
     enum Error: LocalizedError {
 

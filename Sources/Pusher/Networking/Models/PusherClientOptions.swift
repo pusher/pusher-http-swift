@@ -3,8 +3,6 @@ import Foundation
 /// A collection of configuration options for a Pusher Channels HTTP API client.
 public struct PusherClientOptions {
 
-    // MARK: - Error reporting
-
     /// An error generated during initialization.
     enum Error: LocalizedError {
 

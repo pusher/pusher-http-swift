@@ -10,10 +10,10 @@ struct CryptoService {
     // MARK: - Error reporting
 
     /// An error generated during a cryptographic operation.
-    enum CryptoError: LocalizedError {
+    enum Error: LocalizedError {
 
         /// An error occurred during a NaCl cryptographic operation.
-        case naclError(_ error: Error)
+        case naclError(_ error: Swift.Error)
 
         /// Generation of random bytes failed with a `OSStatus` code.
         case randomBytesGenerationError(statusCode: OSStatus)
@@ -87,7 +87,7 @@ struct CryptoService {
         do {
             return try NaclSecretBox.open(box: data, nonce: nonce, key: key)
         } catch {
-            throw CryptoError.naclError(error)
+            throw Error.naclError(error)
         }
     }
 
@@ -104,7 +104,7 @@ struct CryptoService {
         do {
             return try NaclSecretBox.secretBox(message: data, nonce: nonce, key: key)
         } catch {
-            throw CryptoError.naclError(error)
+            throw Error.naclError(error)
         }
     }
 
@@ -135,14 +135,14 @@ struct CryptoService {
         var randomData = Data(count: count)
         let result = try randomData.withUnsafeMutableBytes { bufferPointer -> Int32 in
             guard let baseAddress = bufferPointer.baseAddress else {
-                throw CryptoError.zeroRandomBytesRequested
+                throw Error.zeroRandomBytesRequested
             }
 
             return SecRandomCopyBytes(kSecRandomDefault, count, baseAddress)
         }
 
         guard result == errSecSuccess else {
-            throw CryptoError.randomBytesGenerationError(statusCode: result)
+            throw Error.randomBytesGenerationError(statusCode: result)
         }
 
         return randomData

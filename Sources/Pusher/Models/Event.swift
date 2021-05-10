@@ -29,7 +29,7 @@ public struct Event: EventInfoRecord, Encodable {
     /// The event name.
     public let name: String
 
-    /// This is the `Data` representation of the original `eventData` parameter of the `init` methods.
+    /// This is the `Data` representation of the original `data` parameter of either of the `init(...)` methods.
     /// The data will be encrypted if a `channel` is set and its `ChannelType` is `encrypted`.
     public let data: Data
 
@@ -59,7 +59,7 @@ public struct Event: EventInfoRecord, Encodable {
     ///   - channel: The channel on which to trigger the event.
     ///   - socketId: A connection to which the event will not be sent.
     ///   - attributeOptions: A set of attributes that should be returned for the `channel`.
-    /// - Throws: An `PusherError` if encoding the `eventData` fails for some reason.
+    /// - Throws: An `PusherError` if encoding the event `data` fails for some reason.
     public init<EventData: Encodable>(name: String,
                                       data: EventData,
                                       channel: Channel,
@@ -81,7 +81,7 @@ public struct Event: EventInfoRecord, Encodable {
     ///   - channels: An array of channels on which to trigger the event.
     ///   - socketId: A connection to which the event will not be sent.
     ///   - attributeOptions: A set of attributes that should be returned for each channel in `channels`.
-    /// - Throws: An `PusherError` if encoding the `eventData` fails for some reason,
+    /// - Throws: An `PusherError` if encoding the event `data` fails for some reason,
     ///           or if `channels` contains any encrypted channels.
     public init<EventData: Encodable>(name: String,
                                       data: EventData,
@@ -126,7 +126,7 @@ public struct Event: EventInfoRecord, Encodable {
 
     // MARK: - Event data encryption
 
-    /// Returns an `Event` with encrypted `eventData` if a `channel` is set
+    /// Returns an `Event` with encrypted event `data` if a `channel` is set
     /// and its `ChannelType` is `.encrypted`.
     ///
     /// The event data is encrypted using a random nonce and a shared secret which is
@@ -135,8 +135,8 @@ public struct Event: EventInfoRecord, Encodable {
     /// If the provided `channel` is not an encrypted (or multiple `channels` are provided instead),
     /// then the receiver is returned unaltered.
     /// - Parameter options: Configuration options used to managing the connection.
-    /// - Throws: An `PusherError` if encrypting the `eventData` fails for some reason.
-    /// - Returns: A copy of the receiver, but with encrypted `eventData`. If the `channel` is not
+    /// - Throws: An `PusherError` if encrypting the event `data` fails for some reason.
+    /// - Returns: A copy of the receiver, but with encrypted event `data`. If the `channel` is not
     ///            encrypted, the receiver will be returned unaltered.
     func encrypted(using options: PusherClientOptions) throws -> Self {
 

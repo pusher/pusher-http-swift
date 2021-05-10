@@ -8,7 +8,7 @@ import Foundation
 /// have been verified as geniune Webhooks that were received directly from Pusher.
 public struct Webhook: Codable {
 
-    /// The `Date` that Channels originally created the Webhook request.
+    /// The `Date` that Pusher servers originally created the Webhook request.
     public let createdAt: Date
 
     /// The events contained within the Webhook request.

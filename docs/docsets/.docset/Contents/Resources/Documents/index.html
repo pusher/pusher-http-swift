@@ -328,7 +328,7 @@
 <h3 id='verifying-webhooks' class='heading'>Verifying webhooks</h3>
 
 <p>This library provides a way to verify that a received webhook request is genuine and was received from Pusher. Since a webhook endpoint is accessible to the global internet, verifying that webhook request originated from Pusher is important. Valid webhooks contain special headers which contain a copy of your application key and a HMAC signature of the webhook payload (i.e. its body):</p>
-<pre class="highlight swift"><code><span class="k">self</span><span class="o">.</span><span class="n">pusher</span><span class="o">.</span><span class="nf">verifyWebhookRequest</span><span class="p">(</span><span class="n">receivedWebhookRequest</span><span class="p">)</span> <span class="p">{</span> <span class="n">result</span> <span class="k">in</span>
+<pre class="highlight swift"><code><span class="k">self</span><span class="o">.</span><span class="n">pusher</span><span class="o">.</span><span class="nf">verifyWebhook</span><span class="p">(</span><span class="nv">request</span><span class="p">:</span> <span class="n">receivedWebhookRequest</span><span class="p">)</span> <span class="p">{</span> <span class="n">result</span> <span class="k">in</span>
     <span class="k">switch</span> <span class="n">result</span> <span class="p">{</span>
         <span class="k">case</span> <span class="o">.</span><span class="nf">success</span><span class="p">(</span><span class="k">let</span> <span class="nv">webhook</span><span class="p">):</span>
             <span class="c1">// Inspect `webhook`</span>

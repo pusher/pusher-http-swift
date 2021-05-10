@@ -8,10 +8,10 @@ public enum ChannelFilter {
 
     /// A filter encapsulating any channel that can be subscribed to.
     ///
-    /// Channels returned could be any of the following types: `encrypted`, `private`, `presence` or `public`.
+    /// The channels that are returned by this filter could be any of type.
     case any
 
-    /// A custom filter, based on a provided channel name prefix `String`.
+    /// A custom filter, based on a provided channel name `prefix` string.
     ///
     /// This can be used as a filter for a particular group of channels, defined by a common naming prefix scheme.
     case custom(prefix: String)

@@ -4,7 +4,7 @@ import Foundation
 /// User data required when generating an `AuthToken` for a subscription attempt to a presence channel.
 public struct PresenceUserAuthData: Encodable {
 
-    /// The user identifier.
+    /// The user identifier to send as part of a generated `AuthToken`.
     public let userId: String
 
     /// Optional additional user data to send as part of a generated `AuthToken`.
@@ -18,7 +18,7 @@ public struct PresenceUserAuthData: Encodable {
     // MARK: Lifecycle
 
     /// Creates an instance of `PresenceUserAuthData` for use when generating an `AuthToken`.
-    /// - Parameter userId: The user identifier.
+    /// - Parameter userId: The user identifier to send as part of a generated `AuthToken`.
     /// - Parameter userInfo: Optional additional user data to send as part of a generated `AuthToken`.
     public init(userId: String, userInfo: [String: AnyEncodable]? = nil) {
         self.userId = userId

@@ -15,7 +15,8 @@ public struct WebhookEvent: WebhookEventRecord, Codable {
     /// The identifier of the socket that sent the event (only set if `eventType` is `clientEvent`).
     public let socketId: String?
 
-    /// The user identifier associated with the socket that sent the event (only set for presence channels).
+    /// The user identifier associated with the socket that sent the event
+    /// (only set if `channel` is of type `presence`).
     public let userId: String?
 
     enum CodingKeys: String, CodingKey {

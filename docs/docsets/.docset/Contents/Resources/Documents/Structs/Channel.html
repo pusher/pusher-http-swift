@@ -236,10 +236,10 @@ It is inferred from the <code><a href="../Structs/Channel.html#/s:6Pusher7Channe
                         <p>Creates a <code>Channel</code> based on a full name (including type prefix).</p>
 
 <p>The channel <code><a href="../Structs/Channel.html#/s:6Pusher7ChannelV4typeAA0B4TypeOvp">type</a></code> is inferred based on the provided <code><a href="../Structs/Channel.html#/s:6Pusher7ChannelV8fullNameSSvp">fullName</a></code>.
-e.g. A <code><a href="../Structs/Channel.html#/s:6Pusher7ChannelV8fullNameSSvp">fullName</a></code> of <code>&quot;private-my-channel&quot;</code> results in a <code>Channel</code>
+e.g. A <code><a href="../Structs/Channel.html#/s:6Pusher7ChannelV8fullNameSSvp">fullName</a></code> of <code>&quot;private-my-channel&quot;</code> results in a channel
 whose <code><a href="../Structs/Channel.html#/s:6Pusher7ChannelV4nameSSvp">name</a></code> is <code>&quot;my-channel&quot;</code> and a <code><a href="../Structs/Channel.html#/s:6Pusher7ChannelV4typeAA0B4TypeOvp">type</a></code> of <code>private</code>.</p>
 
-<p>If a shortened name is accidentally used, this results in a <code>Channel</code>
+<p>If a shortened name is accidentally used, this results in a channel
  of <code><a href="../Structs/Channel.html#/s:6Pusher7ChannelV4typeAA0B4TypeOvp">type</a></code> <code>public</code> since no type prefix was provided.</p>
 
                       </div>
@@ -288,7 +288,7 @@ whose <code><a href="../Structs/Channel.html#/s:6Pusher7ChannelV4nameSSvp">name<
                       <div class="abstract">
                         <p>Creates a <code>Channel</code> based on a shortened name and a channel type.</p>
 
-<p>If a full name is accidentally used, this results in a <code>Channel</code>
+<p>If a full name is accidentally used, this results in a channel
 whose type is determined by the <code><a href="../Structs/Channel.html#/s:6Pusher7ChannelV4typeAA0B4TypeOvp">type</a></code> parameter, regardless of
 any type prefix that is present in the name string.</p>
 

@@ -23,10 +23,10 @@ public struct Channel: ChannelDescription {
     /// Creates a `Channel` based on a full name (including type prefix).
     ///
     /// The channel `type` is inferred based on the provided `fullName`.
-    /// e.g. A `fullName` of `"private-my-channel"` results in a `Channel`
+    /// e.g. A `fullName` of `"private-my-channel"` results in a channel
     /// whose `name` is `"my-channel"` and a `type` of `private`.
     ///
-    /// If a shortened name is accidentally used, this results in a `Channel`
+    /// If a shortened name is accidentally used, this results in a channel
     ///  of `type` `public` since no type prefix was provided.
     /// - Parameter fullName: The full channel name.
     public init(fullName: String) {
@@ -37,7 +37,7 @@ public struct Channel: ChannelDescription {
 
     /// Creates a `Channel` based on a shortened name and a channel type.
     ///
-    /// If a full name is accidentally used, this results in a `Channel`
+    /// If a full name is accidentally used, this results in a channel
     /// whose type is determined by the `type` parameter, regardless of
     /// any type prefix that is present in the name string.
     /// - Parameters:

@@ -214,7 +214,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>This is the <code>Data</code> representation of the original <code>eventData</code> parameter of the <code>init</code> methods.
+                        <p>This is the <code>Data</code> representation of the original <code>data</code> parameter of either of the <code><a href="../Structs/Event.html#/s:6Pusher5EventV4name4data7channel8socketId16attributeOptionsACSS_xAA7ChannelVSSSgAA0j14AttributeFetchI0VtKcSERzlufc">init(...)</a></code> methods.
 The data will be encrypted if a <code><a href="../Structs/Event.html#/s:6Pusher5EventV7channelAA7ChannelVSgvp">channel</a></code> is set and its <code><a href="../Enums/ChannelType.html">ChannelType</a></code> is <code>encrypted</code>.</p>
 
                       </div>
@@ -285,7 +285,7 @@ The data will be encrypted if a <code><a href="../Structs/Event.html#/s:6Pusher5
                         <p>Creates an event to be triggered on a specific <code><a href="../Structs/Channel.html">Channel</a></code>.</p>
 <div class="aside aside-throws">
     <p class="aside-title">Throws</p>
-    An <code><a href="../Enums/PusherError.html">PusherError</a></code> if encoding the <code>eventData</code> fails for some reason.
+    An <code><a href="../Enums/PusherError.html">PusherError</a></code> if encoding the event <code><a href="../Structs/Event.html#/s:6Pusher5EventV4data10Foundation4DataVvp">data</a></code> fails for some reason.
 
 </div>
 
@@ -388,7 +388,7 @@ The data will be encrypted if a <code><a href="../Structs/Event.html#/s:6Pusher5
                         <p>Creates an <code>Event</code> which will be triggered on multiple <code><a href="../Structs/Channel.html">Channel</a></code> instances.</p>
 <div class="aside aside-throws">
     <p class="aside-title">Throws</p>
-    An <code><a href="../Enums/PusherError.html">PusherError</a></code> if encoding the <code>eventData</code> fails for some reason,
+    An <code><a href="../Enums/PusherError.html">PusherError</a></code> if encoding the event <code><a href="../Structs/Event.html#/s:6Pusher5EventV4data10Foundation4DataVvp">data</a></code> fails for some reason,
       or if <code><a href="../Structs/Event.html#/s:6Pusher5EventV8channelsSayAA7ChannelVGSgvp">channels</a></code> contains any encrypted channels.
 
 </div>

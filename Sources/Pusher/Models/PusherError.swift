@@ -13,15 +13,16 @@ public enum PusherError: LocalizedError {
     /// The request body could not be encoded to the specified type.
     case encodingError(_ error: EncodingError)
 
-    /// The server returned a failed response indicated by a non-successful HTTP status code.
+    /// The server returned a failed response indicated by a non-successful HTTP `statusCode`.
     ///
-    /// If the `errorResponseBody` cannot be decoded to the `ErrorResponse` type of the endpoint    ,
-    /// the raw response body `Data` will be returned (or empty `Data` if there was no response body).
+    /// The `errorResponse` will contain a message indicating why the request failed, which
+    /// can be helpful during development and in production.
     case failedResponse(statusCode: Int, errorResponse: String)
 
     /// An internal error occured.
     ///
-    /// The exact circumstances that resulted in the error cannot be determined.
+    /// Some internal operation of the library has thrown an error. The reason for the failure
+    /// can be inspected via the `localizedDescription` property of the `error` parameter.
     case internalError(_ error: Error)
 
     /// The server returned a response that was not a `HTTPURLResponse`.

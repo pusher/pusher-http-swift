@@ -15,7 +15,7 @@ struct AuthTokenService {
         case authenticationAttemptForPublicChannel
 
         /// Presence channel authentication requires `userData` to be provided.
-        case presenceChannelAuthenticationMissingUserData
+        case missingUserDataForPresenceChannel
 
         /// A localized human-readable description of the error.
         public var errorDescription: String? {
@@ -25,7 +25,7 @@ struct AuthTokenService {
                 return NSLocalizedString("Authenticating public channel subscriptions is not required.",
                                          comment: "'.publicChannelAuthenticationNotRequired' error text")
 
-            case .presenceChannelAuthenticationMissingUserData:
+            case .missingUserDataForPresenceChannel:
                 return NSLocalizedString("Authenticating presence channel subscriptions requires 'userData'.",
                                          comment: "'.presenceChannelAuthenticationRequiresUserData' error text")
             }
@@ -52,7 +52,7 @@ struct AuthTokenService {
 
         if channel.type == .presence {
             guard userData != nil else {
-                throw Error.presenceChannelAuthenticationMissingUserData
+                throw Error.missingUserDataForPresenceChannel
             }
         }
 

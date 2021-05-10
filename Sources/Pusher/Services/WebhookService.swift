@@ -27,11 +27,17 @@ struct WebhookService {
                                          comment: "'.bodyDataMissing' error text")
 
             case .xPusherKeyHeaderMissingOrInvalid:
-                return NSLocalizedString("The '\(xPusherKeyHeader)' header is missing or invalid on the Webhook request.",
+                return NSLocalizedString("""
+                                        The '\(xPusherKeyHeader)' header is missing or invalid \
+                                        on the Webhook request.
+                                        """,
                                          comment: "'.xPusherKeyHeaderMissingOrInvalid' error text")
 
             case .xPusherSignatureHeaderMissingOrInvalid:
-                return NSLocalizedString("The '\(xPusherSignatureHeader)' header is missing or invalid on the Webhook request.",
+                return NSLocalizedString("""
+                                        The '\(xPusherSignatureHeader)' header is missing or invalid \
+                                        on the Webhook request.
+                                        """,
                                          comment: "'.xPusherSignatureHeaderMissingOrInvalid' error text")
             }
         }

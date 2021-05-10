@@ -59,7 +59,7 @@ final class EventTriggerTests: XCTestCase {
                 return
             }
 
-            XCTAssertEqual(eventError, .encryptedChannelsInvalidWithMultichannelEvents)
+            XCTAssertEqual(eventError, .invalidMultichannelEventConfiguration)
         }
     }
 

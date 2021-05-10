@@ -9,14 +9,14 @@ public struct Event: EventInfoRecord, Encodable {
     enum Error: LocalizedError {
 
         /// Encrypted channels cannot be triggered to when initializing a multichannel `Event`.
-        case encryptedChannelsInvalidWithMultichannelEvents
+        case invalidMultichannelEventConfiguration
 
         /// A localized human-readable description of the error.
         public var errorDescription: String? {
 
             switch self {
-            case .encryptedChannelsInvalidWithMultichannelEvents:
-                return NSLocalizedString("Encrypted channels cannot be used on multichannel events.",
+            case .invalidMultichannelEventConfiguration:
+                return NSLocalizedString("Multichannel events cannot be configured with any encrypted channels.",
                                          comment: "'.encryptedChannelsInvalidWithMultichannelEvents' error text")
             }
         }
@@ -95,7 +95,7 @@ public struct Event: EventInfoRecord, Encodable {
         // (Triggering an event on multiple channels is not allowed if any are encrypted).
         let containsEncryptedChannels = channels.contains { $0.type == .encrypted }
         guard !containsEncryptedChannels else {
-            throw Error.encryptedChannelsInvalidWithMultichannelEvents
+            throw Error.invalidMultichannelEventConfiguration
         }
 
         self.channel = nil

@@ -26,12 +26,15 @@ public struct PusherClientOptions {
             case .encryptionMasterKeyNotBase64:
                 return NSLocalizedString("The provided 'encryptionMasterKey' value is not a valid Base-64 string.",
                                          comment: "'.encryptionMasterKeyNotBase64' error text")
+
             case .customHostContainsSchemePrefix:
                 return NSLocalizedString("The provided 'host' value should not have a 'https://' or 'http://' prefix.",
                                          comment: "'.customHostContainsSchemePrefix' error text")
+
             case .customHostContainsTrailingSlashSuffix:
                 return NSLocalizedString("The provided 'host' value should not have a '/' suffix.",
                                          comment: "'.customHostContainsTrailingSlashSuffix' error text")
+
             case .customPortOrSchemeMissingHost:
                 return NSLocalizedString("A 'host' should be provided if a custom 'port' or 'scheme' is set.",
                                          comment: "'.customPortOrSchemeMissingHost' error text")

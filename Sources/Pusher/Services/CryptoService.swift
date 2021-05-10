@@ -26,15 +26,15 @@ struct CryptoService {
             switch self {
             case .naclError(error: let error):
                 return NSLocalizedString("A cryptographic operation failed with error: \(error.localizedDescription)",
-                                         comment: "'CryptoError.naclError' error text")
+                                         comment: "'.naclError' error text")
 
             case .randomBytesGenerationError(statusCode: let code):
                 return NSLocalizedString("Generating random bytes failed with error: \(code).",
-                                         comment: "'CryptoError.randomBytesGenerationError' error text")
+                                         comment: "'.randomBytesGenerationError' error text")
 
             case .zeroRandomBytesRequested:
                 return NSLocalizedString("Zero random bytes were requested.",
-                                         comment: "'CryptoError.zeroRandomBytesRequested' error text")
+                                         comment: "'.zeroRandomBytesRequested' error text")
             }
         }
     }

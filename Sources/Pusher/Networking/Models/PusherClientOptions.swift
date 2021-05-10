@@ -3,6 +3,40 @@ import Foundation
 /// A collection of configuration options for a Pusher Channels HTTP API client.
 public struct PusherClientOptions {
 
+    /// An error generated during initialization.
+    enum Error: LocalizedError {
+
+        /// The `encryptionMasterKey` value is not a Base-64 encoded `String`.
+        case encryptionMasterKeyNotBase64
+
+        /// A custom `host` was provided with a `"http://"` or `"https://"` prefix.
+        case customHostContainsSchemePrefix
+
+        /// A custom `host` was provided with a `"/"` suffix.
+        case customHostContainsTrailingSlashSuffix
+
+        /// A custom `port` and/or `scheme` was provided without a custom `host`.
+        case customPortOrSchemeMissingHost
+
+        /// A localized human-readable description of the error.
+        public var errorDescription: String? {
+            switch self {
+            case .encryptionMasterKeyNotBase64:
+                return NSLocalizedString("The provided 'encryptionMasterKey' value is not a valid Base-64 string.",
+                                         comment: "'.encryptionMasterKeyNotBase64' error text")
+            case .customHostContainsSchemePrefix:
+                return NSLocalizedString("The provided 'host' value should not have a 'https://' or 'http://' prefix.",
+                                         comment: "'.customHostContainsSchemePrefix' error text")
+            case .customHostContainsTrailingSlashSuffix:
+                return NSLocalizedString("The provided 'host' value should not have a '/' suffix.",
+                                         comment: "'.customHostContainsTrailingSlashSuffix' error text")
+            case .customPortOrSchemeMissingHost:
+                return NSLocalizedString("A 'host' should be provided if a custom 'port' or 'scheme' is set.",
+                                         comment: "'.customPortOrSchemeMissingHost' error text")
+            }
+        }
+    }
+
     /// The application identifier (as specified in the Channels developer dashboard).
     public let appId: Int
 
@@ -104,19 +138,16 @@ public struct PusherClientOptions {
                 useTLS: Bool = true) throws {
 
         guard Data(base64Encoded: encryptionMasterKey) != nil else {
-            let reason = "The provided 'encryptionMasterKey' value is not a valid Base-64 string."
-            throw PusherError.invalidConfiguration(reason: reason)
+            throw Error.encryptionMasterKeyNotBase64
         }
 
         if let host = host {
             guard !host.hasPrefix("http://") && !host.hasPrefix("https://") else {
-                let reason = "The provided 'host' value should not have a 'https://' or 'http://' prefix."
-                throw PusherError.invalidConfiguration(reason: reason)
+                throw Error.customHostContainsSchemePrefix
             }
 
             guard !host.hasSuffix("/") else {
-                let reason = "The provided 'host' value should not have a '/' suffix."
-                throw PusherError.invalidConfiguration(reason: reason)
+                throw Error.customHostContainsTrailingSlashSuffix
             }
         }
 
@@ -137,8 +168,7 @@ public struct PusherClientOptions {
             self.host = "api-\(self.cluster!).pusher.com"
         } else {
             guard port != nil, scheme != nil else {
-                let reason = "A 'host' should be provided if a custom 'port' or 'scheme' is set."
-                throw PusherError.invalidConfiguration(reason: reason)
+                throw Error.customPortOrSchemeMissingHost
             }
 
             self.cluster = "mt1"

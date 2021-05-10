@@ -215,10 +215,10 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The server returned a failed response indicated by a non-successful HTTP status code.</p>
+                        <p>The server returned a failed response indicated by a non-successful HTTP <code>statusCode</code>.</p>
 
-<p>If the <code>errorResponseBody</code> cannot be decoded to the <code>ErrorResponse</code> type of the endpoint    ,
-the raw response body <code>Data</code> will be returned (or empty <code>Data</code> if there was no response body).</p>
+<p>The <code>errorResponse</code> will contain a message indicating why the request failed, which
+can be helpful during development and in production.</p>
 
                       </div>
                       <div class="declaration">
@@ -247,7 +247,8 @@ the raw response body <code>Data</code> will be returned (or empty <code>Data</c
                       <div class="abstract">
                         <p>An internal error occured.</p>
 
-<p>The exact circumstances that resulted in the error cannot be determined.</p>
+<p>Some internal operation of the library has thrown an error. The reason for the failure
+can be inspected via the <code>localizedDescription</code> property of the <code>error</code> parameter.</p>
 
                       </div>
                       <div class="declaration">

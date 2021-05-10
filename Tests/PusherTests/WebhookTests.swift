@@ -100,10 +100,7 @@ final class WebhookTests: XCTestCase {
     func testMissingPusherKeyHeaderWebhookFails() {
         let expectation = XCTestExpectation(function: #function)
         Self.pusher.verifyWebhook(request: TestObjects.Webhooks.missingKeyHeaderWebhookRequest) { result in
-            let expectedReason = """
-            The '\(WebhookService.xPusherKeyHeader)' header is missing or invalid on the Webhook request.
-            """
-            let expectedError = PusherError.invalidConfiguration(reason: expectedReason)
+            let expectedError = PusherError.internalError(WebhookService.Error.xPusherKeyHeaderMissingOrInvalid)
             self.verifyAPIResultFailure(result, expectation: expectation, expectedError: expectedError)
         }
         wait(for: [expectation], timeout: 10.0)
@@ -112,10 +109,7 @@ final class WebhookTests: XCTestCase {
     func testInvalidPusherKeyHeaderWebhookFails() {
         let expectation = XCTestExpectation(function: #function)
         Self.pusher.verifyWebhook(request: TestObjects.Webhooks.invalidKeyHeaderWebhookRequest) { result in
-            let expectedReason = """
-            The '\(WebhookService.xPusherKeyHeader)' header is missing or invalid on the Webhook request.
-            """
-            let expectedError = PusherError.invalidConfiguration(reason: expectedReason)
+            let expectedError = PusherError.internalError(WebhookService.Error.xPusherKeyHeaderMissingOrInvalid)
             self.verifyAPIResultFailure(result, expectation: expectation, expectedError: expectedError)
         }
         wait(for: [expectation], timeout: 10.0)
@@ -124,10 +118,7 @@ final class WebhookTests: XCTestCase {
     func testMissingPusherSignatureHeaderWebhookFails() {
         let expectation = XCTestExpectation(function: #function)
         Self.pusher.verifyWebhook(request: TestObjects.Webhooks.missingSignatureHeaderWebhookRequest) { result in
-            let expectedReason = """
-            The '\(WebhookService.xPusherSignatureHeader)' header is missing or invalid on the Webhook request.
-            """
-            let expectedError = PusherError.invalidConfiguration(reason: expectedReason)
+            let expectedError = PusherError.internalError(WebhookService.Error.xPusherSignatureHeaderMissingOrInvalid)
             self.verifyAPIResultFailure(result, expectation: expectation, expectedError: expectedError)
         }
         wait(for: [expectation], timeout: 10.0)
@@ -136,10 +127,7 @@ final class WebhookTests: XCTestCase {
     func testInvalidPusherSignatureHeaderWebhookFails() {
         let expectation = XCTestExpectation(function: #function)
         Self.pusher.verifyWebhook(request: TestObjects.Webhooks.invalidSignatureHeaderWebhookRequest) { result in
-            let expectedReason = """
-            The '\(WebhookService.xPusherSignatureHeader)' header is missing or invalid on the Webhook request.
-            """
-            let expectedError = PusherError.invalidConfiguration(reason: expectedReason)
+            let expectedError = PusherError.internalError(WebhookService.Error.xPusherSignatureHeaderMissingOrInvalid)
             self.verifyAPIResultFailure(result, expectation: expectation, expectedError: expectedError)
         }
         wait(for: [expectation], timeout: 10.0)
@@ -148,8 +136,7 @@ final class WebhookTests: XCTestCase {
     func testMissingBodyDataWebhookFails() {
         let expectation = XCTestExpectation(function: #function)
         Self.pusher.verifyWebhook(request: TestObjects.Webhooks.missingBodyDataWebhookRequest) { result in
-            let expectedReason = "Body data is missing on the Webhook request."
-            let expectedError = PusherError.invalidConfiguration(reason: expectedReason)
+            let expectedError = PusherError.internalError(WebhookService.Error.bodyDataMissing)
             self.verifyAPIResultFailure(result, expectation: expectation, expectedError: expectedError)
         }
         wait(for: [expectation], timeout: 10.0)

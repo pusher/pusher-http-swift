@@ -69,11 +69,8 @@ final class AuthTokenTests: XCTestCase {
 
     func testAuthenticatePresenceChannelWithMissingUserDataFails() {
         let expectation = XCTestExpectation(function: #function)
-        let expectedReason = """
-        Auth token generation failed with error: \
-        Authenticating presence channel subscriptions requires 'userData'.
-        """
-        let expectedError = PusherError.invalidConfiguration(reason: expectedReason)
+        let authTokenServiceError = AuthTokenService.Error.missingUserDataForPresenceChannel
+        let expectedError = PusherError.internalError(authTokenServiceError)
         Self.pusher.authenticate(channel: TestObjects.Channels.presence,
                                  socketId: TestObjects.AuthSignatures.testSocketId) { result in
             self.verifyAPIResultFailure(result, expectation: expectation, expectedError: expectedError)
@@ -83,11 +80,8 @@ final class AuthTokenTests: XCTestCase {
 
     func testAuthenticatePublicChannelFails() {
         let expectation = XCTestExpectation(function: #function)
-        let expectedReason = """
-        Auth token generation failed with error: \
-        Authenticating public channel subscriptions is not required.
-        """
-        let expectedError = PusherError.invalidConfiguration(reason: expectedReason)
+        let authTokenServiceError = AuthTokenService.Error.authenticationAttemptForPublicChannel
+        let expectedError = PusherError.internalError(authTokenServiceError)
         Self.pusher.authenticate(channel: TestObjects.Channels.public,
                                  socketId: TestObjects.AuthSignatures.testSocketId) { result in
             self.verifyAPIResultFailure(result, expectation: expectation, expectedError: expectedError)

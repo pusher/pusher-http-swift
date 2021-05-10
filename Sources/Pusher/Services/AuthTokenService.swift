@@ -6,6 +6,32 @@ import Foundation
 /// are returned in an authentication token object.
 struct AuthTokenService {
 
+    // MARK: - Error reporting
+
+    /// An error generated during an authentication operation.
+    enum Error: LocalizedError {
+
+        /// An authentication attempt for a public channel occured.
+        case authenticationAttemptForPublicChannel
+
+        /// Presence channel authentication requires `userData` to be provided.
+        case missingUserDataForPresenceChannel
+
+        /// A localized human-readable description of the error.
+        public var errorDescription: String? {
+
+            switch self {
+            case .authenticationAttemptForPublicChannel:
+                return NSLocalizedString("Authenticating public channel subscriptions is not required.",
+                                         comment: "'.publicChannelAuthenticationNotRequired' error text")
+
+            case .missingUserDataForPresenceChannel:
+                return NSLocalizedString("Authenticating presence channel subscriptions requires 'userData'.",
+                                         comment: "'.presenceChannelAuthenticationRequiresUserData' error text")
+            }
+        }
+    }
+
     /// Generate an authentication token.
     /// - Parameters:
     ///   - channel: The `Channel` for which to generate the authentication token.
@@ -21,20 +47,12 @@ struct AuthTokenService {
                           using options: PusherClientOptions) throws -> AuthToken {
 
         guard channel.type != .public else {
-            let reason = """
-            Auth token generation failed with error: \
-            Authenticating public channel subscriptions is not required.
-            """
-            throw PusherError.invalidConfiguration(reason: reason)
+            throw Error.authenticationAttemptForPublicChannel
         }
 
         if channel.type == .presence {
             guard userData != nil else {
-                let reason = """
-                Auth token generation failed with error: \
-                Authenticating presence channel subscriptions requires 'userData'.
-                """
-                throw PusherError.invalidConfiguration(reason: reason)
+                throw Error.missingUserDataForPresenceChannel
             }
         }
 

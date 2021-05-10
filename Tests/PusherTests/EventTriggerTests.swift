@@ -49,19 +49,18 @@ final class EventTriggerTests: XCTestCase {
     }
 
     func testPostEventToChannelFailsForInvalidMultichannelEvent() throws {
-        let expectation = XCTestExpectation(function: #function)
-        do {
-            _ = try Event(name: "my-multichannel-event",
-                          data: TestObjects.Events.eventData,
-                          channels: [TestObjects.Channels.encrypted,
-                                     TestObjects.Channels.public])
-        } catch {
-            let expectedReason = "Cannot trigger an event on multiple channels if any of them are encrypted."
-            XCTAssertEqual(PusherError(from: error),
-                           PusherError.invalidConfiguration(reason: expectedReason))
-            expectation.fulfill()
+        XCTAssertThrowsError(try Event(name: "my-multichannel-event",
+                                       data: TestObjects.Events.eventData,
+                                       channels: [TestObjects.Channels.encrypted,
+                                                  TestObjects.Channels.public])) { error in
+            guard let eventError = error as? Event.Error else {
+                XCTFail("The error should be a 'Event.Error'.")
+
+                return
+            }
+
+            XCTAssertEqual(eventError, .invalidMultichannelEventConfiguration)
         }
-        wait(for: [expectation], timeout: 10.0)
     }
 
     // MARK: - POST batch event tests

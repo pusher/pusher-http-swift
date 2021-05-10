@@ -3,6 +3,23 @@ import Foundation
 /// An event to trigger on a specific channel (or multiple channels).
 public struct Event: EventInfoRecord, Encodable {
 
+    /// An error generated during initialization.
+    enum Error: LocalizedError {
+
+        /// Encrypted channels cannot be triggered to when initializing a multichannel `Event`.
+        case invalidMultichannelEventConfiguration
+
+        /// A localized human-readable description of the error.
+        public var errorDescription: String? {
+
+            switch self {
+            case .invalidMultichannelEventConfiguration:
+                return NSLocalizedString("Multichannel events cannot be configured with any encrypted channels.",
+                                         comment: "'.encryptedChannelsInvalidWithMultichannelEvents' error text")
+            }
+        }
+    }
+
     /// The channels to which the event will be sent (if publishing to multiple channels).
     public let channels: [Channel]?
 
@@ -76,8 +93,7 @@ public struct Event: EventInfoRecord, Encodable {
         // (Triggering an event on multiple channels is not allowed if any are encrypted).
         let containsEncryptedChannels = channels.contains { $0.type == .encrypted }
         guard !containsEncryptedChannels else {
-            let reason = "Cannot trigger an event on multiple channels if any of them are encrypted."
-            throw PusherError.invalidConfiguration(reason: reason)
+            throw Error.invalidMultichannelEventConfiguration
         }
 
         self.channel = nil

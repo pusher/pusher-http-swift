@@ -201,8 +201,8 @@
 <p>To trigger an event on one or more channels, use the <code>trigger(event:callback:)</code> method.</p>
 <h4 id='a-single-channel' class='heading'>A single channel</h4>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">publicChannel</span> <span class="o">=</span> <span class="kt">Channel</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"my-channel"</span><span class="p">,</span> <span class="nv">type</span><span class="p">:</span> <span class="o">.</span><span class="kd">public</span><span class="p">)</span>
-<span class="k">let</span> <span class="nv">publicEvent</span> <span class="o">=</span> <span class="k">try!</span> <span class="kt">Event</span><span class="p">(</span><span class="nv">eventName</span><span class="p">:</span> <span class="s">"my-event"</span><span class="p">,</span>
-                             <span class="nv">eventData</span><span class="p">:</span> <span class="s">"hello world!"</span><span class="p">,</span>
+<span class="k">let</span> <span class="nv">publicEvent</span> <span class="o">=</span> <span class="k">try!</span> <span class="kt">Event</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"my-event"</span><span class="p">,</span>
+                             <span class="nv">data</span><span class="p">:</span> <span class="s">"hello world!"</span><span class="p">,</span>
                              <span class="nv">channel</span><span class="p">:</span> <span class="n">publicChannel</span><span class="p">)</span>
 
 <span class="k">self</span><span class="o">.</span><span class="n">pusher</span><span class="o">.</span><span class="nf">trigger</span><span class="p">(</span><span class="nv">event</span><span class="p">:</span> <span class="n">publicEvent</span><span class="p">)</span> <span class="p">{</span> <span class="n">result</span> <span class="k">in</span>
@@ -217,8 +217,8 @@
 <h4 id='multiple-channels' class='heading'>Multiple channels</h4>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">publicChannelOne</span> <span class="o">=</span> <span class="kt">Channel</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"my-channel"</span><span class="p">,</span> <span class="nv">type</span><span class="p">:</span> <span class="o">.</span><span class="kd">public</span><span class="p">)</span>
 <span class="k">let</span> <span class="nv">publicChannelTwo</span> <span class="o">=</span> <span class="kt">Channel</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"my-other-channel"</span><span class="p">,</span> <span class="nv">type</span><span class="p">:</span> <span class="o">.</span><span class="kd">public</span><span class="p">)</span>
-<span class="k">let</span> <span class="nv">multichannelEvent</span> <span class="o">=</span> <span class="k">try!</span> <span class="kt">Event</span><span class="p">(</span><span class="nv">eventName</span><span class="p">:</span> <span class="s">"my-multichannel-event"</span><span class="p">,</span>
-                                   <span class="nv">eventData</span><span class="p">:</span> <span class="s">"hello world!"</span><span class="p">,</span>
+<span class="k">let</span> <span class="nv">multichannelEvent</span> <span class="o">=</span> <span class="k">try!</span> <span class="kt">Event</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"my-multichannel-event"</span><span class="p">,</span>
+                                   <span class="nv">data</span><span class="p">:</span> <span class="s">"hello world!"</span><span class="p">,</span>
                                    <span class="nv">channels</span><span class="p">:</span> <span class="p">[</span><span class="n">publicChannelOne</span><span class="p">,</span>
                                               <span class="n">publicChannelTwo</span><span class="p">])</span>
 
@@ -236,11 +236,11 @@
 <p>It&rsquo;s also possible to send multiple events with a single API call (max 10 events per call on multi-tenant clusters) using the <code>trigger(events:callback:)</code> method:</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">publicChannelOne</span> <span class="o">=</span> <span class="kt">Channel</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"my-channel"</span><span class="p">,</span> <span class="nv">type</span><span class="p">:</span> <span class="o">.</span><span class="kd">public</span><span class="p">)</span>
 <span class="k">let</span> <span class="nv">publicChannelTwo</span> <span class="o">=</span> <span class="kt">Channel</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"my-other-channel"</span><span class="p">,</span> <span class="nv">type</span><span class="p">:</span> <span class="o">.</span><span class="kd">public</span><span class="p">)</span>
-<span class="k">let</span> <span class="nv">eventOne</span> <span class="o">=</span> <span class="k">try!</span> <span class="kt">Event</span><span class="p">(</span><span class="nv">eventName</span><span class="p">:</span> <span class="s">"my-event"</span><span class="p">,</span>
-                          <span class="nv">eventData</span><span class="p">:</span> <span class="s">"hello world!"</span><span class="p">,</span>
+<span class="k">let</span> <span class="nv">eventOne</span> <span class="o">=</span> <span class="k">try!</span> <span class="kt">Event</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"my-event"</span><span class="p">,</span>
+                          <span class="nv">data</span><span class="p">:</span> <span class="s">"hello world!"</span><span class="p">,</span>
                           <span class="nv">channel</span><span class="p">:</span> <span class="n">publicChannelOne</span><span class="p">)</span>
-<span class="k">let</span> <span class="nv">eventTwo</span> <span class="o">=</span> <span class="k">try!</span> <span class="kt">Event</span><span class="p">(</span><span class="nv">eventName</span><span class="p">:</span> <span class="s">"my-other-event"</span><span class="p">,</span>
-                          <span class="nv">eventData</span><span class="p">:</span> <span class="s">"hello world, again!"</span><span class="p">,</span>
+<span class="k">let</span> <span class="nv">eventTwo</span> <span class="o">=</span> <span class="k">try!</span> <span class="kt">Event</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"my-other-event"</span><span class="p">,</span>
+                          <span class="nv">data</span><span class="p">:</span> <span class="s">"hello world, again!"</span><span class="p">,</span>
                           <span class="nv">channel</span><span class="p">:</span> <span class="n">publicChannelTwo</span><span class="p">)</span>
 
 <span class="k">self</span><span class="o">.</span><span class="n">pusher</span><span class="o">.</span><span class="nf">trigger</span><span class="p">(</span><span class="nv">events</span><span class="p">:</span> <span class="p">[</span><span class="n">eventOne</span><span class="p">,</span> <span class="n">eventTwo</span><span class="p">]])</span> <span class="p">{</span> <span class="n">result</span> <span class="k">in</span>
@@ -257,8 +257,8 @@
 <p>In some situations, you want to stop the client that broadcasts an event from receiving it. You can do this (by specifying its <code>socketId</code>)[<a href="https://pusher.com/docs/channels/server_api/excluding-event-recipients">https://pusher.com/docs/channels/server_api/excluding-event-recipients</a>] when triggering an event:</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">socketIdToExclude</span> <span class="o">=</span> <span class="s">"123.456"</span>
 <span class="k">let</span> <span class="nv">publicChannel</span> <span class="o">=</span> <span class="kt">Channel</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"my-channel"</span><span class="p">,</span> <span class="nv">type</span><span class="p">:</span> <span class="o">.</span><span class="kd">public</span><span class="p">)</span>
-<span class="k">let</span> <span class="nv">excludedClientEvent</span> <span class="o">=</span> <span class="k">try!</span> <span class="kt">Event</span><span class="p">(</span><span class="nv">eventName</span><span class="p">:</span> <span class="s">"my-event"</span><span class="p">,</span>
-                                     <span class="nv">eventData</span><span class="p">:</span> <span class="s">"hello world!"</span><span class="p">,</span>
+<span class="k">let</span> <span class="nv">excludedClientEvent</span> <span class="o">=</span> <span class="k">try!</span> <span class="kt">Event</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"my-event"</span><span class="p">,</span>
+                                     <span class="nv">data</span><span class="p">:</span> <span class="s">"hello world!"</span><span class="p">,</span>
                                      <span class="nv">channel</span><span class="p">:</span> <span class="n">publicChannel</span><span class="p">,</span>
                                      <span class="nv">socketId</span><span class="p">:</span> <span class="n">socketIdToExclude</span><span class="p">)</span>
 
@@ -275,8 +275,8 @@
 
 <p>It is possible to fetch attributes about the channel(s) that were triggered to with the <code>attributeOptions</code> parameter on <code><a href="Structs/Event.html">Event</a></code>. This works with both <code>trigger(…)</code> methods:</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">publicChannel</span> <span class="o">=</span> <span class="kt">Channel</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"my-channel"</span><span class="p">,</span> <span class="nv">type</span><span class="p">:</span> <span class="o">.</span><span class="kd">public</span><span class="p">)</span>
-<span class="k">let</span> <span class="nv">publicEvent</span> <span class="o">=</span> <span class="k">try!</span> <span class="kt">Event</span><span class="p">(</span><span class="nv">eventName</span><span class="p">:</span> <span class="s">"my-event"</span><span class="p">,</span>
-                             <span class="nv">eventData</span><span class="p">:</span> <span class="s">"hello world!"</span><span class="p">,</span>
+<span class="k">let</span> <span class="nv">publicEvent</span> <span class="o">=</span> <span class="k">try!</span> <span class="kt">Event</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"my-event"</span><span class="p">,</span>
+                             <span class="nv">data</span><span class="p">:</span> <span class="s">"hello world!"</span><span class="p">,</span>
                              <span class="nv">channel</span><span class="p">:</span> <span class="n">publicChannel</span><span class="p">,</span>
                              <span class="nv">attributeOptions</span><span class="p">:</span> <span class="p">[</span><span class="o">.</span><span class="n">subscriptionCount</span><span class="p">])</span>
 
@@ -364,8 +364,8 @@
 <p><strong>Limitation:</strong> you cannot trigger a single event on multiple channels in a call to the <code>trigger(event:callback:)</code> method, e.g:</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">publicChannel</span> <span class="o">=</span> <span class="kt">Channel</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"my-channel"</span><span class="p">,</span> <span class="nv">type</span><span class="p">:</span> <span class="o">.</span><span class="kd">public</span><span class="p">)</span>
 <span class="k">let</span> <span class="nv">encryptedChannel</span> <span class="o">=</span> <span class="kt">Channel</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"my-other-channel"</span><span class="p">,</span> <span class="nv">type</span><span class="p">:</span> <span class="o">.</span><span class="n">encrypted</span><span class="p">)</span>
-<span class="k">let</span> <span class="nv">event</span> <span class="o">=</span> <span class="k">try!</span> <span class="kt">Event</span><span class="p">(</span><span class="nv">eventName</span><span class="p">:</span> <span class="s">"my-event"</span><span class="p">,</span>
-                       <span class="nv">eventData</span><span class="p">:</span> <span class="s">"hello world!"</span><span class="p">,</span>
+<span class="k">let</span> <span class="nv">event</span> <span class="o">=</span> <span class="k">try!</span> <span class="kt">Event</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"my-event"</span><span class="p">,</span>
+                       <span class="nv">data</span><span class="p">:</span> <span class="s">"hello world!"</span><span class="p">,</span>
                        <span class="nv">channels</span><span class="p">:</span> <span class="p">[</span><span class="n">publicChannel</span><span class="p">,</span> <span class="n">encryptedChannel</span><span class="p">])</span>
 
 <span class="k">self</span><span class="o">.</span><span class="n">pusher</span><span class="o">.</span><span class="nf">trigger</span><span class="p">(</span><span class="nv">event</span><span class="p">:</span> <span class="n">event</span><span class="p">])</span> <span class="p">{</span> <span class="n">result</span> <span class="k">in</span>
@@ -486,7 +486,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2021 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2021-05-07)</p>
+          <p>&copy; 2021 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2021-05-10)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

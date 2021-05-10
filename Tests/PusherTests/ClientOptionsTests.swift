@@ -50,13 +50,13 @@ final class ClientOptionsTests: XCTestCase {
                                                      key: TestObjects.ClientOptions.testKey,
                                                      secret: TestObjects.ClientOptions.testSecret,
                                                      encryptionMasterKey: TestObjects.ClientOptions.invalidEncryptionMasterKey)) { error in
-            guard let pusherError = error as? PusherError else {
-                XCTFail("The error should be a 'PusherError'.")
+            guard let clientOptionsError = error as? PusherClientOptions.Error else {
+                XCTFail("The error should be a 'PusherClientOptions.Error'.")
 
                 return
             }
-            let expectedReason = "The provided 'encryptionMasterKey' value is not a valid Base-64 string."
-            XCTAssertEqual(pusherError, .invalidConfiguration(reason: expectedReason))
+
+            XCTAssertEqual(clientOptionsError, .encryptionMasterKeyNotBase64)
         }
     }
 
@@ -66,13 +66,13 @@ final class ClientOptionsTests: XCTestCase {
                                                      secret: TestObjects.ClientOptions.testSecret,
                                                      encryptionMasterKey: TestObjects.ClientOptions.testEncryptionMasterKey,
                                                      host: TestObjects.ClientOptions.invalidPrefixCustomHost)) { error in
-            guard let pusherError = error as? PusherError else {
-                XCTFail("The error should be a 'PusherError'.")
+            guard let clientOptionsError = error as? PusherClientOptions.Error else {
+                XCTFail("The error should be a 'PusherClientOptions.Error'.")
 
                 return
             }
-            let expectedReason = "The provided 'host' value should not have a 'https://' or 'http://' prefix."
-            XCTAssertEqual(pusherError, .invalidConfiguration(reason: expectedReason))
+
+            XCTAssertEqual(clientOptionsError, .customHostContainsSchemePrefix)
         }
     }
 
@@ -82,13 +82,13 @@ final class ClientOptionsTests: XCTestCase {
                                                      secret: TestObjects.ClientOptions.testSecret,
                                                      encryptionMasterKey: TestObjects.ClientOptions.testEncryptionMasterKey,
                                                      host: TestObjects.ClientOptions.invalidSuffixCustomHost)) { error in
-            guard let pusherError = error as? PusherError else {
-                XCTFail("The error should be a 'PusherError'.")
+            guard let clientOptionsError = error as? PusherClientOptions.Error else {
+                XCTFail("The error should be a 'PusherClientOptions.Error'.")
 
                 return
             }
-            let expectedReason =  "The provided 'host' value should not have a '/' suffix."
-            XCTAssertEqual(pusherError, .invalidConfiguration(reason: expectedReason))
+
+            XCTAssertEqual(clientOptionsError, .customHostContainsTrailingSlashSuffix)
         }
     }
 
@@ -98,13 +98,13 @@ final class ClientOptionsTests: XCTestCase {
                                                      secret: TestObjects.ClientOptions.testSecret,
                                                      encryptionMasterKey: TestObjects.ClientOptions.testEncryptionMasterKey,
                                                      port: TestObjects.ClientOptions.testCustomPort)) { error in
-            guard let pusherError = error as? PusherError else {
-                XCTFail("The error should be a 'PusherError'.")
+            guard let clientOptionsError = error as? PusherClientOptions.Error else {
+                XCTFail("The error should be a 'PusherClientOptions.Error'.")
 
                 return
             }
-            let expectedReason =  "A 'host' should be provided if a custom 'port' or 'scheme' is set."
-            XCTAssertEqual(pusherError, .invalidConfiguration(reason: expectedReason))
+
+            XCTAssertEqual(clientOptionsError, .customPortOrSchemeMissingHost)
         }
     }
 }

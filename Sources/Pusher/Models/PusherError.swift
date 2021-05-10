@@ -24,9 +24,6 @@ public enum PusherError: LocalizedError {
     /// The exact circumstances that resulted in the error cannot be determined.
     case internalError(_ error: Error)
 
-    /// An invalid configuration caused an error for some reason.
-    case invalidConfiguration(reason: String)
-
     /// The server returned a response that was not a `HTTPURLResponse`.
     case unexpectedResponse
 
@@ -52,10 +49,6 @@ public enum PusherError: LocalizedError {
         case .internalError(let error):
             return NSLocalizedString("The request failed with error: \(error)",
                                      comment: "'internalError' error text")
-
-        case .invalidConfiguration(let reason):
-            return NSLocalizedString("Configuration was invalid and failed with error: \(reason)",
-                                     comment: "'invalidConfiguration' error text")
 
         case .unexpectedResponse:
             return NSLocalizedString("The response was of an unexpected format",
@@ -132,9 +125,6 @@ extension PusherError: Equatable {
 
         case (.internalError(let errorOne), .internalError(let errorTwo)):
             return errorOne.localizedDescription == errorTwo.localizedDescription
-
-        case (.invalidConfiguration(let reasonOne), .invalidConfiguration(let reasonTwo)):
-            return reasonOne == reasonTwo
 
         case (.unexpectedResponse, .unexpectedResponse):
             return true

@@ -243,7 +243,7 @@ self.pusher.authenticate(channel: presenceChannel,
 This library provides a way to verify that a received webhook request is genuine and was received from Pusher. Since a webhook endpoint is accessible to the global internet, verifying that webhook request originated from Pusher is important. Valid webhooks contain special headers which contain a copy of your application key and a HMAC signature of the webhook payload (i.e. its body):
 
 ```swift
-self.pusher.verifyWebhookRequest(receivedWebhookRequest) { result in
+self.pusher.verifyWebhook(request: receivedWebhookRequest) { result in
     switch result {
         case .success(let webhook):
             // Inspect `webhook`

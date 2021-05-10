@@ -17,6 +17,7 @@ Register for a [Pusher](https://pusher.com) account, set up a Channels app and u
 - [Usage](#usage)
 - [Documentation](#documentation)
 - [Reporting bugs and requesting features](#reporting-bugs-and-requesting-features)
+- [Credits](#credits)
 - [License](#license)
 
 ## Supported platforms
@@ -408,6 +409,19 @@ Full documentation of the library can be found in the [API docs](https://pusher.
 ## Reporting bugs and requesting features
 
 Please ensure you use the relevant issue template when reporting a bug or requesting a new feature. Also please check first to see if there is an open issue that already covers your bug report or new feature request.
+
+## Credits
+
+This library is owned and maintained by [Pusher](https://pusher.com/). It was originally created by [Daniel Browne](https://github.com/danielrbrowne).
+
+It uses code from the following third-party repositories:
+
+- [APIota](https://github.com/danielrbrowne/APIota)
+- [AnyCodable](https://github.com/Flight-School/AnyCodable)
+- [swift-crypto](https://github.com/apple/swift-crypto)
+- [tweetnacl-swiftwrap](https://github.com/bitmark-inc/tweetnacl-swiftwrap)
+
+The individual licenses for these libraries are included in the corresponding Swift files.
 
 ## License
 

@@ -8,8 +8,11 @@ final class AuthTokenTests: XCTestCase {
 
     func testAuthenticateEncryptedChannelSucceeds() {
         let expectation = XCTestExpectation(function: #function)
-        let expectedSignature = "b5390e69136683c40d2d:215d060a09b11d609dd6640ebe89a9ec256eea269a75a8a5474e5b598e12e214"
-        let expectedSharedSecret = "FF3Dmpan4Q6fa/lZ2iO3/+LEFWH1D2g/InoQyL4y+sk="
+        let expectedSignature = """
+                                \(TestObjects.Client.testKey):\
+                                6e964b22d03b1cfdecefded43be1a790a4c3ccf3c9bd272d25d98e55f742011b
+                                """
+        let expectedSharedSecret = "/0jEsqvKUTO4l9GSTmSMkBpz3UpsOqpRULThVmKVYHI="
         Self.pusher.authenticate(channel: TestObjects.Channels.encrypted,
                                  socketId: TestObjects.AuthSignatures.testSocketId) { result in
             self.verifyAPIResultSuccess(result, expectation: expectation) { authToken in
@@ -23,7 +26,10 @@ final class AuthTokenTests: XCTestCase {
 
     func testAuthenticatePrivateChannelSucceeds() {
         let expectation = XCTestExpectation(function: #function)
-        let expectedSignature = "b5390e69136683c40d2d:077ffe22dd122b1752d77a3fac2a4d53a08f9e5e19799e9266e7b243bc619100"
+        let expectedSignature = """
+                                \(TestObjects.Client.testKey):\
+                                750873f1478638c1142dce3165502c8d51b938a16239a47d600b4b42f83844bd
+                                """
         Self.pusher.authenticate(channel: TestObjects.Channels.private,
                                  socketId: TestObjects.AuthSignatures.testSocketId) { result in
             self.verifyAPIResultSuccess(result, expectation: expectation) { authToken in
@@ -37,7 +43,10 @@ final class AuthTokenTests: XCTestCase {
 
     func testAuthenticatePresenceChannelSucceeds() {
         let expectation = XCTestExpectation(function: #function)
-        let expectedSignature = "b5390e69136683c40d2d:9f80a404199ac45a69b836a25fc88f09efb9ffef44d6fded36ac91b9d10887a2"
+        let expectedSignature = """
+                                \(TestObjects.Client.testKey):\
+                                a97e9e91201b1fa8708c34c1eee3f48426668ba34d0989c324f96c0b0fd9971d
+                                """
         let expectedUserData = "{\"user_id\":\"user_1\"}"
         Self.pusher.authenticate(channel: TestObjects.Channels.presence,
                                  socketId: TestObjects.AuthSignatures.testSocketId,
@@ -53,7 +62,10 @@ final class AuthTokenTests: XCTestCase {
 
     func testAuthenticatePresenceChannelWithUserInfoSucceeds() {
         let expectation = XCTestExpectation(function: #function)
-        let expectedSignature = "b5390e69136683c40d2d:7709a34e0bd1f12fcadb52d9cc85feebfef414e59166a357bf777c4043c6aa5e"
+        let expectedSignature = """
+                                \(TestObjects.Client.testKey):\
+                                8c48fe056e1f200612891f232d0ff5bb5bbc08e63545664143a8db15c6555a46
+                                """
         let expectedUserData = "{\"user_id\":\"user_1\",\"user_info\":{\"name\":\"Joe Bloggs\"}}"
         Self.pusher.authenticate(channel: TestObjects.Channels.presence,
                                  socketId: TestObjects.AuthSignatures.testSocketId,

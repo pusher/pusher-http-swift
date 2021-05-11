@@ -129,10 +129,10 @@ struct TestObjects {
 
         static let testSocketId = "123.456"
 
-        static let presenceAuthData = PresenceUserAuthData(userId: "user_1")
+        static let presenceUserData = PresenceUserData(userId: "user_1")
 
-        static let presenceAuthDataWithUserInfo = PresenceUserAuthData(userId: "user_1",
-                                                                       userInfo: ["name": "Joe Bloggs"])
+        static let presenceUserDataWithUserInfo = PresenceUserData(userId: "user_1",
+                                                                   userInfo: ["name": "Joe Bloggs"])
     }
 
     // MARK: - Webhooks

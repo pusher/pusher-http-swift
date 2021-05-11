@@ -197,20 +197,20 @@ public class Pusher {
     ///               to a presence channel.
     ///               (This is required when autenticating a presence channel, and should otherwise
     ///               be `nil`).
-    ///   - callback: A closure that returns a `Result` containing a `AuthToken` for subscribing
+    ///   - callback: A closure that returns a `Result` containing a `AuthenticationToken` for subscribing
     ///               to a private or presence channel, or a `PusherError` if the operation fails
     ///               for some reason.
     public func authenticate(channel: Channel,
                              socketId: String,
-                             userData: PresenceUserAuthData? = nil,
-                             callback: @escaping (Result<AuthToken, PusherError>) -> Void) {
+                             userData: PresenceUserData? = nil,
+                             callback: @escaping (Result<AuthenticationToken, PusherError>) -> Void) {
 
         do {
-            let authToken = try AuthTokenService.authToken(for: channel,
-                                                           socketId: socketId,
-                                                           userData: userData,
-                                                           using: options)
-            callback(.success(authToken))
+            let token = try AuthenticationTokenService.authenticationToken(for: channel,
+                                                                           socketId: socketId,
+                                                                           userData: userData,
+                                                                           using: options)
+            callback(.success(token))
         } catch {
             callback(.failure(PusherError(from: error)))
         }

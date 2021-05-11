@@ -6,12 +6,12 @@ import Foundation
 /// The authentication token will contain any `userData` that was provided during
 /// the signing request. In the case of encrypted channels, it will also
 /// contain a base-64 encoded `sharedSecret`.
-public struct AuthToken: Codable {
+public struct AuthenticationToken: Codable {
 
     /// The authentication signature for the channel subscription attempt.
     public let signature: String
 
-    /// The `String` representation of any `PresenceUserAuthData` that was provided
+    /// The `String` representation of any `PresenceUserData` that was provided
     /// during the signing request.
     public let userData: String?
 

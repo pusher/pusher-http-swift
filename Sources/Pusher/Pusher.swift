@@ -97,7 +97,7 @@ public class Pusher {
 
     // MARK: - Triggering events
 
-    /// Triggers an `Event` on one or more channels.
+    /// Triggers an `Event` on one or more `Channel` instances.
     ///
     /// The channel (or channels) that the event should be triggered on, (as well as the
     /// attributes to fetch for each channel) are specified when initializing `event`.

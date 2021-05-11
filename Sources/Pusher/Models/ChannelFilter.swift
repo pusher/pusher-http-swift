@@ -1,6 +1,6 @@
 import Foundation
 
-/// A filter that may be applied when fetching information on an occupied `channel`
+/// A filter that may be applied when fetching information on an occupied `Channel`
 /// (or channels) from the HTTP API.
 ///
 /// The filter can either be based on the `ChannelType`, or a user-specified prefix

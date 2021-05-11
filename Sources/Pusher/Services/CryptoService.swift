@@ -4,7 +4,7 @@ import TweetNacl
 
 /// Provides cryptography functionality for generating digests, HMACs
 /// and encrypting and decrypting data according to the
-/// [Secretbox standard](https://nacl.cr.yp.to/secretbox.html) from NaCl..
+/// [Secretbox standard](https://nacl.cr.yp.to/secretbox.html) from NaCl.
 struct CryptoService {
 
     // MARK: - Error reporting

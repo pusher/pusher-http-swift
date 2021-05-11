@@ -4,7 +4,7 @@ import Foundation
 ///
 /// The generated authentication signature (and other information depending on the channel configuration)
 /// are returned in an authentication token object.
-struct AuthTokenService {
+struct AuthenticationTokenService {
 
     // MARK: - Error reporting
 
@@ -40,11 +40,11 @@ struct AuthTokenService {
     ///               (This must be set when generating an authentication token for a presence channel).
     ///   - options: Configuration options used to managing the connection.
     /// - Throws: A `PusherError` if generating the authentication token fails for some reason.
-    /// - Returns: An `AuthToken`, which can be encoded onto a `URLRequest`.
-    static func authToken(for channel: Channel,
-                          socketId: String,
-                          userData: PresenceUserAuthData?,
-                          using options: PusherClientOptions) throws -> AuthToken {
+    /// - Returns: An `AuthenticationToken`, which can be encoded onto a `URLRequest`.
+    static func authenticationToken(for channel: Channel,
+                                    socketId: String,
+                                    userData: PresenceUserData?,
+                                    using options: PusherClientOptions) throws -> AuthenticationToken {
 
         guard channel.type != .public else {
             throw Error.authenticationAttemptForPublicChannel
@@ -73,8 +73,8 @@ struct AuthTokenService {
             sharedSecret = CryptoService.sha256Digest(data: stringToDigest.toData()).base64EncodedString()
         }
 
-        return AuthToken(signature: authSignature,
-                         userData: userDataString,
-                         sharedSecret: sharedSecret)
+        return AuthenticationToken(signature: authSignature,
+                                   userData: userDataString,
+                                   sharedSecret: sharedSecret)
     }
 }

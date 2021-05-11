@@ -4,7 +4,7 @@ import Foundation
 /// Triggers multiple events on one or more channels in a single request.
 struct TriggerBatchEventsEndpoint: APIotaCodableEndpoint {
 
-    typealias SuccessResponse = ChannelAttributesListAPIResponse
+    typealias SuccessResponse = ChannelInfoListAPIResponse
     typealias ErrorResponse = Data
     typealias Body = EventBatch
 

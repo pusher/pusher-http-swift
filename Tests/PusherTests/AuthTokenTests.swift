@@ -10,9 +10,9 @@ final class AuthTokenTests: XCTestCase {
         let expectation = XCTestExpectation(function: #function)
         let expectedSignature = """
                                 \(TestObjects.Client.testKey):\
-                                6e964b22d03b1cfdecefded43be1a790a4c3ccf3c9bd272d25d98e55f742011b
+                                222dfced2d1e7b39bcbc5e4f43402a9522acddb385d49a6452881bd6db7fa9f2
                                 """
-        let expectedSharedSecret = "/0jEsqvKUTO4l9GSTmSMkBpz3UpsOqpRULThVmKVYHI="
+        let expectedSharedSecret = "AcTnN9VKpzSSjPwqb/7Y3U0qlO2ySQQUbvTPW2O4ERI="
         Self.pusher.authenticate(channel: TestObjects.Channels.encrypted,
                                  socketId: TestObjects.AuthSignatures.testSocketId) { result in
             self.verifyAPIResultSuccess(result, expectation: expectation) { authToken in
@@ -28,7 +28,7 @@ final class AuthTokenTests: XCTestCase {
         let expectation = XCTestExpectation(function: #function)
         let expectedSignature = """
                                 \(TestObjects.Client.testKey):\
-                                750873f1478638c1142dce3165502c8d51b938a16239a47d600b4b42f83844bd
+                                e367fbe4d2ae2598b191acc02d3530f73731cbe1b8da5d5041cdae7a847c0977
                                 """
         Self.pusher.authenticate(channel: TestObjects.Channels.private,
                                  socketId: TestObjects.AuthSignatures.testSocketId) { result in
@@ -45,12 +45,12 @@ final class AuthTokenTests: XCTestCase {
         let expectation = XCTestExpectation(function: #function)
         let expectedSignature = """
                                 \(TestObjects.Client.testKey):\
-                                a97e9e91201b1fa8708c34c1eee3f48426668ba34d0989c324f96c0b0fd9971d
+                                cab92b812ec57f7afa43e8778e666fb6fbd5329b2ea8e6d5d0d60b9831406c3a
                                 """
         let expectedUserData = "{\"user_id\":\"user_1\"}"
         Self.pusher.authenticate(channel: TestObjects.Channels.presence,
                                  socketId: TestObjects.AuthSignatures.testSocketId,
-                                 userData: TestObjects.AuthSignatures.presenceAuthData) { result in
+                                 userData: TestObjects.AuthSignatures.presenceUserData) { result in
             self.verifyAPIResultSuccess(result, expectation: expectation) { authToken in
                 XCTAssertEqual(authToken.signature, expectedSignature)
                 XCTAssertEqual(authToken.userData, expectedUserData)
@@ -64,12 +64,12 @@ final class AuthTokenTests: XCTestCase {
         let expectation = XCTestExpectation(function: #function)
         let expectedSignature = """
                                 \(TestObjects.Client.testKey):\
-                                8c48fe056e1f200612891f232d0ff5bb5bbc08e63545664143a8db15c6555a46
+                                99ea557326f7977d2955151d413e3002a1192f47046dec5c77c441a81e7fc9b3
                                 """
         let expectedUserData = "{\"user_id\":\"user_1\",\"user_info\":{\"name\":\"Joe Bloggs\"}}"
         Self.pusher.authenticate(channel: TestObjects.Channels.presence,
                                  socketId: TestObjects.AuthSignatures.testSocketId,
-                                 userData: TestObjects.AuthSignatures.presenceAuthDataWithUserInfo) { result in
+                                 userData: TestObjects.AuthSignatures.presenceUserDataWithUserInfo) { result in
             self.verifyAPIResultSuccess(result, expectation: expectation) { authToken in
                 XCTAssertEqual(authToken.signature, expectedSignature)
                 XCTAssertEqual(authToken.userData, expectedUserData)
@@ -81,7 +81,7 @@ final class AuthTokenTests: XCTestCase {
 
     func testAuthenticatePresenceChannelWithMissingUserDataFails() {
         let expectation = XCTestExpectation(function: #function)
-        let authTokenServiceError = AuthTokenService.Error.missingUserDataForPresenceChannel
+        let authTokenServiceError = AuthenticationTokenService.Error.missingUserDataForPresenceChannel
         let expectedError = PusherError.internalError(authTokenServiceError)
         Self.pusher.authenticate(channel: TestObjects.Channels.presence,
                                  socketId: TestObjects.AuthSignatures.testSocketId) { result in
@@ -92,7 +92,7 @@ final class AuthTokenTests: XCTestCase {
 
     func testAuthenticatePublicChannelFails() {
         let expectation = XCTestExpectation(function: #function)
-        let authTokenServiceError = AuthTokenService.Error.authenticationAttemptForPublicChannel
+        let authTokenServiceError = AuthenticationTokenService.Error.authenticationAttemptForPublicChannel
         let expectedError = PusherError.internalError(authTokenServiceError)
         Self.pusher.authenticate(channel: TestObjects.Channels.public,
                                  socketId: TestObjects.AuthSignatures.testSocketId) { result in

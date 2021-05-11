@@ -1,7 +1,7 @@
 import Foundation
 
 /// Channel attributes that can be fetched depending on the `ChannelAttributeFetchOptions`
-/// provided to a top-level API method (see the `Pusher` class).
+/// provided to a top-level API method (see: `Pusher`).
 public struct ChannelAttributes: SubscriptionCountable, UserCountable, Decodable {
 
     /// The number of all connections currently subscribed.

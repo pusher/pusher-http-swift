@@ -48,7 +48,7 @@ public class Pusher {
             // Map the API response to `[ChannelSummary]` when running the callback
             // and map the API client error to an equivalent `PusherError`
             callback(result
-                        .map { $0.channelSummaryList }
+                        .map { $0.channelSummaries }
                         .mapError({ PusherError(from: $0) }))
         }
     }
@@ -100,6 +100,7 @@ public class Pusher {
     /// Triggers an `Event` on one or more channels.
     ///
     /// The channel (or channels) that the event should be triggered on, (as well as the
+    /// attributes to fetch for each channel) are specified when initializing `event`.
     /// - Parameters:
     ///   - event: The event to trigger.
     ///   - callback: A closure that returns a `Result` containing an array of `ChannelSummary`

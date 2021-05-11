@@ -1,7 +1,7 @@
 import Foundation
 
-/// The HTTP API response returning a list of channel attributes.
-struct ChannelAttributesListAPIResponse: Decodable {
+/// Represents the HTTP API response returning an array of channel information records.
+struct ChannelInfoListAPIResponse: Decodable {
 
     // MARK: - Properties
 

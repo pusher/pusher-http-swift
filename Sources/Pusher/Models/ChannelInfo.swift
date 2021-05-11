@@ -1,9 +1,12 @@
 import Foundation
 
-/// An information record for an occupied channel.
+/// An information record for an occupied `Channel`.
+///
+/// The channel `attributes` are populated depending on the `ChannelAttributeFetchOptions`
+/// provided to a top-level API method (see: `Pusher`).
 public struct ChannelInfo: ChannelInfoRecord, Decodable {
 
-    /// If there is at least one user subscribed to the channel, it is classed as occupied.
+    /// The channel is classed as occupied if there is at least one user subscribed to it.
     public let isOccupied: Bool
 
     /// The fetched channel attributes.

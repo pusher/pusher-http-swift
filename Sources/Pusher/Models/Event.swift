@@ -1,6 +1,6 @@
 import Foundation
 
-/// An event to trigger on a specific channel (or multiple channels).
+/// An event to trigger on a specific `Channel` (or multiple channels).
 public struct Event: EventInfoRecord, Encodable {
 
     /// An error generated during initialization.

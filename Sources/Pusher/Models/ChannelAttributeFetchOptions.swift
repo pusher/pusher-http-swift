@@ -1,10 +1,10 @@
 import Foundation
 
-/// Attributes of an occupied channel that can be fetched from the Pusher HTTP API.
+/// Attributes of an occupied `Channel` that can be fetched from the Pusher HTTP API.
 ///
-/// The attributes that can be fetched for a channel is dependent on its `ChannelType`.
-/// Attempting to fetch an attribute for a channel that does not support it will result
-/// in an error.
+/// The attributes that can be fetched for a channel are dependent on its `ChannelType`.
+/// Attempting to fetch an attribute for a channel that does not support that attribute
+/// query will result in an error.
 public struct ChannelAttributeFetchOptions: OptionSet {
 
     public let rawValue: Int

@@ -1,6 +1,6 @@
 import Foundation
 
-/// The HTTP API response returning a list of channel summaries.
+/// Represents the HTTP API response returning an array of channel summaries.
 struct ChannelSummaryListAPIResponse: Decodable {
 
     /// A dictionary representation of `ChannelAttributes` keyed by channel name.

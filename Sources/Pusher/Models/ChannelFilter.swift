@@ -1,28 +1,29 @@
 import Foundation
 
-/// A filter that may be applied when fetching information on occupied channels from the HTTP API.
+/// A filter that may be applied when fetching information on an occupied `channel`
+/// (or channels) from the HTTP API.
 ///
-/// The filter can either be based on the channel type, or a user-specified prefix
+/// The filter can either be based on the `ChannelType`, or a user-specified prefix
 /// that allows filtering based on custom naming schemes.
 public enum ChannelFilter {
 
-    /// A filter encapsulating any channel that can be subscribed to.
+    /// A filter that returns any channel that can be subscribed to.
     ///
-    /// The channels that are returned by this filter could be any of type.
+    /// The channels that are returned by this filter could be any of `ChannelType`.
     case any
 
     /// A custom filter, based on a provided channel name `prefix` string.
     ///
-    /// This can be used as a filter for a particular group of channels, defined by a common naming prefix scheme.
+    /// This can be used as a filter for a particular group of channels, related by a common naming prefix scheme.
     case custom(prefix: String)
 
-    /// A filter encapsulating end-to-end encrypted channels.
+    /// A filter that returns all occupied encrypted channels.
     case encrypted
 
-    /// A filter encapsulating private channels.
+    /// A filter that returns all occupied private channels.
     case `private`
 
-    /// A filter encapsulating presence channels.
+    /// A filter that returns all occupied presence channels.
     case presence
 }
 

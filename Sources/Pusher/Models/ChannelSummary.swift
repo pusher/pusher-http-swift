@@ -1,6 +1,6 @@
 import Foundation
 
-/// A summarised information record for an occupied channel.
+/// A summarised information record for an occupied `Channel`.
 public struct ChannelSummary: ChannelSummaryRecord {
 
     // MARK: - Public properties

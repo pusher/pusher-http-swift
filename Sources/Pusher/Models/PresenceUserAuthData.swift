@@ -7,7 +7,7 @@ public struct PresenceUserData: Encodable {
     /// The user identifier to send as part of a generated `AuthenticationToken`.
     public let userId: String
 
-    /// Optional additional user data to send as part of a generated `AuthenticationToken`.
+    /// An optional additional user data dictionary to send as part of a generated `AuthenticationToken`.
     public let userInfo: [String: AnyEncodable]?
 
     enum CodingKeys: String, CodingKey {

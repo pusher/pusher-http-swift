@@ -1,6 +1,6 @@
 import Foundation
 
-/// A collection of configuration options for a Pusher Channels HTTP API client.
+/// A collection of configuration options for a `Pusher` Channels HTTP API client.
 public struct PusherClientOptions {
 
     /// An error generated during initialization.
@@ -122,12 +122,18 @@ public struct PusherClientOptions {
     ///                          (Refer to `encryptionMasterKey` for information on its expected format).
     ///   - cluster: The Pusher cluster that hosts the Channels application
     ///              (as specified in the Channels developer dashboard).
+    ///              The default value is `nil`.
     ///   - host: A custom host for a Channels application (e.g. `"myhost.com"`).
+    ///           The default value is `nil`.
     ///   - httpProxy: A HTTP proxy to use when routing traffic to a custom `host`.
+    ///                The default value is `nil`.
     ///   - port: A port to use when routing traffic to a custom `host`.
+    ///           The default value is `nil`.
     ///   - scheme: A scheme to use when routing traffic to a custom `host`.
+    ///             The default value is `nil`.
     ///   - useTLS: Whether or not Transport Layer Security is used when
     ///             sending and receiving traffic to and from the `host`.
+    ///             The default value is `true`.
     /// - Throws: A `PusherError` if the configuration options are invalid for some reason.
     public init(appId: Int,
                 key: String,

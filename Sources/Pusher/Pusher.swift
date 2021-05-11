@@ -31,11 +31,11 @@ public class Pusher {
 
     // MARK: - Application state queries
 
-    /// Fetch a list of any occupied channels.
+    /// Fetches an array of `ChannelSummary` records for any occupied channels.
     /// - Parameters:
     ///   - filter: A filter to apply to the returned results.
     ///   - attributeOptions: A set of attributes that should be returned in each `ChannelSummary`.
-    ///   - callback: A closure that returns a `Result` containing a list of `ChannelSummary`
+    ///   - callback: A closure that returns a `Result` containing an array of `ChannelSummary`
     ///               instances, or a `PusherError` if the operation fails for some reason.
     public func channels(withFilter filter: ChannelFilter = .any,
                          attributeOptions: ChannelAttributeFetchOptions = [],
@@ -53,7 +53,7 @@ public class Pusher {
         }
     }
 
-    /// Fetch attributes of a given occupied channel.
+    /// Fetches the `ChannelInfo` for a given occupied channel.
     /// - Parameters:
     ///   - channel: The channel to inspect.
     ///   - attributeOptions: A set of attributes that should be returned for the `channel`.
@@ -72,13 +72,13 @@ public class Pusher {
         }
     }
 
-    /// Fetch a list of users currently subscribed to a given occupied presence channel.
+    /// Fetches an array of `User` records currently subscribed to a given occupied presence `Channel`.
     ///
-    /// Attempting to fetch a list of users for non-presence channels is invalid and
-    /// will result in an error.
+    /// Users can only be fetched from presence channels. Using a channel with a `ChannelType`
+    /// other than `presence` is invalid and will result in an error.
     /// - Parameters:
     ///   - channel: The presence channel to inspect.
-    ///   - callback: A closure that returns a `Result` containing a list of `User` instances
+    ///   - callback: A closure that returns a `Result` containing an array of `User` instances
     ///               subscribed to the `channel`, or a `PusherError` if the operation fails
     ///               for some reason.
     public func users(for channel: Channel,
@@ -97,17 +97,15 @@ public class Pusher {
 
     // MARK: - Triggering events
 
-    /// Trigger an event on one or more channels.
+    /// Triggers an `Event` on one or more channels.
     ///
     /// The channel (or channels) that the event should be triggered on, (as well as the
-    /// attributes to fetch for the each channel) are specified when initializing an instance
-    /// of `Event` to pass to this method.
     /// - Parameters:
     ///   - event: The event to trigger.
-    ///   - callback: A closure that returns a `Result` containing a list of `ChannelSummary`
+    ///   - callback: A closure that returns a `Result` containing an array of `ChannelSummary`
     ///               instances, or a `PusherError` if the operation fails for some reason.
     ///               If the `attributeOptions` on the `event` are not set, an empty channel
-    ///               list will be returned.
+    ///               array will be returned.
     public func trigger(event: Event,
                         callback: @escaping (Result<[ChannelSummary], PusherError>) -> Void) {
 
@@ -119,7 +117,7 @@ public class Pusher {
 
                 // Map the API client error to an equivalent `PusherError`
                 callback(result
-                            .map { $0.channelSummaryList }
+                            .map { $0.channelSummaries }
                             .mapError({ PusherError(from: $0) }))
             }
         } catch {
@@ -127,21 +125,20 @@ public class Pusher {
         }
     }
 
-    /// Trigger multiple events, each on a specific channel.
+    /// Triggers multiple events, each on a specific `Channel`.
     ///
     /// The channel that the event should be triggered on, (as well as the
-    /// attributes to fetch for the each channel) are specified when initializing instances
-    /// of `Event` to pass to this method.
+    /// attributes to fetch for the each channel) are specified when initializing `event`.
     ///
-    /// Any events in `events` specifying more than one channel to trigger on will result in
-    /// an error. Providing a list of more than 10 events to trigger will also result in an error.
+    /// Any event in `events` that specifies more than one channel to trigger on will result in
+    /// an error. Providing an array of more than 10 events to trigger will also result in an error.
     /// - Parameters:
-    ///   - events: A list of events to trigger.
-    ///   - callback: A closure that returns a `Result` containing a list of `ChannelInfo` instances
+    ///   - events: An array of events to trigger.
+    ///   - callback: A closure that returns a `Result` containing an array of `ChannelInfo` instances
     ///               (where the instance at index `i` corresponds to the channel for `events[i]`,
     ///               or a `PusherError` if the operation fails for some reason.
     ///               If the `attributeOptions` on the `event` are not set, an empty information
-    ///               list will be returned.
+    ///               array will be returned.
     public func trigger(events: [Event],
                         callback: @escaping (Result<[ChannelInfo], PusherError>) -> Void) {
 
@@ -162,13 +159,13 @@ public class Pusher {
 
     // MARK: - Webhook verification
 
-    /// Verify that a received webhook request is genuine and was received from Pusher.
+    /// Verifies that a received Webhook request is genuine and was received from Pusher.
     ///
-    /// Since a webhook endpoint is accessible to the global internet, verifying that webhook request
-    /// originated from Pusher is important. Valid webhooks contain special headers which contain a
-    /// copy of your application key and a HMAC signature of the webhook payload (i.e. its body).
+    /// Webhook endpoints are accessible to the global internet. Therefore, verifying that
+    /// a Webhook request originated from Pusher is important. Valid Webhooks contain special headers
+    /// that contain a copy of your application key and a HMAC signature of the Webhook payload (i.e. its body).
     /// - Parameters:
-    ///   - request: The received webhook request.
+    ///   - request: The received Webhook request.
     ///   - callback: A closure that returns a `Result` containing a verified `Webhook` and the
     ///               events that were sent with it (which are decrypted if needed), or a `PusherError`
     ///               if the operation fails for some reason.
@@ -188,12 +185,12 @@ public class Pusher {
 
     // MARK: - Private and presence channel subscription authentication
 
-    /// Generate an authentication token that can be returned to a user client that is attempting
-    /// to subscribe to a private or presence channel, which requires authentication with the server.
+    /// Generates an authentication token that can be returned to a user client that is attempting
+    /// to subscribe to a private or presence `Channel`, which requires authentication with the server.
     /// - Parameters:
     ///   - channel: The channel for which to generate the authentication token.
     ///   - socketId: The socket identifier for the connected user.
-    ///   - userData: The data for generating an authentication token for a subscription attempt
+    ///   - userData: The data to generate an authentication token for a subscription attempt
     ///               to a presence channel.
     ///               (This is required when autenticating a presence channel, and should otherwise
     ///               be `nil`).

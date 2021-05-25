@@ -1,4 +1,4 @@
-# Pusher Channels Swift REST API Library
+# Pusher Channels Swift REST API Library [[BETA](https://pusher.com/docs/lab#beta-features)]
 
 ![Build Status](https://github.com/pusher/pusher-http-swift/workflows/CI/badge.svg)
 [![Latest Release](https://img.shields.io/github/v/release/pusher/pusher-http-swift)](https://github.com/pusher/pusher-http-swift/releases)

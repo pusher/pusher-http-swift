@@ -30,6 +30,7 @@ Register for a [Pusher](https://pusher.com) account, set up a Channels app and u
 - iOS 13.0 and above
 - macOS 10.15 and above
 - tvOS 13.0 and above
+- watchOS 6.0 and above
 
 ## Installation
 

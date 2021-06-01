@@ -1,4 +1,3 @@
-import APIota
 @testable import Pusher
 import XCTest
 

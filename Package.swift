@@ -30,7 +30,7 @@ let package = Package(
         // Swift wrapper for TweetNaCl crypto functionality
         .package(name: "TweetNacl",
                  url: "https://github.com/bitmark-inc/tweetnacl-swiftwrap",
-                 .upToNextMajor(from: "1.0.0"))
+                 .revision("f8fd111642bf2336b11ef9ea828510693106e954"))
     ],
     targets: [
         .target(

@@ -15,26 +15,12 @@ struct CryptoService {
         /// An error occurred during a NaCl cryptographic operation.
         case naclError(_ error: Swift.Error)
 
-        /// Generation of random bytes failed with a `OSStatus` code.
-        case randomBytesGenerationError(statusCode: OSStatus)
-
-        /// Zero random bytes were requested.
-        case zeroRandomBytesRequested
-
         /// A localized human-readable description of the error.
         public var errorDescription: String? {
             switch self {
             case .naclError(error: let error):
                 return NSLocalizedString("A cryptographic operation failed with error: \(error.localizedDescription)",
                                          comment: "'.naclError' error text")
-
-            case .randomBytesGenerationError(statusCode: let code):
-                return NSLocalizedString("Generating random bytes failed with error: \(code).",
-                                         comment: "'.randomBytesGenerationError' error text")
-
-            case .zeroRandomBytesRequested:
-                return NSLocalizedString("Zero random bytes were requested.",
-                                         comment: "'.zeroRandomBytesRequested' error text")
             }
         }
     }

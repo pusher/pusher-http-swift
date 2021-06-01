@@ -80,7 +80,7 @@ struct CryptoService {
     ///   - data: The encrypted `Data` to decrypt.
     ///   - nonce: The nonce `Data` to use for the decryption operation.
     ///   - key: The key `Data` to use for the decryption operation.
-    /// - Throws: An `CryptoError` if the decryption operation fails for some reason.
+    /// - Throws: An `CryptoService.Error` if the decryption operation fails for some reason.
     /// - Returns: The decrypted `Data`, if the operation was successful.
     static func decrypt(data: Data, nonce: Data, key: Data) throws -> Data {
 
@@ -97,7 +97,7 @@ struct CryptoService {
     ///   - data: The `Data` to encrypt.
     ///   - nonce: The nonce `Data` to use for the encryption operation.
     ///   - key: The key `Data` to use for the encryption operation.
-    /// - Throws: An `CryptoError` if the encryption operation fails for some reason.
+    /// - Throws: An `CryptoService.Error` if the encryption operation fails for some reason.
     /// - Returns: The encrypted `Data`, if the operation was successful.
     static func encrypt(data: Data, nonce: Data, key: Data) throws -> Data {
 
@@ -112,7 +112,7 @@ struct CryptoService {
 
     /// Generates cryptographically secure random data.
     /// - Parameter count: The number of random bytes to return.
-    /// - Throws: An `CryptoError` if the random data could not be generated for some reason,
+    /// - Throws: An `CryptoService.Error` if the random data could not be generated for some reason,
     ///           or if zero random bytes were requested.
     /// - Returns: The requested number of cryptographically secure random bytes, as `Data`.
     static func secureRandomData(count: Int) throws -> Data {

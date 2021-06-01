@@ -117,36 +117,10 @@ struct CryptoService {
     /// - Returns: The requested number of cryptographically secure random bytes, as `Data`.
     static func secureRandomData(count: Int) throws -> Data {
 
-        // Generation method is platform dependent
-        // (The Security framework is only available on Apple platforms).
-        #if os(Linux)
-
-        var bytes = [UInt8]()
-        for _ in 0..<count {
-            let randomByte = UInt8.random(in: UInt8.min...UInt8.max)
-            bytes.append(randomByte)
+        do {
+            return try NaclUtil.secureRandomData(count: count)
+        } catch {
+            throw Error.naclError(error)
         }
-        let randomData = Data(bytes: &bytes, count: count)
-
-        return randomData
-
-        #else
-
-        var randomData = Data(count: count)
-        let result = try randomData.withUnsafeMutableBytes { bufferPointer -> Int32 in
-            guard let baseAddress = bufferPointer.baseAddress else {
-                throw Error.zeroRandomBytesRequested
-            }
-
-            return SecRandomCopyBytes(kSecRandomDefault, count, baseAddress)
-        }
-
-        guard result == errSecSuccess else {
-            throw Error.randomBytesGenerationError(statusCode: result)
-        }
-
-        return randomData
-
-        #endif
     }
 }

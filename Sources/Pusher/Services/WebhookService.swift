@@ -1,4 +1,7 @@
 import Foundation
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
 
 /// Provides functionality for verifying the authenticity of received Webhook requests,
 /// and for decoding the request into a `Webhook` object.

@@ -1,5 +1,8 @@
 import APIota
 import Foundation
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
 
 /// A REST API client for the Pusher Channels HTTP API.
 struct APIClient: APIotaClient {

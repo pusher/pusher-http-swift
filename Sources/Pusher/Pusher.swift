@@ -1,5 +1,8 @@
 import APIota
 import Foundation
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
 
 /// Manages operations when interacting with the Pusher Channels HTTP API.
 public class Pusher {

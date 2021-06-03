@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased](https://github.com/pusher/pusher-http-swift/compare/0.1.0...HEAD)
 
+## [0.2.0](https://github.com/pusher/pusher-http-swift/compare/0.1.0...0.2.0) - 2021-06-03
+
+### Added
+
+- Support for tvOS (13.0 and above) and watchOS (6.0 and above).
+- Support for Linux.
+
 ## [0.1.0](https://github.com/pusher/pusher-http-swift/compare/3f4c2e8...0.1.0) - 2021-05-25
 
 - Initial public beta release.

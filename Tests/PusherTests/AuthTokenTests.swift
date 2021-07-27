@@ -10,7 +10,7 @@ final class AuthTokenTests: XCTestCase {
         let expectation = XCTestExpectation(function: #function)
         let expectedSignature = """
                                 \(TestObjects.Client.testKey):\
-                                222dfced2d1e7b39bcbc5e4f43402a9522acddb385d49a6452881bd6db7fa9f2
+                                c58902aaef1a2c0dd8f0487c889c1bdccfe22cb32fd16b93215350291b18ecf4
                                 """
         let expectedSharedSecret = "AcTnN9VKpzSSjPwqb/7Y3U0qlO2ySQQUbvTPW2O4ERI="
         Self.pusher.authenticate(channel: TestObjects.Channels.encrypted,
@@ -28,7 +28,7 @@ final class AuthTokenTests: XCTestCase {
         let expectation = XCTestExpectation(function: #function)
         let expectedSignature = """
                                 \(TestObjects.Client.testKey):\
-                                e367fbe4d2ae2598b191acc02d3530f73731cbe1b8da5d5041cdae7a847c0977
+                                1b79c61f9d86d532b0cb82dc7e301696497eaba58855e831e7030afd8e76ac86
                                 """
         Self.pusher.authenticate(channel: TestObjects.Channels.private,
                                  socketId: TestObjects.AuthSignatures.testSocketId) { result in
@@ -45,7 +45,7 @@ final class AuthTokenTests: XCTestCase {
         let expectation = XCTestExpectation(function: #function)
         let expectedSignature = """
                                 \(TestObjects.Client.testKey):\
-                                cab92b812ec57f7afa43e8778e666fb6fbd5329b2ea8e6d5d0d60b9831406c3a
+                                ca63b86e1b51b8dc5592a141471c487523063ab89cd75e6b867bf6b0c567b1a8
                                 """
         let expectedUserData = "{\"user_id\":\"user_1\"}"
         Self.pusher.authenticate(channel: TestObjects.Channels.presence,
@@ -64,7 +64,7 @@ final class AuthTokenTests: XCTestCase {
         let expectation = XCTestExpectation(function: #function)
         let expectedSignature = """
                                 \(TestObjects.Client.testKey):\
-                                99ea557326f7977d2955151d413e3002a1192f47046dec5c77c441a81e7fc9b3
+                                89c5b5af5e845494ed9f230b6b7585ba9ebd8c42d2408ea155e7e5d44422e2ca
                                 """
         let expectedUserData = "{\"user_id\":\"user_1\",\"user_info\":{\"name\":\"Joe Bloggs\"}}"
         Self.pusher.authenticate(channel: TestObjects.Channels.presence,

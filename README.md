@@ -197,6 +197,28 @@ self.pusher.trigger(event: publicEvent) { result in
 }
 ```
 
+**NOTES:**
+- The `trigger(…)` method is asynchronous. If you are not using this in a GUI application, you may need to use a semaphore:
+
+```swift
+let publicChannel = Channel(name: "my-channel", type: .public)
+    let publicEvent = try! Event(name: "my-event",
+                                    data: "hello world!",
+                                    channel: publicChannel)
+
+    let sema = DispatchSemaphore(value: 0)
+    pusher.trigger(event: publicEvent) { result in
+        switch result {
+        case .success(let channelSummaries):
+            // Inspect `channelSummaries
+        case .failure(let error):
+            // Handle error
+        }
+        sema.signal()
+    }
+    sema.wait()
+```
+
 ### Authenticating channel subscriptions
 
 Users that attempt to subscribe to a private or presence channel must be first authenticated. An authentication token that can be returned to a user client that is attempting a subscription, which requires authentication with the server.

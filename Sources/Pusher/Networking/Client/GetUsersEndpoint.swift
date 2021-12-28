@@ -8,7 +8,7 @@ struct GetUsersEndpoint: APIotaCodableEndpoint {
     typealias ErrorResponse = Data
     typealias Body = String
 
-    let encoder: JSONEncoder = JSONEncoder()
+    let encoder: JSONEncoder = JSONEncoder.iso8601Ordered
 
     let headers: HTTPHeaders? = APIClient.defaultHeaders
 

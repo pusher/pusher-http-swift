@@ -8,7 +8,7 @@ struct TriggerBatchEventsEndpoint: APIotaCodableEndpoint {
     typealias ErrorResponse = Data
     typealias Body = EventBatch
 
-    let encoder: JSONEncoder = JSONEncoder()
+    let encoder: JSONEncoder = JSONEncoder.iso8601Ordered
 
     var headers: HTTPHeaders? {
 

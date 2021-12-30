@@ -47,7 +47,7 @@ struct AuthInfo: AuthInfoRecord {
                version: String = "1.0") where Body: Encodable {
 
         // Generate a MD5 digest of the body (if provided)
-        if let httpBody = httpBody, let bodyData = try? JSONEncoder().encode(httpBody) {
+        if let httpBody = httpBody, let bodyData = try? JSONEncoder.iso8601Ordered.encode(httpBody) {
             self.bodyMD5 = CryptoService.md5Digest(data: bodyData).hexEncodedString()
         } else {
             self.bodyMD5 = nil

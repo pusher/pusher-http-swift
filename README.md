@@ -55,7 +55,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/pusher/pusher-http-swift.git",
-                 .upToNextMajor(from: "0.1.0")),
+                 .upToNextMajor(from: "1.0.1")),
     ],
     targets: [
         .target(

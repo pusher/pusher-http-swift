@@ -1,0 +1,39 @@
+name: Prepare release
+
+on:
+  pull_request:
+    types: [ labeled ]
+    branches:
+      - main
+
+jobs:
+  prepare-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Fetch the lastest release version
+        id: fetch_latest_release
+        uses: pozetroninc/github-action-get-latest-release@master
+        with:
+          repository: ${{ github.repository }}
+          excludes: prerelease, draft
+      - uses: actions/checkout@v2
+        with:
+          repository: pusher/actions
+          token: ${{ secrets.PUSHER_CI_GITHUB_PRIVATE_TOKEN }}
+          path: .github/actions
+      - uses: ./.github/actions/prepare-version-bump
+        id: bump
+        with:
+          current_version: ${{ steps.fetch_latest_release.outputs.release }}
+          changelog_file: CHANGELOG.md
+      - name: "Bump version in README.md"
+        run: |
+          sed -i 's/${{ steps.bump.outputs.current_version }}/${{ steps.bump.outputs.new_version }}/1' README.md
+          echo "${{steps.bump.outputs.new_version}}" > .version
+          git add README.md .version CHANGELOG.md
+          git commit -m "Bump to version ${{ steps.bump.outputs.new_version }}"
+          git push

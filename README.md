@@ -156,7 +156,7 @@ self.pusher.trigger(events: [eventOne, eventTwo]]) { result in
 
 #### Excluding receipients
 
-In some situations, you want to stop the client that broadcasts an event from receiving it. You can do this (by specifying its `socketId`)[https://pusher.com/docs/channels/server_api/excluding-event-recipients] when triggering an event:
+In some situations, you want to stop the client that broadcasts an event from receiving it. You can do this [by specifying its `socketId`](https://pusher.com/docs/channels/server_api/excluding-event-recipients) when triggering an event:
 
 ```swift
 let socketIdToExclude = "123.456"

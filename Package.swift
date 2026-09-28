@@ -5,10 +5,10 @@ import PackageDescription
 
 let package = Package(
     name: "Pusher",
-    platforms: [.iOS(.v13),
-                .macOS(.v10_15),
-                .tvOS(.v13),
-                .watchOS(.v6)],
+    platforms: [.iOS("15.0"),
+                .macOS("12.0"),
+                .tvOS("15.0"),
+                .watchOS("9.0")],
     products: [
         .library(
             name: "Pusher",

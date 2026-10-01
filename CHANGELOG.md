@@ -1,6 +1,6 @@
 # Changelog
 
-## [2.0.0](https://github.com/pusher/pusher-http-swift/compare/1.0.1...2.0.0) - Unreleased
+## [1.1.0](https://github.com/pusher/pusher-http-swift/compare/1.0.1...1.1.0) - Unreleased
 
 ### Changed
 

@@ -32,7 +32,7 @@ Register for a [Pusher](https://pusher.com) account, set up a Channels app and u
 - tvOS 15.0 and above
 - watchOS 9.0 and above
 
-If you need support for older versions of iOS, macOS, tvOS or watchOS, please use the latest v1.x release (Linux is unaffected by this floor).
+If you need support for older versions of iOS, macOS, tvOS or watchOS, please pin to a version prior to this release — Linux is unaffected by this floor.
 
 ## Installation
 

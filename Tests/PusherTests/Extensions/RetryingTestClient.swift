@@ -1,5 +1,5 @@
-@testable import Pusher
 import Foundation
+@testable import Pusher
 
 /// A test-only wrapper around `Pusher` that transparently retries, with exponential
 /// backoff, any request that fails with a transient, transport-level connection error

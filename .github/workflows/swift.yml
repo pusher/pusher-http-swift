@@ -17,6 +17,8 @@ jobs:
       run: swift run swiftlint
     - name: Build
       run: swift build -v
+    - name: Disable IPv6 (works around macOS runner Happy Eyeballs flakiness)
+      run: sudo networksetup -setv6off Wi-Fi
     - name: Run tests
       env:
           TEST_APP_ID: ${{ secrets.CI_APP_ID }}

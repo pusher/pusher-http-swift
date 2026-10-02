@@ -59,7 +59,9 @@ struct AuthenticationTokenService {
         var stringToSign = "\(socketId):\(channel.fullName)"
         var userDataString: String?
         if userData != nil {
-            userDataString = try JSONEncoder().encode(userData).toString()
+            let userDataEncoder = JSONEncoder()
+            userDataEncoder.outputFormatting = .sortedKeys
+            userDataString = try userDataEncoder.encode(userData).toString()
             stringToSign += ":\(userDataString!)"
         }
 

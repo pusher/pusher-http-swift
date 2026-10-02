@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.0](https://github.com/pusher/pusher-http-swift/compare/1.0.1...1.1.0) - Unreleased
+
+### Changed
+
+- **Breaking:** Raised the minimum supported OS versions to iOS 15.0, macOS 12.0, tvOS 15.0 and watchOS 9.0 (from iOS 13.0, macOS 10.15, tvOS 13.0 and watchOS 6.0), required to build under Xcode 27. Consumers still targeting older OS versions should pin to `1.0.1` or earlier. Linux is unaffected.
+
 ## [1.0.1](https://github.com/pusher/pusher-http-swift/compare/1.0.0...1.0.1) - 2021-12-30
 
 ### Fixed

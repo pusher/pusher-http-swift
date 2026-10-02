@@ -17,11 +17,13 @@ struct TestObjects {
 
         // MARK: Shared client
 
-        static let shared = Pusher(options: try! PusherClientOptions(appId: testAppId,
-                                                                     key: testKey,
-                                                                     secret: testSecret,
-                                                                     encryptionMasterKey: testMasterKey,
-                                                                     cluster: testCluster))
+        static let shared = RetryingTestClient(
+            pusher: Pusher(options: try! PusherClientOptions(appId: testAppId,
+                                                              key: testKey,
+                                                              secret: testSecret,
+                                                              encryptionMasterKey: testMasterKey,
+                                                              cluster: testCluster))
+        )
     }
 
     // MARK: - Client options

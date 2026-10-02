@@ -23,14 +23,16 @@ Register for a [Pusher](https://pusher.com) account, set up a Channels app and u
 ## Supported platforms
 
 - Swift 5.3 and above
-- Xcode 12.0 and above
+- Xcode 13.0 and above
 
 ### Deployment targets
 
-- iOS 13.0 and above
-- macOS 10.15 and above
-- tvOS 13.0 and above
-- watchOS 6.0 and above
+- iOS 15.0 and above
+- macOS 12.0 and above
+- tvOS 15.0 and above
+- watchOS 9.0 and above
+
+If you need support for older versions of iOS, macOS, tvOS or watchOS, please pin to a version prior to this release — Linux is unaffected by this floor.
 
 ## Installation
 

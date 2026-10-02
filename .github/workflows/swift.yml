@@ -17,6 +17,12 @@ jobs:
       run: swift run swiftlint
     - name: Build
       run: swift build -v
+    - name: Disable IPv6 (works around macOS runner Happy Eyeballs flakiness)
+      run: |
+        networksetup -listallnetworkservices
+        networksetup -listallnetworkservices | tail -n +2 | while IFS= read -r service; do
+          sudo networksetup -setv6off "$service" || true
+        done
     - name: Run tests
       env:
           TEST_APP_ID: ${{ secrets.CI_APP_ID }}

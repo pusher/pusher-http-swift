@@ -17,11 +17,28 @@ struct TestObjects {
 
         // MARK: Shared client
 
-        static let shared = Pusher(options: try! PusherClientOptions(appId: testAppId,
-                                                                     key: testKey,
-                                                                     secret: testSecret,
-                                                                     encryptionMasterKey: testMasterKey,
-                                                                     cluster: testCluster))
+        static let shared: Pusher = {
+            let pusher = Pusher(options: try! PusherClientOptions(appId: testAppId,
+                                                                   key: testKey,
+                                                                   secret: testSecret,
+                                                                   encryptionMasterKey: testMasterKey,
+                                                                   cluster: testCluster))
+
+            // Warm up the connection to the real Pusher API before any test assertion
+            // depends on it. Observed in CI (GitHub Actions macOS runners): the very
+            // first request on a freshly-established TLS/HTTP2 connection occasionally
+            // never receives its response (NSURLErrorDomain -1005, "connection lost"),
+            // while every subsequent request reusing that connection is reliable. This
+            // harmless request absorbs that risk once, up front, instead of it landing
+            // on whichever real test happens to run first.
+            let warmUpSemaphore = DispatchSemaphore(value: 0)
+            pusher.channels { _ in
+                warmUpSemaphore.signal()
+            }
+            _ = warmUpSemaphore.wait(timeout: .now() + 10)
+
+            return pusher
+        }()
     }
 
     // MARK: - Client options
